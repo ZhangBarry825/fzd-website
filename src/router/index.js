@@ -42,11 +42,20 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
+  {
+    path: '/home',
+    component: () => import('@/views/home/index'),
+    hidden: true
+  },
+  {
+    path: '/about-us',
+    component: () => import('@/views/aboutUs/index'),
+    hidden: true
+  },
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/home',
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
@@ -170,7 +179,7 @@ export const asyncRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
