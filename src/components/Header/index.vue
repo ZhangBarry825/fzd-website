@@ -1,52 +1,64 @@
 <template>
   <div class="header-box">
-    <div class="topMenu">
-      <!--      <el-row :gutter="10" style="margin: 0">-->
-      <!--        <el-col :xs="0" :sm="0.5" :md="3" :lg="3" :xl="3">-->
-      <!--          <div class="grid-content bg-purple a1"><a style="opacity: 0">1</a></div>-->
-      <!--        </el-col>-->
-      <!--        <el-col :xs="24" :sm="23" :md="18" :lg="18" :xl="18">-->
+    <div class="header-abs">
+      <div class="topMenu">
+        <div class="topMenuMiddle">
+          <img class="leftLogo" v-if="isShow" src="../../../public/static/images/logo.png" alt="">
+          <img class="leftLogo2" v-if="!isShow" src="../../../public/static/images/logo.png" alt="">
+          <div class="right" v-if="isShow">
+            <div class="item  selected">HOME</div>
+            <div class="item">
+              <div class="text">ABOUT US</div>
+              <div class="itemDetailBox">
+                <div class="itemDetail">Equipment&Workshop</div>
+                <div class="itemDetail">B.News&Blog-post</div>
+                <div class="itemDetail">About US</div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="text">ALUMINIUM CIRCLE</div>
+            </div>
+            <div class="item">
+              <div class="text">ALUMINIUM COIL/SHEET</div>
+            </div>
+            <div class="item">
+              <div class="text">ALUMINIUM FOIL</div>
+            </div>
+            <div class="item">
+              <div class="text">APPLICATION&PROJECT</div>
+            </div>
+            <div class="item">
+              <div class="text">CONTACT</div>
+            </div>
+          </div>
+          <div class="moreMenu" @click="showMenu" v-if="!isShow">
+            <img src="../../../public/static/images/menu.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="hideMenu" v-if="hideMenu && !isShow">
+        <div class="menuItem">HOME</div>
+        <div class="menuItem">ABOUT US</div>
+        <div class="menuItem">ALUMINIUM CIRCLE</div>
+        <div class="menuItem">ALUMINIUM COIL/SHEET</div>
+        <div class="menuItem">ALUMINIUM FOIL</div>
+        <div class="menuItem">APPLICATION&PROJECT</div>
+        <div class="menuItem">CONTACT</div>
+      </div>
+      <div class="bannerInfo">
+        <div class="title">{{nowBanner.title}}</div>
+        <div class="description">{{nowBanner.description}}</div>
+        <div class="more">VIEW MORE</div>
+      </div>
 
-      <!--        </el-col>-->
-      <!--        <el-col :xs="0" :sm="0.5" :md="3" :lg="3" :xl="3">-->
-      <!--          <div class="grid-content bg-purple-light a3"><a style="opacity: 0">3</a></div>-->
-      <!--        </el-col>-->
-      <!--      </el-row>-->
-
-      <div class="grid-content topMenuMiddle">
-        <img class="topLogo" src="../../../public/static/images/logo.png" alt="">
-        <div class="right">
-          <div class="item selected">HOME</div>
-          <div class="item">ABOUT US</div>
-          <div class="item">ALUMINIUM CIRCLE</div>
-          <div class="item">ALUMINIUM COIL/SHEET</div>
-          <div class="item">ALUMINiUM FOIL</div>
-          <div class="item">APPLICATION&PROJECT</div>
-          <div class="item">CONTACT</div>
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" :style="'background-image: url('+item.url+')'" v-for="item in bannerData"></div>
         </div>
 
+        <div class="swiper-pagination" style="z-index: 5555"></div>
       </div>
-
     </div>
-
-
-    <div class="swiper-container">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide" :style="'background-image: url('+backImg1+')'">Slide 1</div>
-        <div class="swiper-slide" :style="'background-image: url('+backImg2+')'">Slide 2</div>
-        <div class="swiper-slide" :style="'background-image: url('+backImg3+')'">Slide 3</div>
-      </div>
-      <!-- 如果需要分页器 -->
-      <div class="swiper-pagination"></div>
-
-      <!-- 如果需要导航按钮 -->
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
-
-      <!-- 如果需要滚动条 -->
-      <div class="swiper-scrollbar"></div>
-    </div>
-
   </div>
 </template>
 
@@ -57,39 +69,79 @@
     name: "Header",
     data() {
       return {
+        screenWidth: document.body.clientWidth,
+        hideMenu: false,
         activeIndex: '1',
         backImg1: require('../../../public/static/images/banner1.png'),
         backImg2: require('../../../public/static/images/banner2.png'),
-        backImg3: require('../../../public/static/images/banner3.png')
+        backImg3: require('../../../public/static/images/banner3.png'),
+        nowBanner: {
+          title: 'ALUMINUM1',
+          description: 'HIGH QUALITY PRODUCTS',
+          url: require('../../../public/static/images/banner1.png')
+        },
+        bannerData: [
+          {
+            title: 'ALUMINUM1',
+            description: 'HIGH QUALITY PRODUCTS',
+            url: require('../../../public/static/images/banner1.png')
+          },
+          {
+            title: 'ALUMINUM2',
+            description: 'HIGH QUALITY PRODUCTS',
+            url: require('../../../public/static/images/banner2.png')
+          },
+          {
+            title: 'ALUMINUM3',
+            description: 'HIGH QUALITY PRODUCTS',
+            url: require('../../../public/static/images/banner3.png')
+          }
+        ]
+      }
+    },
+    props:{
+      isShow:{
+        default:true,
+        type:Boolean
       }
     },
     mounted() {
+      let _this = this
+      //swiper配置
       var mySwiper = new Swiper('.swiper-container', {
         direction: 'vertical', // 垂直切换选项
-        loop: true, // 循环模式选项
-
+        loop: false, // 循环模式选项
+        speed: 500,
+        autoplay: {
+          delay: 5000
+        },
         // 如果需要分页器
         pagination: {
           el: '.swiper-pagination',
         },
 
-        // 如果需要前进后退按钮
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-
-        // 如果需要滚动条
-        scrollbar: {
-          el: '.swiper-scrollbar',
+        on: {
+          slideChange: function () {
+            setTimeout(() => {
+              _this.nowBanner = _this.bannerData[this.activeIndex]
+            }, 100)
+          },
         },
       })
+
+    },
+    methods: {
+      showMenu() {
+        this.hideMenu = !this.hideMenu
+      }
     }
   }
 </script>
 
 <style scoped lang="scss">
   .swiper-container {
+    --swiper-theme-color: #ff6600;
+    --swiper-pagination-color: #00ff33; /* 两种都可以 */
     box-sizing: border-box;
     overflow: hidden;
     width: 100%;
@@ -101,108 +153,247 @@
     }
   }
 
-  /* Extra small devices (phones, 600px and down) */
-  @media only screen and (max-width: 600px) {
-    .topMenuMiddle {
-      width: 100%;
-    }
-  }
-
-  /* Small devices (portrait tablets and large phones, 600px and up) */
-  @media only screen and (min-width: 600px) {
-    .topMenuMiddle {
-      width: 100%;
-    }
-  }
-
-  /* Medium devices (landscape tablets, 768px and up) */
-  @media only screen and (min-width: 768px) {
-    .topMenuMiddle {
-      width: 100%;
-    }
-  }
-
-  /* Large devices (laptops/desktops, 992px and up) */
-  @media only screen and (min-width: 992px) {
-    .topMenuMiddle {
-      width: 900px;
-      display: none;
-      .right{
-        display: none;
-      }
-    }
-  }
-
-  /* Extra large devices (large laptops and desktops, 1200px and up) */
-  @media only screen and (min-width: 1200px) {
-
-    .topMenuMiddle {
-      width: 1000px;
-    }
-
-  }
 
   .header-box {
     width: 100%;
-    height: 760px;
-    background-color: gainsboro;
-  }
+    .header-abs {
+      width: 100%;
+      height: 760px;
+      background-color: gainsboro;
+      position: absolute;
 
-  .topMenu {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    position: absolute;
-    z-index: 555;
-  }
-
-
-  .topLogo {
-    width: 90px;
-  }
-
-  .grid-content {
-    padding: 0;
-  }
-
-  .topMenuMiddle {
-    color: #fff;
-    border: 1px solid red;
-    padding: 5px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-
-    .right {
-      height: 54px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-
-      .item {
-        cursor: pointer;
-        font-size: 12px;
-        padding: 0 5px;
-        box-sizing: border-box;
-        height: 100%;
+      .topMenu {
         display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        position: absolute;
+        z-index: 555;
+        padding-top: 10px;
+
+        .topMenuMiddle {
+          color: #fff;
+          padding: 5px;
+          box-sizing: border-box;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          width: 992px;
+          .moreMenu {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          .leftLogo {
+            width: 90px;
+          }
+
+          .leftLogo2 {
+            width: 60px;
+          }
+
+          .right {
+            height: 54px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+
+            .item {
+              cursor: pointer;
+              font-size: 13px;
+              margin: 0 5px;
+              box-sizing: border-box;
+              height: 100%;
+              font-weight: normal;
+              display: flex;
+              align-items: center;
+              border-bottom: 3px solid rgba(130, 130, 124, 0);
+              position: relative;
+
+              .itemDetailBox {
+                display: none;
+                position: absolute;
+                top: 55px;
+                padding: 15px;
+                color: #999999;
+                box-sizing: border-box;
+                background-color: rgb(13, 12, 13);
+                font-size: 13px;
+
+                .itemDetail {
+                  padding: 7px 0;
+                }
+              }
+            }
+
+            .item:hover, .item:active {
+              border-bottom: 3px solid #177EE6;
+            }
+
+            .item:hover > .itemDetailBox, .item:active > .itemDetailBox {
+              display: block;
+            }
+
+            .selected {
+              border-bottom: 3px solid #177EE6;
+            }
+          }
+
+
+        }
+      }
+
+      .hideMenu {
+        -webkit-animation: fadenum 0.6s ease;
+
+        -moz-animation: fadenum 0.6s ease;
+
+        animation: fadenum 0.6s ease;
+
+        background-color: rgba(21, 19, 21, 0.9);
+        width: 100%;
+        height: calc(100% - 50px);
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        z-index: 5556;
+        color: #e8e1e8;
+        top: 50px;
+        padding: 20px 0;
+
+        .menuItem {
+          cursor: pointer;
+          padding: 10px 20px;
+          box-sizing: border-box;
+          width: 100%;
+        }
+      }
+
+      .bannerInfo {
+        display: flex;
+        flex-direction: column;
         align-items: center;
-        border-bottom: 3px solid rgba(130, 130, 124, 0);
-      }
+        justify-content: center;
+        width: 100%;
+        top: 250px;
+        position: absolute;
+        z-index: 555;
 
-      .item:hover {
-        background-color: rgba(130, 130, 124, 0.4);
-      }
+        .title {
+          color: #177EE6;
+          font-size: 100px;
+        }
 
-      .selected {
-        border-bottom: 3px solid #177EE6;
+        .description {
+          color: #FFFFFF;
+          font-size: 30px;
+          margin: 50px 0;
+          position: relative;
+          left: 200px;
+        }
+
+        .more {
+          cursor: pointer;
+          width: 200px;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #FFFFFF;
+          font-size: 18px;
+          border: 1px solid #FFFFFF;
+        }
+      }
+    }
+  }
+
+  @keyframes fadenum { /*设置内容由显示变为隐藏*/
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /* Extra large devices (large laptops and desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    .header-box {
+      height: 760px;
+    .header-abs {
+      height: 760px;
+        .topMenuMiddle {
+          width: 1000px;
+        }
       }
     }
 
+  }
+
+  /* Large devices (laptops/desktops, 992px and down) */
+  @media only screen and (max-width: 992px) {
+    body {
+      min-width: 300px !important;
+    }
+    .header-box {
+      height: 350px !important;
+    .header-abs {
+      width: 100% !important;
+      height: 350px !important;
+        overflow: hidden !important;
+
+        .topMenuMiddle {
+          width: 100%;
+          box-sizing: border-box;
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+        }
+      }
+
+      .bannerInfo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        top: 130px !important;
+        position: absolute;
+        z-index: 555;
+
+        .title {
+          color: #177EE6;
+          font-size: 40px !important;
+        }
+
+        .description {
+          color: #FFFFFF;
+          font-size: 16px !important;
+          margin: 30px 0 !important;
+          position: relative;
+          left: 0 !important;
+        }
+
+        .more {
+          cursor: pointer;
+          width: 80px !important;
+          height: 30px !important;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #FFFFFF;
+          font-size: 12px !important;
+          border: 1px solid #FFFFFF;
+        }
+      }
+    }
 
   }
 
