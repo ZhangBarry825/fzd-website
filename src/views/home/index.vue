@@ -1,9 +1,9 @@
 <template>
   <div class="home-container">
-    <Header v-bind:isShow="isShow"></Header>
+    <Banner v-bind:isShow="isShow"></Banner>
 
     <div class="about-us-box">
-      <div class="content"  v-if="isShow">
+      <div class="content" v-if="isShow">
         <div class="leftImg">
           <img src="../../../public/static/images/about1.png" alt="">
         </div>
@@ -14,7 +14,8 @@
         <div class="rightText">
           <div class="text">
             China Building Materials International Trade product system basically covers all categories in the field of
-            building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass
+            building materials. The main products are: steel, aluminum, construction machinery and equipment, coal,
+            glass
             fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products,
             waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products,
             geotechnical materials, plates, hardware products, etc.
@@ -38,7 +39,8 @@
         <div class="textBox">
           <div class="text">
             China Building Materials International Trade product system basically covers all categories in the field of
-            building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass
+            building materials. The main products are: steel, aluminum, construction machinery and equipment, coal,
+            glass
             fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products,
             waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products,
             geotechnical materials, plates, hardware products, etc.
@@ -109,7 +111,11 @@
             <div class="text2">PRODUCTION LINE</div>
           </div>
           <div class="leftDes">
-            Driven by innovation and change, focusing on the field of materials and equipment trade services, relying on the core product line and global marketing network that has been built for many years, we will build the operation capability and global resource coordination capability of global procurement and global sales, and provide customers with one-stop supply chain integrated service solutions such as procurement, sales, finance, logistics, risk control, etc.
+            Driven by innovation and change, focusing on the field of materials and equipment trade services, relying on
+            the core product line and global marketing network that has been built for many years, we will build the
+            operation capability and global resource coordination capability of global procurement and global sales, and
+            provide customers with one-stop supply chain integrated service solutions such as procurement, sales,
+            finance, logistics, risk control, etc.
           </div>
           <div class="leftMore">
             more +
@@ -134,7 +140,11 @@
         </div>
         <div class="textBox">
           <div class="text">
-            Driven by innovation and change, focusing on the field of materials and equipment trade services, relying on the core product line and global marketing network that has been built for many years, we will build the operation capability and global resource coordination capability of global procurement and global sales, and provide customers with one-stop supply chain integrated service solutions such as procurement, sales, finance, logistics, risk control, etc.
+            Driven by innovation and change, focusing on the field of materials and equipment trade services, relying on
+            the core product line and global marketing network that has been built for many years, we will build the
+            operation capability and global resource coordination capability of global procurement and global sales, and
+            provide customers with one-stop supply chain integrated service solutions such as procurement, sales,
+            finance, logistics, risk control, etc.
           </div>
           <div class="more">
             <div class="box">
@@ -210,8 +220,12 @@
                 <div class="leftDown">5-15</div>
               </div>
               <div class="itemRight">
-                <div class="rightTitle">CompositionCompositionCompositionCompositionCompositionCompositionCompositionCompositionCompositionComposition</div>
-                <div class="rightDes">The composition of 6061-t6 aluminum plate determines the performanceThe composition of 6061-t6 aluminum plate determines the performance</div>
+                <div class="rightTitle">
+                  CompositionCompositionCompositionCompositionCompositionCompositionCompositionCompositionCompositionComposition
+                </div>
+                <div class="rightDes">The composition of 6061-t6 aluminum plate determines the performanceThe
+                  composition of 6061-t6 aluminum plate determines the performance
+                </div>
               </div>
             </div>
             <div class="item">
@@ -228,7 +242,7 @@
 
         </div>
       </div>
-      <div class="content-mobile"  v-if="!isShow">
+      <div class="content-mobile" v-if="!isShow">
         <div class="title">
           <div class="text1">NEWS</div>
           <div class="text2">NEWS</div>
@@ -251,7 +265,9 @@
               <div class="leftDown">5-15</div>
             </div>
             <div class="itemRight">
-              <div class="rightTitle">CompositionCompositionCompositionCompositionCompositionCompositionCompositionCompositionComposition</div>
+              <div class="rightTitle">
+                CompositionCompositionCompositionCompositionCompositionCompositionCompositionCompositionComposition
+              </div>
               <div class="rightDes">The composition of 6061-t6 aluminum plate determines the performance</div>
             </div>
           </div>
@@ -275,60 +291,45 @@
 </template>
 
 <script>
-  import Header from '../../components/Header/index'
+  import Banner from '../../components/Banner/index'
   import Footer from '../../components/Footer/index'
+
   export default {
     name: "Home",
-    data(){
-      return{
+    data() {
+      return {
         screenWidth: document.body.clientWidth,
-        isShow: true,
-        backImg:require('../../../public/static/images/p1.png'),
-        backImg2:require('../../../public/static/images/pl.png'),
-        backImg3:require('../../../public/static/images/pl.png'),
-        backImg4:require('../../../public/static/images/pl.png'),
-        backImg5:require('../../../public/static/images/pl.png'),
-        backImgN1:require('../../../public/static/images/n1.png'),
-        backImgN2:require('../../../public/static/images/n2.png'),
+        backImg: require('../../../public/static/images/p1.png'),
+        backImg2: require('../../../public/static/images/pl.png'),
+        backImg3: require('../../../public/static/images/pl.png'),
+        backImg4: require('../../../public/static/images/pl.png'),
+        backImg5: require('../../../public/static/images/pl.png'),
+        backImgN1: require('../../../public/static/images/n1.png'),
+        backImgN2: require('../../../public/static/images/n2.png'),
       }
     },
-    watch: {
-      screenWidth(val) {
-        this.screenWidth = val
-        if (this.screenWidth > 992) {
-          this.isShow = true
-        } else {
-          this.isShow = false
-        }
+    computed: {
+      isShow(){
+        return this.$store.getters.isShow
       }
     },
-    components:{
-      Header,
+    watch:{
+      isShow: (newVal,oldVal) => {
+
+      }
+    },
+    components: {
+      Banner,
       Footer,
-    },
-    mounted() {
-      //监听窗口
-      const that = this
-      that.screenWidth = document.documentElement.offsetWidth || document.body.offsetWidth;
-      if (that.screenWidth > 992) {
-        that.isShow = true
-      } else {
-        that.isShow = false
-      }
-      window.onresize = () => {
-        return (() => {
-          window.screenWidth = document.body.clientWidth
-          that.screenWidth = window.screenWidth
-        })()
-      }
     }
   }
 </script>
 
 <style scoped lang="scss">
-.home-container{
-  overflow: hidden;
-}
+  .home-container {
+    overflow: hidden;
+  }
+
   /* Large devices (laptops/desktops, 992px and up) */
   @media only screen and (min-width: 992px) {
     .about-us-box {
@@ -412,7 +413,7 @@
       }
 
     }
-    .products-box{
+    .products-box {
       background-color: #F7F7F7;
       padding-bottom: 60px;
       width: 100%;
@@ -420,64 +421,75 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      .title{
+
+      .title {
         width: 100%;
         display: flex;
         flex-direction: column;
         text-align: center;
+
         .text1 {
           font-size: 48px;
           font-weight: bold;
           position: relative;
           top: 50px;
         }
+
         .text2 {
           font-size: 72px;
           color: #E6E6E6;
         }
       }
-      .items{
+
+      .items {
         width: 992px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         padding: 50px 0;
         box-sizing: border-box;
-        .item{
+
+        .item {
           width: 310px;
           background-color: #FFFFFF;
-          .img{
+
+          .img {
             width: 100%;
             height: 280px;
             background-size: cover;
             background-position: center center;
-            .des{
+
+            .des {
               display: none;
             }
           }
-          .info{
+
+          .info {
             padding: 35px;
             box-sizing: border-box;
             font-size: 16px;
-            .infoTitle{
+
+            .infoTitle {
               font-size: 24px;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
               max-width: 100%;
             }
-            .infoDes{
+
+            .infoDes {
               margin: 15px 0;
               box-sizing: border-box;
               line-height: 1.5;
               max-width: 100%;
-              word-break:break-all;
+              word-break: break-all;
               display: -webkit-box;
               -webkit-box-orient: vertical;
               -webkit-line-clamp: 2;
               overflow: hidden;
             }
-            .infoMore{
+
+            .infoMore {
               cursor: pointer;
               border: 1px solid #000;
               width: 120px;
@@ -486,61 +498,73 @@
             }
           }
         }
-        .item:hover{
+
+        .item:hover {
           color: #FFFFFF;
-          .info{
+
+          .info {
             background-color: #177EE6;
-            .infoMore{
+
+            .infoMore {
               border: 1px solid #FFF;
             }
           }
         }
       }
-      .rightButton{
+
+      .rightButton {
         width: 100%;
         display: flex;
         justify-content: center;
-        img{
+
+        img {
           cursor: pointer;
           width: 60px;
           height: 60px;
         }
       }
     }
-    .line-box{
-      width: 100% ;
+    .line-box {
+      width: 100%;
       display: flex;
       justify-content: center;
       padding: 50px 0;
-      .content{
+
+      .content {
         width: 992px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        .left{
+
+        .left {
           padding-bottom: 40px;
           width: 570px;
-          .leftTitle{
+
+          .leftTitle {
             width: 100%;
             text-align: left;
+
             .text1 {
               font-size: 48px;
               font-weight: bold;
               position: relative;
               top: 50px;
             }
+
             .text2 {
               font-size: 60px;
               color: #E6E6E6;
             }
           }
-          .leftDes{
+
+          .leftDes {
             margin: 20px 0;
             font-size: 16px;
             line-height: 1.7;
-            text-align:justify;
+            text-align: justify;
           }
-          .leftMore{
+
+          .leftMore {
             font-size: 16px;
             cursor: pointer;
             border: 1px solid #000;
@@ -549,15 +573,18 @@
             text-align: center;
           }
         }
-        .right{
+
+        .right {
           display: flex;
           flex-direction: row;
-          width:412px ;
-          .buttons{
+          width: 412px;
+
+          .buttons {
             align-self: flex-end;
             margin-bottom: 50px;
             width: 60px;
-            .topButton,.downButton{
+
+            .topButton, .downButton {
               width: 60px;
               height: 60px;
               background-color: #20a0ff;
@@ -566,11 +593,13 @@
               align-items: center;
               cursor: pointer;
             }
-            .downButton{
+
+            .downButton {
               background-color: #000000;
             }
           }
-          .img{
+
+          .img {
             width: 362px;
             height: 100%;
             background-position: center;
@@ -579,52 +608,60 @@
         }
       }
     }
-    .advantages-box{
+    .advantages-box {
       background-color: #F7F7F7;
       width: 100%;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       align-items: center;
-      .title{
+
+      .title {
         width: 100%;
         display: flex;
         flex-direction: column;
         text-align: center;
+
         .text1 {
           font-size: 48px;
           font-weight: bold;
           position: relative;
           top: 50px;
         }
+
         .text2 {
           font-size: 72px;
           color: #E6E6E6;
         }
       }
-      .items{
+
+      .items {
         width: 992px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         padding-top: 50px;
         box-sizing: border-box;
-        .item{
+
+        .item {
           width: 280px;
-          .img{
+
+          .img {
             width: 100%;
             height: 305px;
             background-size: cover;
             background-position: center center;
           }
-          .info{
+
+          .info {
             padding: 60px 35px;
             box-sizing: border-box;
             font-size: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            .text{
+
+            .text {
               padding-bottom: 10px;
             }
           }
@@ -632,28 +669,32 @@
 
       }
     }
-    .news-box{
+    .news-box {
       width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: center;
       padding: 60px 0;
-      .content{
+
+      .content {
         width: 992px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         padding-bottom: 50px;
-        .newsLeft{
+
+        .newsLeft {
           position: relative;
-          .img1{
+
+          .img1 {
             width: 380px;
             height: 400px;
             background-size: cover;
             background-position: center center;
             z-index: 1;
           }
-          .img2{
+
+          .img2 {
             position: absolute;
             width: 227px;
             height: 227px;
@@ -664,9 +705,11 @@
             z-index: 555;
           }
         }
-        .newsRight{
+
+        .newsRight {
           width: 530px;
-          .title{
+
+          .title {
             .text1 {
               font-size: 48px;
               font-weight: bold;
@@ -674,6 +717,7 @@
               top: 25px;
               z-index: 5;
             }
+
             .text2 {
               font-size: 72px;
               color: #E6E6E6;
@@ -681,33 +725,40 @@
               top: -25px;
             }
           }
-          .items{
+
+          .items {
             display: flex;
             flex-direction: column;
             width: 100%;
-            .item{
+
+            .item {
               cursor: pointer;
               width: 100%;
               padding: 10px 0;
               display: flex;
               flex-direction: row;
-              .itemLeft{
+
+              .itemLeft {
                 width: 50px;
-                .leftTop{
+
+                .leftTop {
                   font-weight: bold;
                   color: #222222;
                   font-size: 35px;
                   padding: 5px 0;
                 }
-                .leftDown{
+
+                .leftDown {
                   color: #999999;
                   font-size: 15px;
                   padding: 5px 0;
                 }
               }
-              .itemRight{
+
+              .itemRight {
                 margin-left: 30px;
-                .rightTitle{
+
+                .rightTitle {
                   color: #222222;
                   font-size: 17px;
                   padding: 10px 0;
@@ -717,12 +768,13 @@
                   text-overflow: ellipsis;
                   max-width: 470px;
                 }
-                .rightDes{
+
+                .rightDes {
                   color: #999999;
                   font-size: 15px;
 
                   max-width: 470px;
-                  word-break:break-all;
+                  word-break: break-all;
                   display: -webkit-box;
                   -webkit-box-orient: vertical;
                   -webkit-line-clamp: 2;
@@ -743,53 +795,64 @@
       width: 100% !important;
       display: block !important;
       box-sizing: border-box;
-      .content-mobile{
+
+      .content-mobile {
 
         width: 100%;
-        .title{
+
+        .title {
           text-align: center;
           font-size: 30px;
           padding: 10px 0;
           font-weight: bold;
+
           .text1 {
             font-size: 24px;
             position: relative;
             top: 20px;
             font-weight: bold;
           }
+
           .text2 {
             font-size: 34px;
             color: #F2F2F2;
           }
         }
-        .img{
+
+        .img {
           width: 100%;
           /*min-width: 300px;*/
           display: flex;
           justify-content: center;
-          img{
+
+          img {
             width: 80%;
           }
         }
-        .textBox{
+
+        .textBox {
           width: 100%;
           padding: 15px;
           box-sizing: border-box;
-          .text{
+
+          .text {
             line-height: 2;
             word-break: break-all;
           }
-          .more{
+
+          .more {
             margin-top: 10px;
             width: 100%;
             display: flex;
             font-size: 18px;
             justify-content: center;
-            .box{
+
+            .box {
               padding: 10px;
               color: #FFF;
               background-color: #20a0ff;
-              img{
+
+              img {
 
               }
             }
@@ -797,7 +860,7 @@
         }
       }
     }
-    .products-box{
+    .products-box {
       padding-bottom: 20px;
       background-color: #F7F7F7;
       width: 100%;
@@ -805,43 +868,50 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      .title  {
+
+      .title {
         width: 100%;
         display: flex;
         flex-direction: column;
         text-align: center;
+
         .text1 {
           font-size: 24px;
           font-weight: bold;
           position: relative;
           top: 20px;
         }
+
         .text2 {
           font-size: 34px;
           color: #E6E6E6;
         }
       }
-      .items::-webkit-scrollbar{/* Chrome Safari */
+
+      .items::-webkit-scrollbar { /* Chrome Safari */
         display: none;
       }
-      .items{
+
+      .items {
         width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         padding: 20px 0;
 
-        .item{
+        .item {
           margin-bottom: 10px;
           width: 30%;
           background-color: #FFFFFF;
-          .img{
+
+          .img {
             width: 100%;
             height: 150px;
             background-size: cover;
             background-position: center center;
             position: relative;
-            .des{
+
+            .des {
               height: 40px;
               display: flex !important;
               justify-content: center;
@@ -851,48 +921,55 @@
               width: 100%;
               font-size: 15px;
               position: absolute;
-              background-color: rgba(23,126,230,0.65);
+              background-color: rgba(23, 126, 230, 0.65);
             }
           }
-          .info{
+
+          .info {
             display: none !important;
           }
         }
       }
-      .rightButton{
+
+      .rightButton {
         width: 100%;
         display: flex;
         justify-content: center;
-        img{
+
+        img {
           cursor: pointer;
           width: 40px;
           height: 40px;
         }
       }
     }
-    .line-box{
-      .content-mobile{
+    .line-box {
+      .content-mobile {
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        .title{
+
+        .title {
           text-align: center;
           font-size: 30px;
           padding: 10px 0;
           font-weight: bold;
+
           .text1 {
             font-size: 24px;
             position: relative;
             top: 20px;
             font-weight: bold;
           }
+
           .text2 {
             font-size: 34px;
             color: #F2F2F2;
           }
         }
-        .img{
+
+        .img {
           width: 80%;
           height: 200px;
           /*min-width: 300px;*/
@@ -901,29 +978,35 @@
 
           background-position: center;
           background-size: cover;
-          img{
+
+          img {
             width: 80%;
           }
         }
-        .textBox{
+
+        .textBox {
           width: 100%;
           padding: 30px;
           box-sizing: border-box;
-          .text{
+
+          .text {
             line-height: 1.7;
             word-break: break-all;
           }
-          .more{
+
+          .more {
             margin-top: 10px;
             width: 100%;
             display: flex;
             font-size: 18px;
             justify-content: center;
-            .box{
+
+            .box {
               padding: 10px;
               color: #FFF;
               background-color: #20a0ff;
-              img{
+
+              img {
 
               }
             }
@@ -931,7 +1014,7 @@
         }
       }
     }
-    .advantages-box{
+    .advantages-box {
       padding-top: 10px;
       padding-bottom: 10px;
       background-color: #F7F7F7;
@@ -940,122 +1023,143 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      .title  {
+
+      .title {
         width: 100%;
         display: flex;
         flex-direction: column;
         text-align: center;
+
         .text1 {
           font-size: 24px;
           font-weight: bold;
           position: relative;
           top: 20px;
         }
+
         .text2 {
           font-size: 34px;
           color: #E6E6E6;
         }
       }
-      .items::-webkit-scrollbar{/* Chrome Safari */
+
+      .items::-webkit-scrollbar { /* Chrome Safari */
         display: none;
       }
-      .items{
+
+      .items {
         width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         padding: 20px 0;
-        .item{
+
+        .item {
           margin-bottom: 10px;
           width: 30%;
-          .img{
+
+          .img {
             width: 100%;
             background-size: cover;
             background-position: center center;
             position: relative;
             text-align: center;
-            img{
+
+            img {
               width: 80%;
             }
           }
-          .info{
+
+          .info {
             display: flex;
             flex-direction: column;
             align-items: center;
-           .text{
-            margin-top: 10px;
-           }
+
+            .text {
+              margin-top: 10px;
+            }
           }
         }
       }
     }
-    .news-box{
+    .news-box {
       width: 100%;
       padding: 20px 0;
-      .content-mobile{
+
+      .content-mobile {
         width: 100%;
         padding: 0 30px;
-        .title  {
+
+        .title {
           width: 100%;
           display: flex;
           flex-direction: column;
           text-align: center;
+
           .text1 {
             font-size: 24px;
             font-weight: bold;
             position: relative;
             top: 20px;
           }
+
           .text2 {
             font-size: 34px;
             color: #E6E6E6;
           }
         }
-        .items{
+
+        .items {
           display: flex;
           flex-direction: column;
           width: 100%;
-          .item{
+
+          .item {
             cursor: pointer;
             width: 100%;
             padding: 10px 0;
             display: flex;
             flex-direction: row;
-            .itemLeft{
+
+            .itemLeft {
               width: 50px;
-              .leftTop{
+
+              .leftTop {
                 font-weight: bold;
                 color: #222222;
                 font-size: 35px;
-                padding: 5px 0;
               }
-              .leftDown{
+
+              .leftDown {
                 color: #999999;
                 font-size: 15px;
                 padding: 5px 0;
               }
             }
-            .itemRight{
+
+            .itemRight {
               margin-left: 30px;
-              .rightTitle{
+
+              .rightTitle {
                 color: #222222;
                 font-size: 17px;
                 line-height: 1.1;
 
                 max-width: 100%;
-                word-break:break-all;
+                word-break: break-all;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
-                -webkit-line-clamp: 2;
+                -webkit-line-clamp: 1;
                 overflow: hidden;
               }
-              .rightDes{
+
+              .rightDes {
                 color: #999999;
                 font-size: 15px;
                 margin: 10px 0;
 
                 max-width: 100%;
-                word-break:break-all;
+                word-break: break-all;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 3;

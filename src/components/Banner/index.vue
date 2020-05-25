@@ -1,6 +1,6 @@
 <template>
-  <div class="header-box">
-    <div class="header-abs" :style="'background-image: url('+bannerUrl+')'">
+  <div class="banner-box">
+    <div class="header-abs">
       <div class="topMenu">
         <div class="topMenuMiddle">
           <img class="leftLogo" v-if="isShow" src="../../../public/static/images/logo.png" alt="">
@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="hideMenu" v-if="hideMenu && !isShow" @touchmove.prevent @mousewheel.prevent>
-        <div class="menuItem" @click="goTo('/home')">HOME</div>
+        <div class="menuItem">HOME</div>
         <div class="menuItem">ABOUT US</div>
         <div class="menuItem" @click="goTo('/product-list?menuId=3')">ALUMINIUM CIRCLE</div>
         <div class="menuItem" @click="goTo('/product-list?menuId=4')">ALUMINIUM COIL/SHEET</div>
@@ -46,7 +46,17 @@
         <div class="menuItem">CONTACT</div>
       </div>
       <div class="bannerInfo">
-        <div class="title">{{BannerTitle}}</div>
+        <div class="title">{{nowBanner.title}}</div>
+        <div class="description">{{nowBanner.description}}</div>
+        <div class="more">VIEW MORE</div>
+      </div>
+
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" :style="'background-image: url('+item.url+')'" v-for="item in bannerData"></div>
+        </div>
+
+        <div class="swiper-pagination" style="z-index: 5555"></div>
       </div>
     </div>
   </div>
@@ -56,45 +66,73 @@
   import Swiper from 'swiper';
 
   export default {
-    name: "Header",
+    name: "Banner",
     data() {
       return {
         screenWidth: document.body.clientWidth,
         hideMenu: false,
         activeIndex: '1',
-        bannerUrl:require('../../../public/static/images/banner1.png'),
+        backImg1: require('../../../public/static/images/banner1.png'),
+        backImg2: require('../../../public/static/images/banner2.png'),
+        backImg3: require('../../../public/static/images/banner3.png'),
         nowBanner: {
-          title: 'PRODUCTS',
+          title: 'ALUMINUM1',
           description: 'HIGH QUALITY PRODUCTS',
-          url1: require('../../../public/static/images/banner1.png'),
-          url2: require('../../../public/static/images/banner2.png'),
-          url3: require('../../../public/static/images/banner3.png'),
-          url4: require('../../../public/static/images/banner4.png'),
-        }
+          url: require('../../../public/static/images/banner1.png')
+        },
+        bannerData: [
+          {
+            title: 'ALUMINUM1',
+            description: 'HIGH QUALITY PRODUCTS',
+            url: require('../../../public/static/images/banner1.png')
+          },
+          {
+            title: 'ALUMINUM2',
+            description: 'HIGH QUALITY PRODUCTS',
+            url: require('../../../public/static/images/banner2.png')
+          },
+          {
+            title: 'ALUMINUM3',
+            description: 'HIGH QUALITY PRODUCTS',
+            url: require('../../../public/static/images/banner3.png')
+          }
+        ]
       }
     },
     props: {
-      BannerNum:{
-        default: 0,
-        type: Number
-      },
-      BannerTitle:{
-        default: 'Title',
-        type: String
-      },
       isShow: {
         default: true,
         type: Boolean
       },
       menuId: {
-        default: 0,
+        default: 1,
         type: Number
       }
     },
     mounted() {
-      if(this.BannerNum !== 0){
-        this.bannerUrl=require('../../../public/static/images/banner'+this.BannerNum+'.png')
-      }
+
+      let _this = this
+      //swiper配置
+      var mySwiper = new Swiper('.swiper-container', {
+        direction: 'vertical', // 垂直切换选项
+        loop: false, // 循环模式选项
+        speed: 500,
+        autoplay: {
+          delay: 5000
+        },
+        // 如果需要分页器
+        pagination: {
+          el: '.swiper-pagination',
+        },
+
+        on: {
+          slideChange: function () {
+            setTimeout(() => {
+              _this.nowBanner = _this.bannerData[this.activeIndex]
+            }, 100)
+          },
+        },
+      })
 
     },
     methods: {
@@ -109,18 +147,30 @@
 </script>
 
 <style scoped lang="scss">
+  .swiper-container {
+    --swiper-theme-color: #ff6600;
+    --swiper-pagination-color: #00ff33; /* 两种都可以 */
+    box-sizing: border-box;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+
+    .swiper-slide {
+      background-size: cover;
+      background-position: center center;
+    }
+  }
 
 
-  .header-box {
+  .banner-box {
     width: 100%;
 
     .header-abs {
       width: 100%;
-      height: 500px;
+      height: 760px;
       background-color: gainsboro;
       position: absolute;
-      background-position: center center;
-      background-size: cover;
+
       .topMenu {
         display: flex;
         flex-direction: row;
@@ -213,7 +263,9 @@
 
       .hideMenu {
         -webkit-animation: fadenum 0.6s ease;
+
         -moz-animation: fadenum 0.6s ease;
+
         animation: fadenum 0.6s ease;
 
         background-color: rgba(21, 19, 21, 0.9);
@@ -229,7 +281,7 @@
 
         .menuItem {
           cursor: pointer;
-          padding: 5px 20px;
+          padding: 10px 20px;
           box-sizing: border-box;
           width: 100%;
         }
@@ -241,19 +293,34 @@
         align-items: center;
         justify-content: center;
         width: 100%;
-        top: 230px;
+        top: 250px;
         position: absolute;
         z-index: 555;
 
         .title {
-          text-align: center;
-          min-width: 500px;
-          word-break: break-word;
           color: #177EE6;
-          font-size: 48px;
-          font-weight: bold;
+          font-size: 100px;
         }
 
+        .description {
+          color: #FFFFFF;
+          font-size: 30px;
+          margin: 50px 0;
+          position: relative;
+          left: 200px;
+        }
+
+        .more {
+          cursor: pointer;
+          width: 200px;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #FFFFFF;
+          font-size: 18px;
+          border: 1px solid #FFFFFF;
+        }
       }
     }
   }
@@ -269,11 +336,11 @@
 
   /* Extra large devices (large laptops and desktops, 992px and up) */
   @media only screen and (min-width: 992px) {
-    .header-box {
-      height: 500px;
+    .banner-box {
+      height: 760px;
 
       .header-abs {
-        height: 500px;
+        height: 760px;
 
         .topMenuMiddle {
           width: 1000px;
@@ -288,11 +355,12 @@
     body {
       min-width: 300px !important;
     }
-    .header-box {
-      height: 250px !important;
+    .banner-box {
+      height: 350px !important;
+
       .header-abs {
         width: 100% !important;
-        height: 250px !important;
+        height: 350px !important;
         overflow: hidden !important;
 
         .topMenuMiddle {
@@ -315,7 +383,27 @@
 
         .title {
           color: #177EE6;
-          font-size: 30px !important;
+          font-size: 40px !important;
+        }
+
+        .description {
+          color: #FFFFFF;
+          font-size: 16px !important;
+          margin: 30px 0 !important;
+          position: relative;
+          left: 0 !important;
+        }
+
+        .more {
+          cursor: pointer;
+          width: 80px !important;
+          height: 30px !important;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #FFFFFF;
+          font-size: 12px !important;
+          border: 1px solid #FFFFFF;
         }
       }
     }
