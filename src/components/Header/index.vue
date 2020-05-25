@@ -3,8 +3,8 @@
     <div class="header-abs" :style="'background-image: url('+bannerUrl+')'">
       <div class="topMenu">
         <div class="topMenuMiddle">
-          <img class="leftLogo" v-if="isShow" src="../../../public/static/images/logo.png" alt="">
-          <img class="leftLogo2" v-if="!isShow" src="../../../public/static/images/logo.png" alt="">
+          <img class="leftLogo" v-if="isShow" src="../../../public/static/images/logo.png" @click="goTo('/home')" alt="">
+          <img class="leftLogo2" v-if="!isShow" src="../../../public/static/images/logo.png" @click="goTo('/home')" alt="">
           <div class="right" v-if="isShow">
             <div class="item" :class="{'selected':menuId === 1}" @click="goTo('/home')">HOME</div>
             <div class="item" :class="{'selected':menuId === 2}">
