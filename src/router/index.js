@@ -63,6 +63,11 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/news',
+    component: () => import('@/views/aboutUs/news'),
+    hidden: true
+  },
+  {
     path: '/equipment',
     component: () => import('@/views/aboutUs/equipment'),
     hidden: true

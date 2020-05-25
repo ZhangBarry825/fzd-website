@@ -11,7 +11,7 @@
               <div class="text">ABOUT US</div>
               <div class="itemDetailBox">
                 <div class="itemDetail" @click="goTo('/equipment')">Equipment&Workshop</div>
-                <div class="itemDetail">B.News&Blog-post</div>
+                <div class="itemDetail" @click="goTo('/news')">B.News&Blog-post</div>
                 <div class="itemDetail">About US</div>
               </div>
             </div>

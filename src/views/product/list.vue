@@ -21,7 +21,7 @@
             <div class="typeItem">pipe</div>
           </div>
           <div class="content-right">
-            <div class="productDetail">
+            <div class="productDetail" @click="goTo('/product-detail')">
               <div class="img" :style="'background-image: url('+productImg1+')'">
                 <div class="des">Pole</div>
               </div>
@@ -31,7 +31,7 @@
                 <div class="infoMore">more +</div>
               </div>
             </div>
-            <div class="productDetail">
+            <div class="productDetail" @click="goTo('/product-detail')">
               <div class="img" :style="'background-image: url('+productImg2+')'">
                 <div class="des">Pole</div>
               </div>
@@ -41,7 +41,7 @@
                 <div class="infoMore">more +</div>
               </div>
             </div>
-            <div class="productDetail">
+            <div class="productDetail" @click="goTo('/product-detail')">
               <div class="img" :style="'background-image: url('+productImg3+')'">
                 <div class="des">Pole</div>
               </div>
@@ -51,7 +51,7 @@
                 <div class="infoMore">more +</div>
               </div>
             </div>
-            <div class="productDetail">
+            <div class="productDetail" @click="goTo('/product-detail')">
               <div class="img" :style="'background-image: url('+productImg1+')'">
                 <div class="des">Pole</div>
               </div>
@@ -107,6 +107,11 @@
       isShow: (newVal, oldVal) => {},
       $route (to, from) {
         this.$router.go(0)
+      }
+    },
+    methods:{
+      goTo(path){
+        this.$router.push({path:path})
       }
     },
     mounted() {
