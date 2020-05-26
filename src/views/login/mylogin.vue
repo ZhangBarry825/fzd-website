@@ -7,11 +7,22 @@
     <div class="login-center">
       <div class="login-left">
         <img src="../../../public/static/images/login_login.png" alt="">
-        <el-input class="userInfo" placeholder="username" v-model="loginForm.username" ></el-input>
-        <el-input class="userInfo"  placeholder="password" v-model="loginForm.password" show-password></el-input>
-        <el-row>
-          <el-button class="subButton" type="primary" plain @click="submitForm" :loading="loading">{{BtnText}}</el-button>
-        </el-row>
+        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on"
+                 label-position="left">
+          <el-form-item prop="username">
+            <el-input class="userInfo" type="text" placeholder="username" v-model="loginForm.username" tabindex="1" auto-complete="on"></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input :key="passwordType" ref="password" :type="passwordType" name="password"
+                      tabindex="2"
+                      auto-complete="on"
+                      @keyup.enter.native="submitForm" class="userInfo" placeholder="password" v-model="loginForm.password" show-password></el-input>
+          </el-form-item>
+          <el-row>
+            <el-button class="subButton" type="primary" plain @click.native.prevent="submitForm" :loading="loading">{{BtnText}}
+            </el-button>
+          </el-row>
+        </el-form>
       </div>
       <div class="login-right" v-if="isShow">
         <img src="../../../public/static/images/login_logo.png" alt="">
@@ -22,16 +33,39 @@
 </template>
 
 <script>
+  import {validUsername} from "@/utils/validate";
+
   export default {
     name: "MyLogin",
-    data(){
-      return{
-        loading:false,
-        BtnText:'Login',
+    data() {
+      const validateUsername = (rule, value, callback) => {
+        if (value.length<2) {
+          callback(new Error('Please enter the correct user name'))
+        } else {
+          callback()
+        }
+      }
+      const validatePassword = (rule, value, callback) => {
+        if (value.length < 6) {
+          callback(new Error('The password can not be less than 6 digits'))
+        } else {
+          callback()
+        }
+      }
+      return {
+        loading: false,
+        BtnText: 'Login',
         loginForm: {
           username: '',
           password: ''
         },
+        loginRules: {
+          username: [{required: true, trigger: 'blur', validator: validateUsername}],
+          password: [{required: true, trigger: 'blur', validator: validatePassword}]
+        },
+
+        passwordType: 'password',
+        redirect: undefined
       }
     },
     computed: {
@@ -43,15 +77,23 @@
       isShow: (newVal, oldVal) => {
       }
     },
-    methods:{
-      submitForm(){
-        this.loading=true
-        this.BtnText='loading'
+    methods: {
+      submitForm() {
 
-        setTimeout(()=>{
-          this.loading=false
-          this.BtnText='Login'
-        },1000)
+        this.$refs.loginForm.validate(valid => {
+          if (valid) {
+            this.loading = true
+            this.$store.dispatch('user/login', this.loginForm).then(() => {
+              this.$router.push({ path: this.redirect || '/dashboard' })
+              this.loading = false
+            }).catch(() => {
+              this.loading = false
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
       }
     }
   }
@@ -68,7 +110,8 @@
     align-items: center;
     position: relative;
     overflow: hidden;
-    .login-center{
+
+    .login-center {
       overflow: hidden;
       width: 80%;
       height: 80%;
@@ -80,42 +123,52 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      .login-left{
+
+      .login-left {
         width: 360px;
-        img{
+
+        img {
           margin-bottom: 10px;
         }
-        .userInfo{
-          margin-top: 20px;
+
+        .userInfo {
+          margin-top: 10px;
         }
-        .userInfo>>>.el-input__inner{
+
+        .userInfo > > > .el-input__inner {
           height: 50px;
           font-size: 18px;
+          font-weight: normal;
         }
-        .subButton{
+
+        .subButton {
           margin-top: 30px;
           width: 100%;
           height: 50px;
           font-size: 16px;
         }
       }
-      .login-right{
+
+      .login-right {
         margin-left: 150px;
-        img{
+
+        img {
           width: 500px;
           height: 400px;
         }
       }
     }
-    .back1{
+
+    .back1 {
       background-color: #7B86F8;
       height: 600px;
-      width:600px;
+      width: 600px;
       position: absolute;
       top: 65px;
       left: 110px;
     }
-    .back2{
+
+    .back2 {
       background-color: #46BDD3;
       height: 45px;
       width: 200px;
@@ -123,7 +176,8 @@
       top: 0;
       right: 20%;
     }
-    .back3{
+
+    .back3 {
       background-color: #46BDD3;
       z-index: 999;
       height: 80px;
@@ -132,7 +186,8 @@
       top: 8%;
       right: 15%;
     }
-    .back4{
+
+    .back4 {
       background-color: #7B86F8;
       height: 80px;
       width: 300px;
@@ -140,7 +195,8 @@
       bottom: 50px;
       right: 15%;
     }
-    .bottom{
+
+    .bottom {
       color: #FFFFFF;
       font-size: 16px;
       width: 100%;
