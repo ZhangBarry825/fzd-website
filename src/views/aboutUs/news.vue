@@ -7,7 +7,7 @@
         <div class="text2">NEWS</div>
       </div>
       <div class="content">
-        <div class="newsItem">
+        <div class="newsItem"  @click="goTo('/detail')">
           <div class="itemLeft">
             <div class="leftTop">01</div>
             <div class="leftDown">5-15</div>
@@ -20,7 +20,7 @@
             </div>
           </div>
         </div>
-        <div class="newsItem">
+        <div class="newsItem"  @click="goTo('/detail')">
           <div class="itemLeft">
             <div class="leftTop">02</div>
             <div class="leftDown">5-15</div>
@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-        <div class="newsItem">
+        <div class="newsItem"  @click="goTo('/detail')">
           <div class="itemLeft">
             <div class="leftTop">03</div>
             <div class="leftDown">5-15</div>
@@ -46,7 +46,7 @@
             </div>
           </div>
         </div>
-        <div class="newsItem">
+        <div class="newsItem"  @click="goTo('/detail')">
           <div class="itemLeft">
             <div class="leftTop">04</div>
             <div class="leftDown">5-15</div>
@@ -59,7 +59,7 @@
             </div>
           </div>
         </div>
-        <div class="newsItem">
+        <div class="newsItem"  @click="goTo('/detail')">
           <div class="itemLeft">
             <div class="leftTop">05</div>
             <div class="leftDown">5-15</div>
@@ -114,6 +114,11 @@
       isShow: (newVal, oldVal) => {
       }
     },
+    methods:{
+      goTo(path){
+        this.$router.push({path:path})
+      }
+    }
   }
 </script>
 

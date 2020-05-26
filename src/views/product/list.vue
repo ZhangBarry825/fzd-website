@@ -191,6 +191,13 @@
           }
         }
 
+
+        .content-right::after{
+          height: 0;
+          width: 230px;
+          min-width: 230px;
+          content: "";
+        }
         .content-right {
           justify-content: space-between;
           display: flex;
@@ -314,6 +321,7 @@
             color: #222222;
             position: relative;
             top: 25px;
+            font-weight: bold;
           }
 
           .text2 {

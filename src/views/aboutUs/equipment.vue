@@ -1,6 +1,6 @@
 <template>
   <div class="detail-box">
-    <Header :banner-title="'EQUIPMENT & WORKSHOP'" :banner-num="3" :is-show="isShow"></Header>
+    <Header :banner-title="'EQUIPMENT & WORKSHOP'" :menu-id="2" :banner-num="3" :is-show="isShow"></Header>
     <div class="detail-center">
       <div class="title">
         <div class="text1">EQUIPMENT&WORKSHOP</div>

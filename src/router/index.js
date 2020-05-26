@@ -73,8 +73,28 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/contact',
+    component: () => import('@/views/contact/contact'),
+    hidden: true
+  },
+  {
     path: '/about-us',
-    component: () => import('@/views/aboutUs/index'),
+    component: () => import('@/views/aboutUs/about-us'),
+    hidden: true
+  },
+  {
+    path: '/application-list',
+    component: () => import('@/views/application/list'),
+    hidden: true
+  },
+  {
+    path: '/application-detail',
+    component: () => import('@/views/application/detail'),
+    hidden: true
+  },
+  {
+    path: '/mylogin',
+    component: () => import('@/views/login/mylogin'),
     hidden: true
   },
   {

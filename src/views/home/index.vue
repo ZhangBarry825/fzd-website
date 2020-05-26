@@ -61,7 +61,7 @@
         <div class="text2">PRODUCTS</div>
       </div>
       <div class="items">
-        <div class="item">
+        <div class="item" @click="goTo('/product-detail')">
           <div class="img" :style="'background-image: url('+backImg+')'">
             <div class="des">Pole</div>
           </div>
@@ -73,7 +73,7 @@
             </div>
           </div>
         </div>
-        <div class="item">
+        <div class="item" @click="goTo('/product-detail')">
           <div class="img" :style="'background-image: url('+backImg+')'">
             <div class="des">Pipe</div>
           </div>
@@ -85,7 +85,7 @@
             </div>
           </div>
         </div>
-        <div class="item">
+        <div class="item" @click="goTo('/product-detail')">
           <div class="img" :style="'background-image: url('+backImg+')'">
             <div class="des">Stick</div>
           </div>
@@ -204,7 +204,7 @@
             <div class="text2">News</div>
           </div>
           <div class="items">
-            <div class="item">
+            <div class="item" @click="goTo('/detail')">
               <div class="itemLeft">
                 <div class="leftTop">01</div>
                 <div class="leftDown">5-15</div>
@@ -214,7 +214,7 @@
                 <div class="rightDes">The composition of 6061-t6 aluminum plate determines the performance</div>
               </div>
             </div>
-            <div class="item">
+            <div class="item" @click="goTo('/detail')">
               <div class="itemLeft">
                 <div class="leftTop">02</div>
                 <div class="leftDown">5-15</div>
@@ -228,7 +228,7 @@
                 </div>
               </div>
             </div>
-            <div class="item">
+            <div class="item" @click="goTo('/detail')">
               <div class="itemLeft">
                 <div class="leftTop">03</div>
                 <div class="leftDown">5-15</div>
@@ -321,6 +321,11 @@
     components: {
       Banner,
       Footer,
+    },
+    methods:{
+      goTo(path){
+        this.$router.push({path:path})
+      }
     }
   }
 </script>
@@ -452,7 +457,7 @@
         .item {
           width: 310px;
           background-color: #FFFFFF;
-
+          cursor: pointer;
           .img {
             width: 100%;
             height: 280px;
@@ -797,7 +802,9 @@
       box-sizing: border-box;
 
       .content-mobile {
-
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         width: 100%;
 
         .title {
@@ -820,13 +827,13 @@
         }
 
         .img {
-          width: 100%;
+          width: 90%;
           /*min-width: 300px;*/
           display: flex;
           justify-content: center;
 
           img {
-            width: 80%;
+            width: 100%;
           }
         }
 
@@ -838,6 +845,7 @@
           .text {
             line-height: 2;
             word-break: break-all;
+            text-align: justify;
           }
 
           .more {
@@ -900,6 +908,7 @@
         padding: 20px 0;
 
         .item {
+          cursor:pointer;
           margin-bottom: 10px;
           width: 30%;
           background-color: #FFFFFF;

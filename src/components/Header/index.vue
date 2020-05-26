@@ -12,7 +12,7 @@
               <div class="itemDetailBox">
                 <div class="itemDetail" @click="goTo('/equipment')">Equipment&Workshop</div>
                 <div class="itemDetail" @click="goTo('/news')">B.News&Blog-post</div>
-                <div class="itemDetail">About US</div>
+                <div class="itemDetail" @click="goTo('/about-us')">About US</div>
               </div>
             </div>
             <div class="item" :class="{'selected':menuId === 3}" @click="goTo('/product-list?menuId=3')">
@@ -24,10 +24,10 @@
             <div class="item" :class="{'selected':menuId === 5}" @click="goTo('/product-list?menuId=5')">
               <div class="text">ALUMINIUM FOIL</div>
             </div>
-            <div class="item" :class="{'selected':menuId === 6}">
+            <div class="item" :class="{'selected':menuId === 6}" @click="goTo('/application-list')">
               <div class="text">APPLICATION&PROJECT</div>
             </div>
-            <div class="item" :class="{'selected':menuId === 7}">
+            <div class="item" :class="{'selected':menuId === 7}" @click="goTo('/contact')">
               <div class="text">CONTACT</div>
             </div>
           </div>
@@ -38,12 +38,12 @@
       </div>
       <div class="hideMenu" v-if="hideMenu && !isShow" @touchmove.prevent @mousewheel.prevent>
         <div class="menuItem" @click="goTo('/home')">HOME</div>
-        <div class="menuItem">ABOUT US</div>
+        <div class="menuItem" @click="goTo('/about-us')">ABOUT US</div>
         <div class="menuItem" @click="goTo('/product-list?menuId=3')">ALUMINIUM CIRCLE</div>
         <div class="menuItem" @click="goTo('/product-list?menuId=4')">ALUMINIUM COIL/SHEET</div>
         <div class="menuItem" @click="goTo('/product-list?menuId=5')">ALUMINIUM FOIL</div>
-        <div class="menuItem">APPLICATION&PROJECT</div>
-        <div class="menuItem">CONTACT</div>
+        <div class="menuItem" @click="goTo('/application-list')">APPLICATION&PROJECT</div>
+        <div class="menuItem" @click="goTo('/contact')">CONTACT</div>
       </div>
       <div class="bannerInfo">
         <div class="title">{{BannerTitle}}</div>
