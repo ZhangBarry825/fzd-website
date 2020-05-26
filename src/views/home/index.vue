@@ -293,6 +293,7 @@
 <script>
   import Banner from '../../components/Banner/index'
   import Footer from '../../components/Footer/index'
+  import {getHomeInfo} from "@/api/home";
 
   export default {
     name: "Home",
@@ -325,7 +326,18 @@
     methods:{
       goTo(path){
         this.$router.push({path:path})
+      },
+      fetchData(){
+        getHomeInfo({
+          pageSize:3,
+          pageNum:1
+        }).then(res=>{
+          console.log(res,123)
+        })
       }
+    },
+    mounted() {
+      this.fetchData()
     }
   }
 </script>
