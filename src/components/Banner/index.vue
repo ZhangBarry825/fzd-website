@@ -15,15 +15,12 @@
                 <div class="itemDetail" @click="goTo('/about-us')">About US</div>
               </div>
             </div>
-            <div class="item" :class="{'selected':menuId === 3}" @click="goTo('/product-list?menuId=3')">
-              <div class="text">ALUMINIUM CIRCLE</div>
+
+            <div class="item" :class="{'selected':menuId === index+3}" @click="goTo('/product-list?id='+item.id+'&menuId='+menuIdAdd(index))" v-for="(item,index) in menuData">
+              <div class="text">{{item.classifyName}}</div>
             </div>
-            <div class="item" :class="{'selected':menuId === 4}" @click="goTo('/product-list?menuId=4')">
-              <div class="text">ALUMINIUM COIL/SHEET</div>
-            </div>
-            <div class="item" :class="{'selected':menuId === 5}" @click="goTo('/product-list?menuId=5')">
-              <div class="text">ALUMINIUM FOIL</div>
-            </div>
+
+
             <div class="item" :class="{'selected':menuId === 6}" @click="goTo('/application-list')">
               <div class="text">APPLICATION&PROJECT</div>
             </div>
@@ -47,13 +44,15 @@
       </div>
       <div class="bannerInfo">
         <div class="title">{{nowBanner.title}}</div>
-        <div class="description">{{nowBanner.description}}</div>
-        <div class="more"  @click="goTo('/product-list?menuId='+activeIndex)">VIEW MORE</div>
+        <div class="description">{{nowBanner.introduction}}</div>
+        <div class="more"  @click="goTo('/product-list?id='+activeIndex)">VIEW MORE</div>
       </div>
 
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <div class="swiper-slide" :style="'background-image: url('+item.url+')'" v-for="item in bannerData"></div>
+          <div class="swiper-slide"   v-for="(item,index) in bannerData">
+            <div class="swiperBackImg"  :style="'background-image: url('+baseImgUrl+item.imageUrl+')'"></div>
+          </div>
         </div>
 
         <div class="swiper-pagination" style="z-index: 5555"></div>
@@ -64,39 +63,27 @@
 
 <script>
   import Swiper from 'swiper';
+  import {getHomeBanner, getHomeMenu} from "@/api/home";
 
   export default {
     name: "Banner",
     data() {
       return {
+        baseImgUrl:this.$globalData.baseImgUrl,
         screenWidth: document.body.clientWidth,
         hideMenu: false,
         activeIndex: '1',
-        backImg1: require('../../../public/static/images/banner1.png'),
-        backImg2: require('../../../public/static/images/banner2.png'),
-        backImg3: require('../../../public/static/images/banner3.png'),
         nowBanner: {
-          title: 'ALUMINUM1',
-          description: 'HIGH QUALITY PRODUCTS',
-          url: require('../../../public/static/images/banner1.png')
+          title: 'ALUMINUM',
+          introduction: 'HIGH QUALITY PRODUCTS',
+          // url: require('../../../public/static/images/banner1.png')
         },
-        bannerData: [
-          {
-            title: 'ALUMINUM1',
-            description: 'HIGH QUALITY PRODUCTS',
-            url: require('../../../public/static/images/banner1.png')
-          },
-          {
-            title: 'ALUMINUM2',
-            description: 'HIGH QUALITY PRODUCTS',
-            url: require('../../../public/static/images/banner2.png')
-          },
-          {
-            title: 'ALUMINUM3',
-            description: 'HIGH QUALITY PRODUCTS',
-            url: require('../../../public/static/images/banner3.png')
-          }
-        ]
+        bannerData: [{
+          imageUrl:''
+        }],
+        menuData:[{
+
+        }]
       }
     },
     props: {
@@ -107,40 +94,74 @@
       menuId: {
         default: 1,
         type: Number
-      }
+      },
+      // bannerData:{
+      //   default: [],
+      //   type: Array
+      // }
     },
     mounted() {
-
       let _this = this
-      //swiper配置
-      var mySwiper = new Swiper('.swiper-container', {
-        direction: 'vertical', // 垂直切换选项
-        loop: false, // 循环模式选项
-        speed: 500,
-        autoplay: {
-          delay: 5000
-        },
-        // 如果需要分页器
-        pagination: {
-          el: '.swiper-pagination',
-        },
+      setTimeout(()=>{
 
-        on: {
-          slideChange: function () {
-            setTimeout(() => {
-              _this.nowBanner = _this.bannerData[this.activeIndex]
-            }, 100)
+        //swiper配置
+        var mySwiper = new Swiper('.swiper-container', {
+          direction: 'vertical', // 垂直切换选项
+          loop: false, // 循环模式选项
+          speed: 300,
+          slideActiveClass : 'itemActive',
+          autoplay: {
+            delay: 3000
           },
-        },
-      })
+          // 如果需要分页器
+          // pagination: {
+          //   el: '.swiper-pagination',
+          // },
+          on: {
+            slideChange: function () {
+              setTimeout(() => {
+                _this.nowBanner = _this.bannerData[this.activeIndex]
+              }, 100)
+              // _this.nowBanner = _this.bannerData[this.activeIndex]
+            },
+          },
+        })
+      },1000)
 
+      this.fetchData()
     },
     methods: {
+      menuIdAdd(n){
+        return 3+n
+      },
       goTo(path){
         this.$router.push({path:path})
       },
       showMenu() {
         this.hideMenu = !this.hideMenu
+      },
+      fetchData(){
+        let that = this
+        getHomeBanner({
+          pageSize:3,
+          pageNum:1
+        }).then(res=>{
+          if(res.code==200){
+            that.bannerData=res.data.list
+            that.nowBanner=res.data.list[0]
+          }
+        })
+
+
+        getHomeMenu({
+          pageSize:3,
+          pageNum:1
+        }).then(res=>{
+          if(res.code==200){
+            that.menuData=res.data.list
+            console.log(that.menuData,99999)
+          }
+        })
       }
     }
   }
@@ -148,14 +169,16 @@
 
 <style scoped lang="scss">
   .swiper-container {
-    --swiper-theme-color: #ff6600;
-    --swiper-pagination-color: #00ff33; /* 两种都可以 */
-    box-sizing: border-box;
     overflow: hidden;
     width: 100%;
     height: 100%;
-
-    .swiper-slide {
+    .itemActive{
+      width: 100%;
+      height: 760px;
+    }
+    .swiperBackImg{
+      width: 100%;
+      height: 760px;
       background-size: cover;
       background-position: center center;
     }
@@ -338,10 +361,8 @@
   @media only screen and (min-width: 992px) {
     .banner-box {
       height: 760px;
-
       .header-abs {
         height: 760px;
-
         .topMenuMiddle {
           width: 1000px;
         }
@@ -352,17 +373,24 @@
 
   /* Large devices (laptops/desktops, 992px and down) */
   @media only screen and (max-width: 992px) {
+    .swiper-container {
+      .itemActive{
+        width: 100%;
+        height: 350px !important;
+      }
+      .swiperBackImg{
+        height: 350px !important;
+      }
+    }
     body {
       min-width: 300px !important;
     }
     .banner-box {
       height: 350px !important;
-
       .header-abs {
         width: 100% !important;
         height: 350px !important;
         overflow: hidden !important;
-
         .topMenuMiddle {
           width: 100%;
           box-sizing: border-box;
@@ -388,15 +416,16 @@
 
         .description {
           color: #FFFFFF;
-          font-size: 16px !important;
+          font-size: 18px !important;
           margin: 30px 0 !important;
           position: relative;
           left: 0 !important;
         }
 
         .more {
+          box-sizing: border-box;
           cursor: pointer;
-          width: 80px !important;
+          width: 85px !important;
           height: 30px !important;
           display: flex;
           justify-content: center;

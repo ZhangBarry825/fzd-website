@@ -78,6 +78,7 @@
 <script>
   import Header from '../../components/Header/index'
   import Footer from '../../components/Footer/index'
+  import {getEquipmentClassify} from "@/api/product";
 
   export default {
     name: "ProductList",
@@ -87,7 +88,8 @@
     },
     data() {
       return {
-        bannerNum:2,
+        id:0,
+        bannerNum:0,
         productImg1: require('../../../public/static/images/p1.png'),
         productImg2: require('../../../public/static/images/p2.png'),
         productImg3: require('../../../public/static/images/p3.png'),
@@ -112,13 +114,26 @@
     methods:{
       goTo(path){
         this.$router.push({path:path})
+      },
+      fetchData(){
+        getEquipmentClassify({
+          classifyId:this.id,
+          pageNum:1,
+          pageSize:5000000
+        }).then(res=>{
+          console.log(res.data,898)
+          if(res.code && res.code ===200){
+
+          }
+        })
       }
     },
     mounted() {
-
       if(this.$route.query.menuId){
         this.bannerNum=parseInt(this.$route.query.menuId)
       }
+      this.id=this.$route.query.id
+      this.fetchData()
     }
   }
 </script>

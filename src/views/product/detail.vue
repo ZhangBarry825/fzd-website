@@ -11,18 +11,18 @@
           <div class="left">
             <div class="img" :style="'background-image: url('+img+')'"></div>
             <div class="down">
-              <div class="imgs selected"  :style="'background-image: url('+img+')'"></div>
-              <div class="imgs"  :style="'background-image: url('+img+')'"></div>
-              <div class="imgs"  :style="'background-image: url('+img+')'"></div>
-              <div class="imgs"  :style="'background-image: url('+img+')'"></div>
-              <div class="imgs"  :style="'background-image: url('+img+')'"></div>
+              <div class="imgs" :class="{'selected':nowImg==1}" :style="'background-image: url('+img+')'" @click="selectImg(1)"></div>
+              <div class="imgs" :class="{'selected':nowImg==2}" :style="'background-image: url('+img+')'" @click="selectImg(2)"></div>
+              <div class="imgs" :class="{'selected':nowImg==3}" :style="'background-image: url('+img+')'" @click="selectImg(3)"></div>
+              <div class="imgs" :class="{'selected':nowImg==4}" :style="'background-image: url('+img+')'" @click="selectImg(4)"></div>
+              <div class="imgs" :class="{'selected':nowImg==5}" :style="'background-image: url('+img+')'" @click="selectImg(5)"></div>
             </div>
           </div>
           <div class="right">
             <div class="right1">
-              <div class="rightTitle">Aluminum Pole</div>
+              <div class="rightTitle">{{detail.productName}}</div>
               <div class="rightText">
-                Aluminum and its alloy are one of the most widely used and economical materials. Aluminum and its alloy are one of the most widely used and economical materials. Aluminum and its alloy are one of the most widely used and economical materials.  Aluminum and its alloy are one of the most widely used and economical materials. Aluminum and its alloy are one of the most widely used and economical materials. Aluminum and its alloy are one of the most widely used and economical materials.
+                {{detail.introduction}}
               </div>
             </div>
             <div class="right2">
@@ -32,10 +32,10 @@
               <img src="../../../public/static/images/icon_twitter.png" alt="">
               <img src="../../../public/static/images/icon_fb.png" alt="">
             </div>
-            <div class="right3">
+            <a class="right3"  href="mailto:943870975@qq.com">
               <img src="../../../public/static/images/email_white.png" alt="">
               943870975@qq.com
-            </div>
+            </a>
           </div>
         </div>
 
@@ -68,30 +68,9 @@
           </div>
         </div>
 
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical.
-        </div>
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical.
-        </div>
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical.
-        </div>
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical.
-        </div>
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical.
-        </div>
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical.
-        </div>
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical.
-        </div>
+        <div class="text" v-html="detail.content"></div>
 
-
-        <div class="next">
+        <div class="next" @click="nextPage">
           <img src="../../../public/static/images/btn_more_r.png" alt="">
         </div>
       </div>
@@ -103,6 +82,7 @@
 <script>
   import Header from '../../components/Header/index'
   import Footer from '../../components/Footer/index'
+  import {getProductDetail} from "@/api/product";
 
   export default {
     name: "ProductDetail",
@@ -112,7 +92,18 @@
     },
     data(){
       return{
-        img:require('../../../public/static/images/p1.png')
+        id:0,
+        baseImgUrl: this.$globalData.baseImgUrl,
+        hasNext:false,
+        nextId:0,
+        nowImg:1,
+        img:require('../../../public/static/images/p1.png'),
+        detail:{
+          productName:'',
+          introduction:'',
+          createTime:'',
+          content:'',
+        }
       }
     },
     computed: {
@@ -124,6 +115,51 @@
       isShow: (newVal, oldVal) => {
       }
     },
+    methods:{
+      nextPage(){
+        if(this.hasNext){
+          getProductDetail({
+            id:this.nextId
+          }).then(res=>{
+            if(res.code && res.code === 200){
+              console.log(res,876)
+              this.detail=res.data
+
+
+
+
+
+            }
+          })
+        }else{
+          this.$message({
+            message:'No more data',
+            type:'warning'
+          })
+        }
+      },
+      selectImg(num){
+        this.nowImg=num
+      },
+      fetchData(){
+        getProductDetail({
+          id:this.id
+        }).then(res=>{
+          if(res.code && res.code === 200){
+            console.log(res,876)
+            this.detail=res.data
+
+
+
+
+          }
+        })
+      }
+    },
+    mounted() {
+      this.id=this.$route.query.id
+      this.fetchData()
+    }
   }
 </script>
 
@@ -254,10 +290,10 @@
 
         }
         .text{
-          padding: 10px 0;
-          line-height: 1.7;
-          text-indent: 2em;
-          text-align: justify;
+          /*padding: 10px 0;*/
+          /*line-height: 1.7;*/
+          /*text-indent: 2em;*/
+          /*text-align: justify;*/
         }
         .next{
           width: 100%;

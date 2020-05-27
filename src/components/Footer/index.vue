@@ -6,17 +6,17 @@
           <div class="left1">
             <ul>
               <li class="title">Products</li>
-              <li>Aluminum Circle</li>
-              <li>Aluminum Sheet/Coil</li>
-              <li>Aluminum Foil</li>
+              <li @click="goTo('/product-list')">Aluminum Circle</li>
+              <li @click="goTo('/product-list')">Aluminum Sheet/Coil</li>
+              <li @click="goTo('/product-list')">Aluminum Foil</li>
             </ul>
           </div>
           <div class="left1 left2">
             <ul>
               <li class="title">About us</li>
-              <li>Equipment&Workshop</li>
-              <li>B.News&Blog-post</li>
-              <li>About US</li>
+              <li @click="goTo('/equipment')">Equipment&Workshop</li>
+              <li @click="goTo('/news')">B.News&Blog-post</li>
+              <li @click="goTo('/about-us')">About US</li>
             </ul>
           </div>
         </div>
@@ -64,7 +64,12 @@
 
 <script>
   export default {
-    name: "Footer"
+    name: "Footer",
+    methods:{
+      goTo(path){
+        this.$router.push({path:path})
+      }
+    }
   }
 </script>
 
@@ -116,8 +121,12 @@
               }
 
               .title {
+                cursor: default;
                 font-size: 30px;
                 line-height: 2.5;
+              }
+              .title:hover{
+                color: #999999;
               }
             }
           }

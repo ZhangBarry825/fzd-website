@@ -15,14 +15,8 @@
                 <div class="itemDetail" @click="goTo('/about-us')">About US</div>
               </div>
             </div>
-            <div class="item" :class="{'selected':menuId === 3}" @click="goTo('/product-list?menuId=3')">
-              <div class="text">ALUMINIUM CIRCLE</div>
-            </div>
-            <div class="item" :class="{'selected':menuId === 4}" @click="goTo('/product-list?menuId=4')">
-              <div class="text">ALUMINIUM COIL/SHEET</div>
-            </div>
-            <div class="item" :class="{'selected':menuId === 5}" @click="goTo('/product-list?menuId=5')">
-              <div class="text">ALUMINIUM FOIL</div>
+            <div class="item" :class="{'selected':menuId === index+3}" @click="goTo('/product-list?id='+item.id+'&menuId='+menuIdAdd(index))" v-for="(item,index) in menuData">
+              <div class="text">{{item.classifyName}}</div>
             </div>
             <div class="item" :class="{'selected':menuId === 6}" @click="goTo('/application-list')">
               <div class="text">APPLICATION&PROJECT</div>
@@ -54,11 +48,13 @@
 
 <script>
   import Swiper from 'swiper';
+  import {getHomeMenu} from "@/api/home";
 
   export default {
     name: "Header",
     data() {
       return {
+        menuData:[],
         screenWidth: document.body.clientWidth,
         hideMenu: false,
         activeIndex: '1',
@@ -95,14 +91,29 @@
       if(this.BannerNum !== 0){
         this.bannerUrl=require('../../../public/static/images/banner'+this.BannerNum+'.png')
       }
-
+      this.fetchData()
     },
     methods: {
+      menuIdAdd(n){
+        return 3+n
+      },
       goTo(path){
         this.$router.push({path:path})
       },
       showMenu() {
         this.hideMenu = !this.hideMenu
+      },
+      fetchData(){
+        let that = this
+        getHomeMenu({
+          pageSize:3,
+          pageNum:1
+        }).then(res=>{
+          if(res.code==200){
+            that.menuData=res.data.list
+            console.log(that.menuData,99999)
+          }
+        })
       }
     }
   }

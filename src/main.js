@@ -14,7 +14,8 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-
+import globalData from "@/globalData";
+Vue.prototype.$globalData = globalData;
 
 //百度地图
 import BaiduMap from 'vue-baidu-map'

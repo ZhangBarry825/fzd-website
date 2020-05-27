@@ -1,11 +1,11 @@
 <template>
   <div class="home-container">
-    <Banner v-bind:isShow="isShow"></Banner>
+    <Banner v-bind:isShow="isShow" :bannerData="bannerData"></Banner>
 
     <div class="about-us-box">
       <div class="content" v-if="isShow">
         <div class="leftImg">
-          <img src="../../../public/static/images/about1.png" alt="">
+          <div class="img" :style="'background-image: url('+baseImgUrl+homeAboutUs.imageUrl+')'"></div>
         </div>
         <div class="rightTitle">
           <div class="text1">ABOUT US</div>
@@ -13,15 +13,10 @@
         </div>
         <div class="rightText">
           <div class="text">
-            China Building Materials International Trade product system basically covers all categories in the field of
-            building materials. The main products are: steel, aluminum, construction machinery and equipment, coal,
-            glass
-            fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products,
-            waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products,
-            geotechnical materials, plates, hardware products, etc.
+            {{homeAboutUs.content}}
           </div>
           <div class="more">
-            <div class="box">
+            <div class="box" @click="goTo('/about-us')">
               more
               <img src="../../../public/static/images/arrow_right.png" alt="">
             </div>
@@ -33,20 +28,14 @@
           <div class="text1">ABOUT US</div>
           <div class="text2">ABOUT US</div>
         </div>
-        <div class="img">
-          <img src="../../../public/static/images/about1.png" alt="">
+        <div class="img" :style="'background-image: url('+baseImgUrl+homeAboutUs.imageUrl+')'">
         </div>
         <div class="textBox">
           <div class="text">
-            China Building Materials International Trade product system basically covers all categories in the field of
-            building materials. The main products are: steel, aluminum, construction machinery and equipment, coal,
-            glass
-            fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products,
-            waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products,
-            geotechnical materials, plates, hardware products, etc.
+            {{homeAboutUs.content}}
           </div>
           <div class="more">
-            <div class="box">
+            <div class="box" @click="goTo('/about-us')">
               more
               <img src="../../../public/static/images/arrow_right.png" alt="">
             </div>
@@ -61,37 +50,14 @@
         <div class="text2">PRODUCTS</div>
       </div>
       <div class="items">
-        <div class="item" @click="goTo('/product-detail')">
-          <div class="img" :style="'background-image: url('+backImg+')'">
-            <div class="des">Pole</div>
+        <div class="item" @click="goTo('/product-detail?id='+item.id)" v-for="(item,index) in homeProduct"
+             v-if="index<3">
+          <div class="img" :style="'background-image: url('+baseImgUrl+item.imageUrl+')'">
+            <div class="des">{{item.productName}}</div>
           </div>
           <div class="info">
-            <div class="infoTitle">Pole</div>
-            <div class="infoDes">Aluminum and its alloy are one of the most widely used and economical ...</div>
-            <div class="infoMore">
-              more +
-            </div>
-          </div>
-        </div>
-        <div class="item" @click="goTo('/product-detail')">
-          <div class="img" :style="'background-image: url('+backImg+')'">
-            <div class="des">Pipe</div>
-          </div>
-          <div class="info">
-            <div class="infoTitle">Pipe</div>
-            <div class="infoDes">Aluminum and its alloy are one of the most widely used and economical ...</div>
-            <div class="infoMore">
-              more +
-            </div>
-          </div>
-        </div>
-        <div class="item" @click="goTo('/product-detail')">
-          <div class="img" :style="'background-image: url('+backImg+')'">
-            <div class="des">Stick</div>
-          </div>
-          <div class="info">
-            <div class="infoTitle">Stick</div>
-            <div class="infoDes">Aluminum and its alloy are one of the most widely used and economical ...</div>
+            <div class="infoTitle">{{item.productName}}</div>
+            <div class="infoDes">{{item.introduction}}</div>
             <div class="infoMore">
               more +
             </div>
@@ -99,7 +65,7 @@
         </div>
       </div>
       <div class="rightButton">
-        <img src="../../../public/static/images/arrow_right1.png" alt="">
+        <img src="../../../public/static/images/arrow_right1.png" alt="" @click="goTo('/product-list')">
       </div>
     </div>
 
@@ -111,24 +77,20 @@
             <div class="text2">PRODUCTION LINE</div>
           </div>
           <div class="leftDes">
-            Driven by innovation and change, focusing on the field of materials and equipment trade services, relying on
-            the core product line and global marketing network that has been built for many years, we will build the
-            operation capability and global resource coordination capability of global procurement and global sales, and
-            provide customers with one-stop supply chain integrated service solutions such as procurement, sales,
-            finance, logistics, risk control, etc.
+            {{homeEquipment.introduction}}
           </div>
-          <div class="leftMore">
+          <div class="leftMore" @click="goTo('/detail?type=equipment&id='+homeEquipment.id)">
             more +
           </div>
         </div>
         <div class="right">
           <div class="buttons">
-            <div class="topButton">
+            <div class="topButton" @click="changeEquip('left')">
               <img src="../../../public/static/images/left1.png" alt="">
             </div>
-            <div class="downButton"><img src="../../../public/static/images/right1.png" alt=""></div>
+            <div class="downButton"  @click="changeEquip('right')"><img src="../../../public/static/images/right1.png" alt=""></div>
           </div>
-          <div class="img" :style="'background-image:url('+backImg2+')'"></div>
+          <div class="img" :style="'background-image:url('+baseImgUrl+homeEquipment.imageUrl+')'" @click="goTo('/detail?type=equipment&id='+homeEquipment.id)"></div>
         </div>
       </div>
       <div class="content-mobile" v-if="!isShow">
@@ -136,18 +98,14 @@
           <div class="text1">PRODUCTION LINE</div>
           <div class="text2">PRODUCTION LINE</div>
         </div>
-        <div class="img" :style="'background-image:url('+backImg2+')'">
+        <div class="img" :style="'background-image:url('+baseImgUrl+homeEquipment.imageUrl+')'">
         </div>
         <div class="textBox">
           <div class="text">
-            Driven by innovation and change, focusing on the field of materials and equipment trade services, relying on
-            the core product line and global marketing network that has been built for many years, we will build the
-            operation capability and global resource coordination capability of global procurement and global sales, and
-            provide customers with one-stop supply chain integrated service solutions such as procurement, sales,
-            finance, logistics, risk control, etc.
+            {{homeEquipment.introduction}}
           </div>
-          <div class="more">
-            <div class="box">
+          <div class="more" >
+            <div class="box" @click="goTo('/detail?type=equipment&id='+homeEquipment.id)">
               more
               <img src="../../../public/static/images/arrow_right.png" alt="">
             </div>
@@ -195,8 +153,8 @@
     <div class="news-box">
       <div class="content" v-if="isShow">
         <div class="newsLeft">
-          <div class="img1" :style="'background-image: url('+backImgN1+')'"></div>
-          <div class="img2" :style="'background-image: url('+backImgN2+')'"></div>
+          <div class="img1" :style="'background-image: url('+baseImgUrl+homeNews[0].imageUrl+')'"></div>
+          <div class="img2" :style="'background-image: url('+baseImgUrl+homeNews[1].imageUrl+')'"></div>
         </div>
         <div class="newsRight">
           <div class="title">
@@ -204,38 +162,14 @@
             <div class="text2">News</div>
           </div>
           <div class="items">
-            <div class="item" @click="goTo('/detail')">
+            <div class="item" @click="goTo('/detail?type=news&id='+item.id)" v-for="(item,index) in homeNews">
               <div class="itemLeft">
-                <div class="leftTop">01</div>
-                <div class="leftDown">5-15</div>
+                <div class="leftTop">{{index+1}}</div>
+                <div class="leftDown">{{item.createTime|formatTime}}</div>
               </div>
               <div class="itemRight">
-                <div class="rightTitle">Composition</div>
-                <div class="rightDes">The composition of 6061-t6 aluminum plate determines the performance</div>
-              </div>
-            </div>
-            <div class="item" @click="goTo('/detail')">
-              <div class="itemLeft">
-                <div class="leftTop">02</div>
-                <div class="leftDown">5-15</div>
-              </div>
-              <div class="itemRight">
-                <div class="rightTitle">
-                  CompositionCompositionCompositionCompositionCompositionCompositionCompositionCompositionCompositionComposition
-                </div>
-                <div class="rightDes">The composition of 6061-t6 aluminum plate determines the performanceThe
-                  composition of 6061-t6 aluminum plate determines the performance
-                </div>
-              </div>
-            </div>
-            <div class="item" @click="goTo('/detail')">
-              <div class="itemLeft">
-                <div class="leftTop">03</div>
-                <div class="leftDown">5-15</div>
-              </div>
-              <div class="itemRight">
-                <div class="rightTitle">Composition</div>
-                <div class="rightDes">The composition of 6061-t6 aluminum plate determines the performance</div>
+                <div class="rightTitle">{{item.title}}</div>
+                <div class="rightDes">{{item.introduction}}</div>
               </div>
             </div>
           </div>
@@ -249,36 +183,14 @@
         </div>
 
         <div class="items">
-          <div class="item">
+          <div class="item" v-for="(item,index) in homeNews" @click="goTo('/detail?type=news&id='+item.id)">
             <div class="itemLeft">
-              <div class="leftTop">01</div>
-              <div class="leftDown">5-15</div>
+              <div class="leftTop">{{index+1}}</div>
+              <div class="leftDown">{{item.createTime|formatTime}}</div>
             </div>
             <div class="itemRight">
-              <div class="rightTitle">Composition</div>
-              <div class="rightDes">The composition of 6061-t6 aluminum plate determines the performance</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="itemLeft">
-              <div class="leftTop">02</div>
-              <div class="leftDown">5-15</div>
-            </div>
-            <div class="itemRight">
-              <div class="rightTitle">
-                CompositionCompositionCompositionCompositionCompositionCompositionCompositionCompositionComposition
-              </div>
-              <div class="rightDes">The composition of 6061-t6 aluminum plate determines the performance</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="itemLeft">
-              <div class="leftTop">03</div>
-              <div class="leftDown">5-15</div>
-            </div>
-            <div class="itemRight">
-              <div class="rightTitle">Composition</div>
-              <div class="rightDes">The composition of 6061-t6 aluminum plate determines the performance</div>
+              <div class="rightTitle">{{item.title}}</div>
+              <div class="rightDes">{{item.introduction}}</div>
             </div>
           </div>
         </div>
@@ -293,13 +205,40 @@
 <script>
   import Banner from '../../components/Banner/index'
   import Footer from '../../components/Footer/index'
-  import {getHomeInfo} from "@/api/home";
+  import {getHomeAboutUs, getHomeEquipment, getHomeNews, getHomeProduct} from "@/api/home";
+  import {parseTime} from "../../utils/index"
 
   export default {
     name: "Home",
     data() {
       return {
-        screenWidth: document.body.clientWidth,
+        homeAboutUs: {
+          imageUrl:''
+        },
+        homeEquipment: {
+          imageUrl:'',
+          introduction:''
+        },
+        equipHasNext:false,
+        equipHasPre:false,
+        equipPage:1,
+        homeNews:[{
+          title:'',
+          imageUrl:'',
+          createTime:''
+        },{
+          title:'',
+          imageUrl:'',
+          createTime:''
+        }],
+        baseImgUrl: this.$globalData.baseImgUrl,
+        bannerData: [{
+          imageUrl:''
+        }],
+        homeProduct: [{
+          productName:'',
+          imageUrl:''
+        }],
         backImg: require('../../../public/static/images/p1.png'),
         backImg2: require('../../../public/static/images/pl.png'),
         backImg3: require('../../../public/static/images/pl.png'),
@@ -309,13 +248,18 @@
         backImgN2: require('../../../public/static/images/n2.png'),
       }
     },
+    filters:{
+      formatTime(value){
+        return parseTime(value,'{m}-{d}')
+      }
+    },
     computed: {
-      isShow(){
+      isShow() {
         return this.$store.getters.isShow
       }
     },
-    watch:{
-      isShow: (newVal,oldVal) => {
+    watch: {
+      isShow: (newVal, oldVal) => {
 
       }
     },
@@ -323,16 +267,87 @@
       Banner,
       Footer,
     },
-    methods:{
-      goTo(path){
-        this.$router.push({path:path})
+    methods: {
+      goTo(path) {
+        this.$router.push({path: path})
       },
-      fetchData(){
-        getHomeInfo({
-          pageSize:3,
-          pageNum:1
+      changeEquip(type){
+        if(type==='left'){
+          if(this.equipHasPre){
+            getHomeEquipment({
+              pageNum:this.equipPage-1,
+              pageSize:1,
+            }).then(res=>{
+              if (res.code && res.code === 200) {
+                this.homeEquipment = res.data.list[0]
+                this.equipHasNext=res.data.hasNextPage
+                this.equipHasPre=res.data.hasPreviousPage
+                this.equipPage=this.equipPage-1
+                console.log(res.data)
+              }
+            })
+          }else {
+            this.$message({
+              message: 'No more data!',
+              type: 'warning'
+            })
+          }
+        }else {
+          if(this.equipHasNext){
+            getHomeEquipment({
+              pageNum:this.equipPage+1,
+              pageSize:1,
+            }).then(res=>{
+              if (res.code && res.code === 200) {
+                this.homeEquipment = res.data.list[0]
+                this.equipHasNext=res.data.hasNextPage
+                this.equipHasPre=res.data.hasPreviousPage
+                this.equipPage=this.equipPage+1
+                console.log(res.data)
+              }
+            })
+          }else {
+            this.$message({
+              message: 'No more data!',
+              type: 'warning'
+            })
+          }
+        }
+
+      },
+      fetchData() {
+        getHomeProduct().then(res => {
+          if (res.code && res.code === 200) {
+            this.homeProduct = res.data
+          }
+        })
+
+        getHomeAboutUs().then(res => {
+          if (res.code && res.code === 200) {
+            this.homeAboutUs = res.data[0]
+          }
+        })
+
+        getHomeEquipment({
+          pageNum:this.equipPage,
+          pageSize:1,
         }).then(res=>{
-          console.log(res,123)
+          if (res.code && res.code === 200) {
+            this.homeEquipment = res.data.list[0]
+            this.equipHasNext=res.data.hasNextPage
+            this.equipHasPre=res.data.hasPreviousPage
+          }
+        })
+        getHomeNews(
+          {
+            pageNum:1,
+            pageSize:3
+          }
+        ).then(res=>{
+          if (res.code && res.code === 200) {
+            this.homeNews = res.data.list
+            console.log(res.data,'news')
+          }
         })
       }
     },
@@ -365,9 +380,12 @@
           position: absolute;
           z-index: 0;
 
-          img {
+          .img {
             width: 800px;
             height: 500px;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
           }
         }
 
@@ -406,6 +424,12 @@
 
           .text {
             line-height: 2;
+            max-width: 100%;
+            /*word-break: break-all;*/
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 6;
+            overflow: hidden;
           }
 
           .more {
@@ -414,6 +438,7 @@
             flex-direction: row;
             justify-content: flex-end;
             font-size: 20px;
+
 
             .box {
               cursor: pointer;
@@ -470,6 +495,7 @@
           width: 310px;
           background-color: #FFFFFF;
           cursor: pointer;
+
           .img {
             width: 100%;
             height: 280px;
@@ -499,7 +525,7 @@
               box-sizing: border-box;
               line-height: 1.5;
               max-width: 100%;
-              word-break: break-all;
+              /*word-break: break-all;*/
               display: -webkit-box;
               -webkit-box-orient: vertical;
               -webkit-line-clamp: 2;
@@ -549,6 +575,7 @@
 
       .content {
         width: 992px;
+        height: 430px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -579,6 +606,14 @@
             font-size: 16px;
             line-height: 1.7;
             text-align: justify;
+
+            max-width: 100%;
+            word-wrap: break-spaces;
+            /*word-break: break-all;*/
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 7;
+            overflow: hidden;
           }
 
           .leftMore {
@@ -617,6 +652,7 @@
           }
 
           .img {
+            cursor: pointer;
             width: 362px;
             height: 100%;
             background-position: center;
@@ -716,7 +752,7 @@
             width: 227px;
             height: 227px;
             right: -50px;
-            bottom: -50px;
+            top: 220px;
             background-size: cover;
             background-position: center center;
             z-index: 555;
@@ -791,7 +827,7 @@
                   font-size: 15px;
 
                   max-width: 470px;
-                  word-break: break-all;
+                  /*word-break: break-all;*/
                   display: -webkit-box;
                   -webkit-box-orient: vertical;
                   -webkit-line-clamp: 2;
@@ -837,16 +873,13 @@
             color: #F2F2F2;
           }
         }
-
         .img {
           width: 90%;
-          /*min-width: 300px;*/
-          display: flex;
-          justify-content: center;
+          height: 200px;
+          background-size: cover;
+          background-position: center center;
+          background-repeat: no-repeat;
 
-          img {
-            width: 100%;
-          }
         }
 
         .textBox {
@@ -856,8 +889,14 @@
 
           .text {
             line-height: 2;
-            word-break: break-all;
             text-align: justify;
+
+            max-width: 100%;
+            /*word-break: break-all;*/
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 6;
+            overflow: hidden;
           }
 
           .more {
@@ -888,7 +927,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-
+      text-align: center;
       .title {
         width: 100%;
         display: flex;
@@ -920,14 +959,14 @@
         padding: 20px 0;
 
         .item {
-          cursor:pointer;
+          cursor: pointer;
           margin-bottom: 10px;
           width: 30%;
           background-color: #FFFFFF;
 
           .img {
             width: 100%;
-            height: 150px;
+            height: 135px;
             background-size: cover;
             background-position: center center;
             position: relative;
@@ -940,7 +979,8 @@
               color: #FFF;
               bottom: 0;
               width: 100%;
-              font-size: 15px;
+              font-size: 13px;
+              line-height: 1.3;
               position: absolute;
               background-color: rgba(23, 126, 230, 0.65);
             }
@@ -1012,7 +1052,14 @@
 
           .text {
             line-height: 1.7;
+            text-align: justify;
+            max-width: 100%;
             word-break: break-all;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 6;
+            overflow: hidden;
+            /*word-break: break-all;*/
           }
 
           .more {
@@ -1141,10 +1188,11 @@
             padding: 10px 0;
             display: flex;
             flex-direction: row;
-
+            justify-content: flex-start;
             .itemLeft {
-              width: 50px;
-
+              width: 70px;
+              display: flex;
+              flex-direction: column;
               .leftTop {
                 font-weight: bold;
                 color: #222222;
@@ -1159,15 +1207,13 @@
             }
 
             .itemRight {
-              margin-left: 30px;
-
+              width: calc(100% - 60px);
               .rightTitle {
                 color: #222222;
                 font-size: 17px;
-                line-height: 1.1;
 
                 max-width: 100%;
-                word-break: break-all;
+                /*word-break: break-all;*/
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 1;
@@ -1177,13 +1223,15 @@
               .rightDes {
                 color: #999999;
                 font-size: 15px;
-                margin: 10px 0;
+                margin: 5px 0;
+                text-align: justify;
+                line-height: 1.3;
 
                 max-width: 100%;
-                word-break: break-all;
+                /*word-break: break-all;*/
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
-                -webkit-line-clamp: 3;
+                -webkit-line-clamp: 2;
                 overflow: hidden;
               }
             }
