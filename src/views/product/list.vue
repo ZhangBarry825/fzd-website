@@ -4,60 +4,22 @@
     <div class="products-box">
       <div class="product-center">
         <div class="title">
-          <div class="text1">PRODUCTS</div>
-          <div class="text2">PRODUCTS</div>
+          <div class="text1">{{classifyName}}</div>
+          <div class="text2">{{classifyName}}</div>
         </div>
         <div class="content">
           <div class="content-left">
-            <div class="typeItem">pole</div>
-            <div class="typeItem selected">pipe</div>
-            <div class="typeItem">pole</div>
-            <div class="typeItem">pipe</div>
-            <div class="typeItem">pole</div>
-            <div class="typeItem">pipe</div>
-            <div class="typeItem">pole</div>
-            <div class="typeItem">pipe</div>
-            <div class="typeItem">pole</div>
-            <div class="typeItem">pipe</div>
+            <div class="typeItem" :class="{'selected':nowType===index}" @click="changeType(index,item)" v-for="(item,index) in typeGroup">
+              {{item.classifyName}}</div>
           </div>
           <div class="content-right">
-            <div class="productDetail" @click="goTo('/product-detail')">
-              <div class="img" :style="'background-image: url('+productImg1+')'">
-                <div class="des">Pole</div>
+            <div class="productDetail" @click="goTo('/product-detail?id='+item.id)" v-for="(item,index) in productList">
+              <div class="img" :style="'background-image: url('+baseImgUrl+item.imageUrl+')'">
+                <div class="des">{{item.productName}}</div>
               </div>
               <div class="info">
-                <div class="infoTitle">Pole</div>
-                <div class="infoDes">Aluminum and its alloy are one of the most widely used and economical ...</div>
-                <div class="infoMore">more +</div>
-              </div>
-            </div>
-            <div class="productDetail" @click="goTo('/product-detail')">
-              <div class="img" :style="'background-image: url('+productImg2+')'">
-                <div class="des">Pole</div>
-              </div>
-              <div class="info">
-                <div class="infoTitle">Pole</div>
-                <div class="infoDes">Aluminum and its alloy are one of the most widely used and economical ...</div>
-                <div class="infoMore">more +</div>
-              </div>
-            </div>
-            <div class="productDetail" @click="goTo('/product-detail')">
-              <div class="img" :style="'background-image: url('+productImg3+')'">
-                <div class="des">Pole</div>
-              </div>
-              <div class="info">
-                <div class="infoTitle">Pole</div>
-                <div class="infoDes">Aluminum and its alloy are one of the most widely used and economical ...</div>
-                <div class="infoMore">more +</div>
-              </div>
-            </div>
-            <div class="productDetail" @click="goTo('/product-detail')">
-              <div class="img" :style="'background-image: url('+productImg1+')'">
-                <div class="des">Pole</div>
-              </div>
-              <div class="info">
-                <div class="infoTitle">Pole</div>
-                <div class="infoDes">Aluminum and its alloy are one of the most widely used and economical ...</div>
+                <div class="infoTitle">{{item.productName}}</div>
+                <div class="infoDes">{{item.introduction}}</div>
                 <div class="infoMore">more +</div>
               </div>
             </div>
@@ -65,8 +27,10 @@
         </div>
         <div class="pageButton">
           <div class="buttons">
-            <div class="left" :style="'background-image: url('+pageNoneLeft+')'"></div>
-            <div class="right" :style="'background-image: url('+pageRight+')'"></div>
+            <div class="left" :style="'background-image: url('+pageLeft+')'" @click="changPage('left')" v-if="hasPrevious"></div>
+            <div class="left" :style="'background-image: url('+pageNoneLeft+')'" @click="changPage('left')"v-if="!hasPrevious"></div>
+            <div class="right" :style="'background-image: url('+pageRight+')'" @click="changPage('right')" v-if="hasNext"></div>
+            <div class="right" :style="'background-image: url('+pageNoneRight+')'" @click="changPage('right')" v-if="!hasNext"></div>
           </div>
         </div>
       </div>
@@ -78,7 +42,7 @@
 <script>
   import Header from '../../components/Header/index'
   import Footer from '../../components/Footer/index'
-  import {getEquipmentClassify} from "@/api/product";
+  import {getProductClassify, getProductList} from "@/api/product";
 
   export default {
     name: "ProductList",
@@ -89,10 +53,17 @@
     data() {
       return {
         id:0,
+        pageSize:6,
+        pageNum:1,
+        nowTypeId:0,
+        nowType:0,
+        hasNext:false,
+        hasPrevious:false,
+        typeGroup:[],
+        productList:[],
         bannerNum:0,
-        productImg1: require('../../../public/static/images/p1.png'),
-        productImg2: require('../../../public/static/images/p2.png'),
-        productImg3: require('../../../public/static/images/p3.png'),
+        classifyName:'',
+        baseImgUrl: this.$globalData.baseImgUrl,
         pageLeft: require('../../../public/static/images/btn_more_l.png'),
         pageNoneLeft: require('../../../public/static/images/btn_more_none_l.png'),
         pageRight: require('../../../public/static/images/btn_more_r.png'),
@@ -112,17 +83,88 @@
       }
     },
     methods:{
+      changPage(type){
+        if(type === 'left' & this.hasPrevious){
+          this.getProductList(-1)
+        }else if(type === 'right' & this.hasNext){
+          this.getProductList(1)
+        }else {
+
+        }
+      },
+      changeType(index,item){
+        this.nowType=index
+        getProductList({
+          pageNum:1,
+          pageSize:this.pageSize,
+          classifyId:item.id,
+        }).then(res=>{
+          console.log(res,111)
+          if(res.code && res.code ===200){
+            if(res.data){
+              this.hasPrevious=res.data.hasPreviousPage
+              this.hasNext=res.data.hasNextPage
+              this.productList=res.data.list
+              this.pageNum=1
+            }else {
+              this.hasPrevious=false
+              this.hasNext=false
+              this.productList=[]
+              this.pageNum=1
+            }
+
+            console.log(this.productList,990)
+          }
+        })
+
+
+      },
       goTo(path){
         this.$router.push({path:path})
       },
-      fetchData(){
-        getEquipmentClassify({
-          classifyId:this.id,
+      getProductList(num){
+        getProductList({
+          pageNum:this.pageNum+num,
+          pageSize:this.pageSize,
+          classifyId:this.nowTypeId,
+        }).then(res=>{
+          if(res.code && res.code ===200){
+            this.hasPrevious=res.data.hasPreviousPage
+            this.hasNext=res.data.hasNextPage
+            this.productList=res.data.list
+            this.pageNum=this.pageNum+num
+          }
+        })
+      },
+      fetchData(id){
+        getProductClassify({
+          parentId:id,
           pageNum:1,
           pageSize:5000000
         }).then(res=>{
-          console.log(res.data,898)
           if(res.code && res.code ===200){
+            this.classifyName=res.data1.classifyName
+            if(res.data.length>0){
+              this.typeGroup=res.data
+              this.nowTypeId=res.data[0].id
+              getProductList({
+                pageNum:this.pageNum,
+                pageSize:this.pageSize,
+                classifyId:this.nowTypeId,
+              }).then(res=>{
+                if(res.code && res.code ===200){
+                  if(res.data){
+                    this.hasPrevious=res.data.hasPreviousPage
+                    this.hasNext=res.data.hasNextPage
+                    this.productList=res.data.list
+                  }else {
+                    this.hasPrevious=false
+                    this.hasNext=false
+                    this.productList=[]
+                  }
+                }
+              })
+            }
 
           }
         })
@@ -133,7 +175,7 @@
         this.bannerNum=parseInt(this.$route.query.menuId)
       }
       this.id=this.$route.query.id
-      this.fetchData()
+      this.fetchData(this.id)
     }
   }
 </script>
@@ -163,6 +205,7 @@
           color: #222222;
           position: relative;
           top: 40px;
+          font-weight: bold;
         }
 
         .text2 {
@@ -379,7 +422,11 @@
               border-left: 5px solid #177EE6;
             }
           }
-
+          .content-right::after{
+            height: 0;
+            width: 150px;
+            content: "";
+          }
           .content-right {
             width: calc(100% - 100px);
             justify-content: space-around;

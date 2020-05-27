@@ -1,137 +1,123 @@
 <template>
-    <div class="app-list-box">
-      <Header :is-show="isShow" :menu-id="6" :banner-title="'APPLICATION'" :banner-num="5"></Header>
-      <div class="appCenter">
-        <div class="title">
-          <div class="text1">APPLICATION</div>
-          <div class="text2">APPLICATION</div>
-        </div>
-        <div class="appItems">
-          <div class="item" @click="goTo('/application-detail')">
-            <div class="img"  :style="'background-image: url('+img+')'"></div>
-            <div class="info">
-              <div class="title">Composition</div>
-              <div class="detail">
-                The composition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.  The compos
-                ition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.
-              </div>
+  <div class="app-list-box">
+    <Header :is-show="isShow" :menu-id="6" :banner-title="'APPLICATION'" :banner-num="5"></Header>
+    <div class="appCenter">
+      <div class="title">
+        <div class="text1">APPLICATION</div>
+        <div class="text2">APPLICATION</div>
+      </div>
+      <div class="appItems">
+        <div class="item" @click="goTo('/application-detail?id='+item.id)" v-for="(item,index) in appList">
+          <div class="img" :style="'background-image: url('+baseImgUrl+item.imageUrl+')'"></div>
+          <div class="info">
+            <div class="title">{{item.title}}</div>
+            <div class="detail">
+              {{item.introduction}}
             </div>
-          </div>
-          <div class="item"  @click="goTo('/application-detail')">
-            <div class="img"  :style="'background-image: url('+img+')'"></div>
-            <div class="info">
-              <div class="title">Composition</div>
-              <div class="detail">
-                The composition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.  The compos
-                ition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.
-              </div>
-            </div>
-          </div>
-          <div class="item"  @click="goTo('/application-detail')">
-            <div class="img"  :style="'background-image: url('+img+')'"></div>
-            <div class="info">
-              <div class="title">Composition</div>
-              <div class="detail">
-                The composition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.  The compos
-                ition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.
-              </div>
-            </div>
-          </div>
-          <div class="item"  @click="goTo('/application-detail')">
-            <div class="img"  :style="'background-image: url('+img+')'"></div>
-            <div class="info">
-              <div class="title">Composition</div>
-              <div class="detail">
-                The composition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.  The compos
-                ition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.
-              </div>
-            </div>
-          </div>
-          <div class="item"  @click="goTo('/application-detail')">
-            <div class="img"  :style="'background-image: url('+img+')'"></div>
-            <div class="info">
-              <div class="title">Composition</div>
-              <div class="detail">
-                The composition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.  The compos
-                ition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.
-              </div>
-            </div>
-          </div>
-          <div class="item"  @click="goTo('/application-detail')">
-            <div class="img"  :style="'background-image: url('+img+')'"></div>
-            <div class="info">
-              <div class="title">Composition</div>
-              <div class="detail">
-                The composition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.  The compos
-                ition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="pageButton">
-          <div class="buttons">
-            <div class="left" :style="'background-image: url('+pageNoneLeft+')'"></div>
-            <div class="right" :style="'background-image: url('+pageRight+')'"></div>
           </div>
         </div>
       </div>
-      <Footer></Footer>
+
+      <div class="pageButton">
+        <div class="buttons">
+          <div class="left" :style="'background-image: url('+pageLeft+')'" v-if="hasPrevious" @click="changePage('left')"></div>
+          <div class="left" :style="'background-image: url('+pageNoneLeft+')'" v-if="!hasPrevious"  @click="changePage('left')"></div>
+          <div class="right" :style="'background-image: url('+pageRight+')'" v-if="hasNext"  @click="changePage('right')"></div>
+          <div class="right" :style="'background-image: url('+pageNoneRight+')'" v-if="!hasNext"  @click="changePage('right')"></div>
+        </div>
+      </div>
     </div>
+    <Footer></Footer>
+  </div>
 </template>
 
 <script>
-    import Header from "@/components/Header/index";
-    import Footer from "@/components/Footer/index";
+  import Header from "@/components/Header/index";
+  import Footer from "@/components/Footer/index";
+  import {getAppList} from "@/api/application";
 
-    export default {
-        name: "ApplicationList",
-      computed: {
-        isShow() {
-          return this.$store.getters.isShow
-        }
+  export default {
+    name: "ApplicationList",
+    computed: {
+      isShow() {
+        return this.$store.getters.isShow
+      }
+    },
+    data() {
+      return {
+        baseImgUrl: this.$globalData.baseImgUrl,
+        img: require('../../../public/static/images/compony_img.png'),
+        pageLeft: require('../../../public/static/images/btn_more_l.png'),
+        pageNoneLeft: require('../../../public/static/images/btn_more_none_l.png'),
+        pageRight: require('../../../public/static/images/btn_more_r.png'),
+        pageNoneRight: require('../../../public/static/images/btn_more_none_r.png'),
+        pageSize:6,
+        appList:[],
+        pageNum:1,
+        hasNext:false,
+        hasPrevious:false,
+      }
+    },
+    components: {
+      Header,
+      Footer
+    },
+    watch: {
+      isShow: (newVal, oldVal) => {
       },
-      data(){
-          return{
-            img: require('../../../public/static/images/compony_img.png'),
-            pageLeft: require('../../../public/static/images/btn_more_l.png'),
-            pageNoneLeft: require('../../../public/static/images/btn_more_none_l.png'),
-            pageRight: require('../../../public/static/images/btn_more_r.png'),
-            pageNoneRight: require('../../../public/static/images/btn_more_none_r.png'),
+      $route(to, from) {
+        this.$router.go(0)
+      }
+    },
+    mounted() {
+      this.fetchData()
+    },
+    methods: {
+      changePage(type){
+        if(type === 'left' & this.hasPrevious){
+          this.fetchData(-1)
+        }else if(type === 'right' & this.hasNext){
+          this.fetchData(1)
+        }else {
 
+        }
+
+      },
+      fetchData(num=0) {
+        getAppList({
+          pageSize:this.pageSize,
+          pageNum:this.pageNum+num,
+        }).then(res=>{
+          if(res.code && res.code===200){
+            this.appList=res.data.list
+            this.hasNext=res.data.hasNextPage
+            this.hasPrevious=res.data.hasPreviousPage
+            this.pageNum=this.pageNum+num
           }
+        })
       },
-      components: {
-        Header,
-        Footer
-      },
-      watch: {
-        isShow: (newVal, oldVal) => {},
-        $route (to, from) {
-          this.$router.go(0)
-        }
-      },
-      methods:{
-        goTo(path){
-          this.$router.push({path:path})
-        }
+      goTo(path) {
+        this.$router.push({path: path})
       }
     }
+  }
 </script>
 
 <style scoped lang="scss">
 
-  .app-list-box{
+  .app-list-box {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
   /* Extra large devices (large laptops and desktops, 992px and up) */
   @media only screen and (min-width: 992px) {
-    .appCenter{
+    .appCenter {
       width: 992px;
-      padding-bottom:50px;
+      padding-bottom: 50px;
+
       .title {
         display: flex;
         flex-direction: column;
@@ -151,31 +137,36 @@
           padding-bottom: 30px;
         }
       }
-      .appItems{
+
+      .appItems {
         width: 100%;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
-        .item{
+
+        .item {
           cursor: pointer;
           margin-bottom: 50px;
           width: 450px;
           display: flex;
           flex-direction: column;
-          .img{
+
+          .img {
             width: 100%;
             height: 200px;
             background-position: center center;
             background-size: cover;
             background-repeat: no-repeat;
           }
-          .info{
+
+          .info {
             width: 100%;
             display: flex;
             flex-direction: column;
             color: #222222;
-            .title{
+
+            .title {
               text-align: left !important;
               font-size: 18px;
               margin: 15px 0;
@@ -187,7 +178,8 @@
               -webkit-line-clamp: 1;
               overflow: hidden;
             }
-            .detail{
+
+            .detail {
               font-size: 16px;
               text-align: justify;
               line-height: 1.5;
@@ -202,6 +194,7 @@
           }
         }
       }
+
       .pageButton {
         width: 992px;
         display: flex;
@@ -232,13 +225,14 @@
 
   /* Large devices (laptops/desktops, 992px and down) */
   @media only screen and (max-width: 992px) {
-    .appCenter{
+    .appCenter {
       width: 100%;
       padding: 10px 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
       .title {
         width: 100% !important;
         display: flex;
@@ -260,7 +254,7 @@
         }
       }
 
-      .appItems{
+      .appItems {
         padding: 0 20px;
         box-sizing: inherit;
         width: 100%;
@@ -268,25 +262,29 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
-        .item{
+
+        .item {
           cursor: pointer;
           margin-bottom: 50px;
           width: 100%;
           display: flex;
           flex-direction: column;
-          .img{
+
+          .img {
             width: 100%;
             height: 200px;
             background-position: center center;
             background-size: cover;
             background-repeat: no-repeat;
           }
-          .info{
+
+          .info {
             width: 100%;
             display: flex;
             flex-direction: column;
             color: #222222;
-            .title{
+
+            .title {
               text-align: left !important;
               font-size: 18px;
               margin: 15px 0;
@@ -298,7 +296,8 @@
               -webkit-line-clamp: 1;
               overflow: hidden;
             }
-            .detail{
+
+            .detail {
               font-size: 16px;
               text-align: justify;
               line-height: 1.5;
@@ -313,11 +312,13 @@
           }
         }
       }
+
       .pageButton {
         width: 100%;
         display: flex;
         justify-content: center;
         padding-bottom: 50px;
+
         .buttons {
           display: flex;
 

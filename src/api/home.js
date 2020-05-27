@@ -46,6 +46,12 @@ export function getHomeNews(data) {
     params:data
   })
 }
-
+export function contactUs(data) {
+  return request({
+    url: '/contactUs-backend/contactUsAdd',
+    method: 'post',
+    data
+  })
+}
 
 

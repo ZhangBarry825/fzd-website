@@ -9,13 +9,9 @@
       <div class="content">
         <div class="info" v-if="isShow">
           <div class="left">
-            <div class="img" :style="'background-image: url('+img+')'"></div>
+            <div class="img" :style="'background-image: url('+baseImgUrl+detail.imageUrlList[nowImg].imageUrl+')'"></div>
             <div class="down">
-              <div class="imgs" :class="{'selected':nowImg==1}" :style="'background-image: url('+img+')'" @click="selectImg(1)"></div>
-              <div class="imgs" :class="{'selected':nowImg==2}" :style="'background-image: url('+img+')'" @click="selectImg(2)"></div>
-              <div class="imgs" :class="{'selected':nowImg==3}" :style="'background-image: url('+img+')'" @click="selectImg(3)"></div>
-              <div class="imgs" :class="{'selected':nowImg==4}" :style="'background-image: url('+img+')'" @click="selectImg(4)"></div>
-              <div class="imgs" :class="{'selected':nowImg==5}" :style="'background-image: url('+img+')'" @click="selectImg(5)"></div>
+              <div class="imgs" v-if="index<5" :class="{'selected':nowImg==index}" :style="'background-image: url('+baseImgUrl+item.imageUrl+')'" @click="selectImg(index)" v-for="(item,index) in detail.imageUrlList"></div>
             </div>
           </div>
           <div class="right">
@@ -43,19 +39,13 @@
 
           <div class="mobile-des">
             <div class="right1">
-              <div class="rightTitle">Aluminum Pole</div>
-              <div class="rightText">
-                Aluminum and its alloy are one of the most widely used and economical materials. Aluminum and its alloy are one of the most widely used and economical materials. Aluminum and its alloy are one of the most widely used and economical materials.  Aluminum and its alloy are one of the most widely used and economical materials. Aluminum and its alloy are one of the most widely used and economical materials. Aluminum and its alloy are one of the most widely used and economical materials.
-              </div>
+              <div class="rightTitle">{{detail.productName}}</div>
+              <div class="rightText"> {{detail.introduction}}</div>
             </div>
             <div class="mobile-imgs">
-              <div class="img" :style="'background-image: url('+img+')'"></div>
+              <div class="img" :style="'background-image: url('+baseImgUrl+detail.imageUrlList[nowImg].imageUrl+')'"></div>
               <div class="down">
-                <div class="imgs selected"  :style="'background-image: url('+img+')'"></div>
-                <div class="imgs"  :style="'background-image: url('+img+')'"></div>
-                <div class="imgs"  :style="'background-image: url('+img+')'"></div>
-                <div class="imgs"  :style="'background-image: url('+img+')'"></div>
-                <div class="imgs"  :style="'background-image: url('+img+')'"></div>
+                <div class="imgs"  v-if="index<5" :class="{'selected':nowImg==index}" :style="'background-image: url('+baseImgUrl+item.imageUrl+')'" @click="selectImg(index)" v-for="(item,index) in detail.imageUrlList"></div>
               </div>
             </div>
             <div class="right2">
@@ -70,9 +60,9 @@
 
         <div class="text" v-html="detail.content"></div>
 
-        <div class="next" @click="nextPage">
-          <img src="../../../public/static/images/btn_more_r.png" alt="">
-        </div>
+<!--        <div class="next" @click="nextPage">-->
+<!--          <img src="../../../public/static/images/btn_more_r.png" alt="">-->
+<!--        </div>-->
       </div>
     </div>
     <Footer></Footer>
@@ -96,13 +86,16 @@
         baseImgUrl: this.$globalData.baseImgUrl,
         hasNext:false,
         nextId:0,
-        nowImg:1,
+        nowImg:0,
         img:require('../../../public/static/images/p1.png'),
         detail:{
           productName:'',
           introduction:'',
           createTime:'',
           content:'',
+          imageUrlList:[{
+            imageUrl:'123'
+          }]
         }
       }
     },
@@ -322,12 +315,11 @@
         flex-direction: column;
         align-items: center;
         font-weight: bold;
-
         .text1 {
           font-size: 24px;
           color: #222222;
           position: relative;
-          top: 25px;
+          top: 20px;
         }
 
         .text2 {
@@ -340,10 +332,10 @@
         width: 100%;
         padding: 0 20px;
         .text{
-          padding: 10px 0;
-          line-height: 1.7;
-          text-indent: 2em;
-          text-align: justify;
+          /*padding: 10px 0;*/
+          /*line-height: 1.7;*/
+          /*text-indent: 2em;*/
+          /*text-align: justify;*/
         }
         .mobile-des{
           text-align: left;
@@ -355,6 +347,7 @@
             .rightTitle{
               font-size: 24px;
               text-align: left;
+              font-weight: bold;
             }
             .rightText{
               font-size: 16px;

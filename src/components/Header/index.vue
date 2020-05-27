@@ -33,9 +33,9 @@
       <div class="hideMenu" v-if="hideMenu && !isShow" @touchmove.prevent @mousewheel.prevent>
         <div class="menuItem" @click="goTo('/home')">HOME</div>
         <div class="menuItem" @click="goTo('/about-us')">ABOUT US</div>
-        <div class="menuItem" @click="goTo('/product-list?menuId=3')">ALUMINIUM CIRCLE</div>
-        <div class="menuItem" @click="goTo('/product-list?menuId=4')">ALUMINIUM COIL/SHEET</div>
-        <div class="menuItem" @click="goTo('/product-list?menuId=5')">ALUMINIUM FOIL</div>
+        <div class="menuItem" @click="goTo('/product-list?id='+item.id+'&menuId='+menuIdAdd(index))" v-for="(item,index) in menuData">
+          <div class="text">{{item.classifyName}}</div>
+        </div>
         <div class="menuItem" @click="goTo('/application-list')">APPLICATION&PROJECT</div>
         <div class="menuItem" @click="goTo('/contact')">CONTACT</div>
       </div>
@@ -111,7 +111,6 @@
         }).then(res=>{
           if(res.code==200){
             that.menuData=res.data.list
-            console.log(that.menuData,99999)
           }
         })
       }

@@ -3,25 +3,13 @@
     <Header :menu-id="6" :is-show="isShow" banner-title="APPLICATION DETAIL" :banner-num="5"></Header>
     <div class="app-detail-center">
       <div class="title">
-        <div class="text1">APPLICATION</div>
-        <div class="text2">APPLICATION</div>
+        <div class="text1">{{detail.title}}</div>
+<!--        <div class="text2">APPLICATION</div>-->
       </div>
-      <div class="articleImg" :style="'background-image: url('+img2+')'"></div>
+      <div class="articleImg" :style="'background-image: url('+baseImgUrl+detail.imageUrl+')'"></div>
       <div class="articleDetail">
         <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical.
-        </div>
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical.
-        </div>
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical.
-        </div>
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical.
-        </div>
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical.
+          {{detail.content}}
         </div>
       </div>
       <div class="recommend">
@@ -30,23 +18,12 @@
           <div class="text2">RECOMMEND</div>
         </div>
         <div class="appItems">
-          <div class="item"  @click="goTo('/application-detail')">
-            <div class="img"  :style="'background-image: url('+img1+')'"></div>
+          <div class="item"  @click="goTo('/application-detail?id='+item.id)" v-for="(item,index) in recommend">
+            <div class="img"  :style="'background-image: url('+baseImgUrl+item.imageUrl+')'"></div>
             <div class="info">
-              <div class="title">Composition</div>
+              <div class="title">{{item.title}}</div>
               <div class="detail">
-                The composition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.  The compos
-                ition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.
-              </div>
-            </div>
-          </div>
-          <div class="item"  @click="goTo('/application-detail')">
-            <div class="img"  :style="'background-image: url('+img2+')'"></div>
-            <div class="info">
-              <div class="title">Composition</div>
-              <div class="detail">
-                The composition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.  The compos
-                ition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.
+                {{item.introduction}}
               </div>
             </div>
           </div>
@@ -60,6 +37,7 @@
 <script>
   import Header from "@/components/Header/index";
   import Footer from "@/components/Footer/index";
+  import {getAppDetail} from "@/api/application";
 
   export default {
     name: "ApplicationDetail",
@@ -70,6 +48,10 @@
     },
     data(){
       return{
+        id:0,
+        detail:{},
+        recommend:[],
+        baseImgUrl: this.$globalData.baseImgUrl,
         img1: require('../../../public/static/images/app1.png'),
         img2: require('../../../public/static/images/app2.png'),
         img3: require('../../../public/static/images/compony_img.png'),
@@ -89,7 +71,22 @@
     methods:{
       goTo(path){
         this.$router.push({path:path})
+      },
+      fetchData(){
+        getAppDetail({
+          id:this.id
+        }).then(res=>{
+          console.log(res,98765)
+          if(res.code && res.code===200){
+            this.detail=res.data
+            this.recommend=res.data1.list
+          }
+        })
       }
+    },
+    mounted() {
+      this.id=this.$route.query.id
+      this.fetchData()
     }
   }
 </script>
@@ -115,8 +112,9 @@
         .text1 {
           font-size: 48px;
           color: #222222;
-          position: relative;
-          top: 40px;
+          padding: 50px 0;
+          /*position: relative;*/
+          /*top: 40px;*/
           font-weight: bold;
         }
 
@@ -156,8 +154,8 @@
           .text1 {
             font-size: 24px;
             color: #222222;
-            position: relative;
-            top: 25px;
+            position: relative !important;
+            top: 70px !important;
             font-weight: bold;
           }
 
@@ -236,8 +234,9 @@
         .text1 {
           font-size: 24px;
           color: #222222;
-          position: relative;
-          top: 25px;
+          padding: 30px 0;
+          /*position: relative;*/
+          /*top: 25px;*/
           font-weight: bold;
         }
 
@@ -279,7 +278,7 @@
             font-size: 24px;
             color: #222222;
             position: relative;
-            top: 25px;
+            top: 50px;
             font-weight: bold;
           }
 

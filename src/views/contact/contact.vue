@@ -85,6 +85,7 @@
 <script>
   import Header from '../../components/Header/index'
   import Footer from '../../components/Footer/index'
+  import {contactUs} from "@/api/home";
 
   export default {
     name: "Contact",
@@ -154,7 +155,19 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            let formData = new FormData();
+            formData.append('email',this.ruleForm.email)
+            formData.append('phone',this.ruleForm.tel)
+            formData.append('message',this.ruleForm.message)
+            formData.append('name',this.ruleForm.name)
+            formData.append('address',this.ruleForm.name)
+            contactUs(formData).then(res=>{
+              console.log(res,2222)
+              this.$message({
+                message:'submit successfully',
+                type:'success'
+              })
+            })
           } else {
             console.log('error submit!!');
             return false;
