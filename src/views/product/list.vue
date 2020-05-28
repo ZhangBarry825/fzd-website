@@ -263,18 +263,21 @@
           flex-wrap: wrap;
           padding-left: 30px;
           width: calc(100% - 250px);
+          .productDetail:hover>.img{
+            transform: scale(1.1)
+          }
           .productDetail {
             cursor: pointer;
-            padding-bottom: 20px;
-            width: 210px;
+            padding-bottom: 15px;
+            width: 230px;
             background-color: #FFFFFF;
-
+            overflow: hidden;
             .img {
               width: 100%;
               height: 230px;
               background-size: cover;
               background-position: center center;
-
+              transition: all 0.6s;
               .des {
                 display: none;
               }

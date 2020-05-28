@@ -20,7 +20,7 @@
 <script>
   import Header from '../../components/Header/index'
   import Footer from '../../components/Footer/index'
-  import {getEquipmentDetail, getNewsDetail} from "@/api/about-us";
+  import {getBannerDetail, getEquipmentDetail, getNewsDetail} from "@/api/about-us";
 
   export default {
     name: "Detail",
@@ -66,6 +66,16 @@
           })
         }else if(this.type=='equipment'){
           getEquipmentDetail({
+            id:this.id
+          }).then(res=>{
+            console.log(res)
+            if(res.code && res.code===200){
+              this.detail=res.data
+            }
+
+          })
+        }else if(this.type=='banner'){
+          getBannerDetail({
             id:this.id
           }).then(res=>{
             console.log(res)
@@ -133,6 +143,9 @@
         }
         .text{
           min-height: 300px;
+          img{
+            max-width: 100%;
+          }
           /*padding: 10px 0;*/
           /*line-height: 1.7;*/
           /*text-indent: 2em;*/

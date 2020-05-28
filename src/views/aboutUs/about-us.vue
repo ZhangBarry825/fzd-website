@@ -183,6 +183,9 @@
         width: 100%;
 
         .text{
+          /deep/ img{
+            max-width: 100%;
+          }
           /*text-align: justify;*/
           /*text-indent: 2em;*/
           /*margin: 10px 0;*/
@@ -236,6 +239,9 @@
       .detail{
         width: 100%;
         .text{
+          /deep/ img{
+            max-width: 100%;
+          }
           /*text-indent: 2em;*/
           /*padding: 10px 0;*/
           /*text-align: justify;*/

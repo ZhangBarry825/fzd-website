@@ -65,7 +65,8 @@
         </div>
       </div>
       <div class="rightButton">
-        <img src="../../../public/static/images/arrow_right1.png" alt="" @click="goTo('/product-list')">
+        <img src="../../../public/static/images/arrow_right1.png" alt=""
+             @click="goTo('/product-list?id='+homeProduct[0].parentId)">
       </div>
     </div>
 
@@ -88,9 +89,13 @@
             <div class="topButton" @click="changeEquip('left')">
               <img src="../../../public/static/images/left1.png" alt="">
             </div>
-            <div class="downButton"  @click="changeEquip('right')"><img src="../../../public/static/images/right1.png" alt=""></div>
+            <div class="downButton" @click="changeEquip('right')"><img src="../../../public/static/images/right1.png"
+                                                                       alt=""></div>
           </div>
-          <div class="img" :style="'background-image:url('+baseImgUrl+homeEquipment.imageUrl+')'" @click="goTo('/detail?type=equipment&id='+homeEquipment.id)"></div>
+          <div class="img-box">
+            <div class="img" :style="'background-image:url('+baseImgUrl+homeEquipment.imageUrl+')'"
+                 @click="goTo('/detail?type=equipment&id='+homeEquipment.id)"></div>
+          </div>
         </div>
       </div>
       <div class="content-mobile" v-if="!isShow">
@@ -104,7 +109,7 @@
           <div class="text">
             {{homeEquipment.introduction}}
           </div>
-          <div class="more" >
+          <div class="more">
             <div class="box" @click="goTo('/detail?type=equipment&id='+homeEquipment.id)">
               more
               <img src="../../../public/static/images/arrow_right.png" alt="">
@@ -213,31 +218,31 @@
     data() {
       return {
         homeAboutUs: {
-          imageUrl:'123'
+          imageUrl: '123'
         },
         homeEquipment: {
-          imageUrl:'123',
-          introduction:''
+          imageUrl: '123',
+          introduction: ''
         },
-        equipHasNext:false,
-        equipHasPre:false,
-        equipPage:1,
-        homeNews:[{
-          title:'',
-          imageUrl:'123',
-          createTime:''
-        },{
-          title:'',
-          imageUrl:'123',
-          createTime:''
+        equipHasNext: false,
+        equipHasPre: false,
+        equipPage: 1,
+        homeNews: [{
+          title: '',
+          imageUrl: '123',
+          createTime: ''
+        }, {
+          title: '',
+          imageUrl: '123',
+          createTime: ''
         }],
         baseImgUrl: this.$globalData.baseImgUrl,
         bannerData: [{
-          imageUrl:'123'
+          imageUrl: '123'
         }],
         homeProduct: [{
-          productName:'',
-          imageUrl:'123'
+          productName: '',
+          imageUrl: '123'
         }],
         backImg: require('../../../public/static/images/p1.png'),
         backImg2: require('../../../public/static/images/pl.png'),
@@ -248,14 +253,14 @@
         backImgN2: require('../../../public/static/images/n2.png'),
       }
     },
-    filters:{
-      formatTime(value){
-        return parseTime(value,'{m}-{d}')
+    filters: {
+      formatTime(value) {
+        return parseTime(value, '{m}-{d}')
       },
-      addZero(value){
-        if(value<10){
-          return '0'+value
-        }else {
+      addZero(value) {
+        if (value < 10) {
+          return '0' + value
+        } else {
           return value
         }
       }
@@ -278,42 +283,42 @@
       goTo(path) {
         this.$router.push({path: path})
       },
-      changeEquip(type){
-        if(type==='left'){
-          if(this.equipHasPre){
+      changeEquip(type) {
+        if (type === 'left') {
+          if (this.equipHasPre) {
             getHomeEquipment({
-              pageNum:this.equipPage-1,
-              pageSize:1,
-            }).then(res=>{
+              pageNum: this.equipPage - 1,
+              pageSize: 1,
+            }).then(res => {
               if (res.code && res.code === 200) {
                 this.homeEquipment = res.data.list[0]
-                this.equipHasNext=res.data.hasNextPage
-                this.equipHasPre=res.data.hasPreviousPage
-                this.equipPage=this.equipPage-1
+                this.equipHasNext = res.data.hasNextPage
+                this.equipHasPre = res.data.hasPreviousPage
+                this.equipPage = this.equipPage - 1
                 console.log(res.data)
               }
             })
-          }else {
+          } else {
             this.$message({
               message: 'No more data!',
               type: 'warning'
             })
           }
-        }else {
-          if(this.equipHasNext){
+        } else {
+          if (this.equipHasNext) {
             getHomeEquipment({
-              pageNum:this.equipPage+1,
-              pageSize:1,
-            }).then(res=>{
+              pageNum: this.equipPage + 1,
+              pageSize: 1,
+            }).then(res => {
               if (res.code && res.code === 200) {
                 this.homeEquipment = res.data.list[0]
-                this.equipHasNext=res.data.hasNextPage
-                this.equipHasPre=res.data.hasPreviousPage
-                this.equipPage=this.equipPage+1
+                this.equipHasNext = res.data.hasNextPage
+                this.equipHasPre = res.data.hasPreviousPage
+                this.equipPage = this.equipPage + 1
                 console.log(res.data)
               }
             })
-          }else {
+          } else {
             this.$message({
               message: 'No more data!',
               type: 'warning'
@@ -336,24 +341,24 @@
         })
 
         getHomeEquipment({
-          pageNum:this.equipPage,
-          pageSize:1,
-        }).then(res=>{
+          pageNum: this.equipPage,
+          pageSize: 1,
+        }).then(res => {
           if (res.code && res.code === 200) {
             this.homeEquipment = res.data.list[0]
-            this.equipHasNext=res.data.hasNextPage
-            this.equipHasPre=res.data.hasPreviousPage
+            this.equipHasNext = res.data.hasNextPage
+            this.equipHasPre = res.data.hasPreviousPage
           }
         })
         getHomeNews(
           {
-            pageNum:1,
-            pageSize:3
+            pageNum: 1,
+            pageSize: 3
           }
-        ).then(res=>{
+        ).then(res => {
           if (res.code && res.code === 200) {
             this.homeNews = res.data.list
-            console.log(res.data,'news')
+            console.log(res.data, 'news')
           }
         })
       }
@@ -498,21 +503,28 @@
         padding: 50px 0;
         box-sizing: border-box;
 
+        .item:hover > .img {
+          transform: scale(1.1)
+        }
+
         .item {
           width: 310px;
           background-color: #FFFFFF;
           cursor: pointer;
+          overflow: hidden;
 
           .img {
             width: 100%;
             height: 280px;
             background-size: cover;
             background-position: center center;
+            transition: all 0.6s;
 
             .des {
               display: none;
             }
           }
+
 
           .info {
             padding: 35px;
@@ -658,13 +670,25 @@
             }
           }
 
-          .img {
+          .img-box:hover > .img {
+            transform: scale(1.1);
+          }
+
+          .img-box {
             cursor: pointer;
             width: 362px;
             height: 100%;
-            background-position: center;
-            background-size: cover;
+            overflow: hidden;
+            .img {
+              cursor: pointer;
+              width: 362px;
+              height: 100%;
+              background-position: center;
+              background-size: cover;
+              transition: all 0.6s;
+            }
           }
+
         }
       }
     }
@@ -705,8 +729,12 @@
 
         .item {
           width: 280px;
-
+          cursor: pointer;
+          &:hover>.img {
+            transform: rotateY(360deg);
+          }
           .img {
+            transition: 1s;
             width: 100%;
             height: 305px;
             background-size: cover;
@@ -880,6 +908,7 @@
             color: #F2F2F2;
           }
         }
+
         .img {
           width: 90%;
           height: 200px;
@@ -935,6 +964,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+
       .title {
         width: 100%;
         display: flex;
@@ -1196,10 +1226,12 @@
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
+
             .itemLeft {
               width: 70px;
               display: flex;
               flex-direction: column;
+
               .leftTop {
                 font-weight: bold;
                 color: #222222;
@@ -1215,6 +1247,7 @@
 
             .itemRight {
               width: calc(100% - 60px);
+
               .rightTitle {
                 color: #222222;
                 font-size: 17px;

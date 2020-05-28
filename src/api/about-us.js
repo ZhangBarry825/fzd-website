@@ -14,6 +14,13 @@ export function getNewsDetail(data) {
     params:data
   })
 }
+export function getBannerDetail(data) {
+  return request({
+    url: '/banner-deskend/bannerSelectById',
+    method: 'get',
+    params:data
+  })
+}
 
 export function getEquipmentDetail(data) {
   return request({

@@ -220,12 +220,13 @@
                 background-position: center center;
                 background-size: cover;
                 cursor:pointer;
+                transition: all 0.3s;
               }
               .imgs:hover{
-                border: 1px solid #177EE6;
+                border: 3px solid #177EE6;
               }
               .selected{
-                border: 1px solid #177EE6;
+                border: 3px solid #177EE6;
               }
             }
           }
@@ -283,6 +284,10 @@
 
         }
         .text{
+          /deep/ img{
+            max-width: 100%;
+          }
+
           /*padding: 10px 0;*/
           /*line-height: 1.7;*/
           /*text-indent: 2em;*/
@@ -332,6 +337,9 @@
         width: 100%;
         padding: 0 20px;
         .text{
+          /deep/ img{
+            max-width: 100%;
+          }
           /*padding: 10px 0;*/
           /*line-height: 1.7;*/
           /*text-indent: 2em;*/

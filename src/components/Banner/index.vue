@@ -47,7 +47,7 @@
       <div class="bannerInfo">
         <div class="title">{{nowBanner.title}}</div>
         <div class="description">{{nowBanner.introduction}}</div>
-        <div class="more"  @click="goTo('/product-list?id='+activeIndex)">VIEW MORE</div>
+        <div class="more"  @click="goTo('/detail?type=banner&id='+activeIndex)">VIEW MORE</div>
       </div>
 
       <div class="swiper-container">
@@ -110,10 +110,10 @@
         var mySwiper = new Swiper('.swiper-container', {
           direction: 'vertical', // 垂直切换选项
           loop: false, // 循环模式选项
-          speed: 300,
+          speed: 500,
           slideActiveClass : 'itemActive',
           autoplay: {
-            delay: 3000
+            delay: 2000
           },
           // 如果需要分页器
           // pagination: {
