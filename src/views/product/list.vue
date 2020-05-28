@@ -223,7 +223,7 @@
         .content-left {
           display: flex;
           flex-direction: column;
-          width: 280px;
+          min-width: 250px;
           background-color: #F7F7F7;
           height: 100%;
 
@@ -262,11 +262,11 @@
           flex-direction: row;
           flex-wrap: wrap;
           padding-left: 30px;
-
+          width: calc(100% - 250px);
           .productDetail {
             cursor: pointer;
-            padding-bottom: 30px;
-            width: 230px;
+            padding-bottom: 20px;
+            width: 210px;
             background-color: #FFFFFF;
 
             .img {

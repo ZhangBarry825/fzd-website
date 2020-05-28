@@ -13,7 +13,7 @@
         </div>
         <div class="rightText">
           <div class="text">
-            {{homeAboutUs.content}}
+            {{homeAboutUs.introduction}}
           </div>
           <div class="more">
             <div class="box" @click="goTo('/about-us')">
@@ -213,10 +213,10 @@
     data() {
       return {
         homeAboutUs: {
-          imageUrl:''
+          imageUrl:'123'
         },
         homeEquipment: {
-          imageUrl:'',
+          imageUrl:'123',
           introduction:''
         },
         equipHasNext:false,
@@ -224,20 +224,20 @@
         equipPage:1,
         homeNews:[{
           title:'',
-          imageUrl:'',
+          imageUrl:'123',
           createTime:''
         },{
           title:'',
-          imageUrl:'',
+          imageUrl:'123',
           createTime:''
         }],
         baseImgUrl: this.$globalData.baseImgUrl,
         bannerData: [{
-          imageUrl:''
+          imageUrl:'123'
         }],
         homeProduct: [{
           productName:'',
-          imageUrl:''
+          imageUrl:'123'
         }],
         backImg: require('../../../public/static/images/p1.png'),
         backImg2: require('../../../public/static/images/pl.png'),

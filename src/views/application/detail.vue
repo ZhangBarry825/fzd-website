@@ -8,8 +8,7 @@
       </div>
       <div class="articleImg" :style="'background-image: url('+baseImgUrl+detail.imageUrl+')'"></div>
       <div class="articleDetail">
-        <div class="text">
-          {{detail.content}}
+        <div class="text" v-html="detail.content">
         </div>
       </div>
       <div class="recommend">
@@ -137,12 +136,12 @@
         flex-direction: column;
         padding: 50px 0;
         .text{
-          color: #333333;
-          font-size: 16px;
-          padding: 10px 0;
-          line-height: 1.5;
-          text-indent: 2em;
-          text-align: justify;
+          /*color: #333333;*/
+          /*font-size: 16px;*/
+          /*padding: 10px 0;*/
+          /*line-height: 1.5;*/
+          /*text-indent: 2em;*/
+          /*text-align: justify;*/
         }
       }
       .recommend{
@@ -259,12 +258,12 @@
         flex-direction: column;
         padding: 20px 0;
         .text{
-          color: #333333;
-          font-size: 16px;
-          padding: 10px 0;
-          line-height: 1.5;
-          text-indent: 2em;
-          text-align: justify;
+          /*color: #333333;*/
+          /*font-size: 16px;*/
+          /*padding: 10px 0;*/
+          /*line-height: 1.5;*/
+          /*text-indent: 2em;*/
+          /*text-align: justify;*/
         }
       }
       .recommend{
