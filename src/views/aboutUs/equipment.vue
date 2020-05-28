@@ -7,15 +7,15 @@
         <div class="text2">EQUIPMENT&WORKSHOP</div>
       </div>
       <div class="items">
-        <div class="item" :style="'background-image: url('+img1+')'"></div>
-        <div class="item" :style="'background-image: url('+img1+')'"></div>
-        <div class="item" :style="'background-image: url('+img1+')'"></div>
-        <div class="item" :style="'background-image: url('+img1+')'"></div>
-        <div class="item" :style="'background-image: url('+img1+')'"></div>
-        <div class="item" :style="'background-image: url('+img1+')'"></div>
-        <div class="item" :style="'background-image: url('+img1+')'"></div>
-        <div class="item" :style="'background-image: url('+img1+')'"></div>
-        <div class="item" :style="'background-image: url('+img1+')'"></div>
+        <div class="item" :style="'background-image: url('+baseImgUrl+item.imageUrl+')'" v-for="(item,index) in equipmentList" @click="goTo('/detail?type=equipment&id='+item.id)"></div>
+      </div>
+      <div class="pageButton">
+        <div class="buttons">
+          <div class="left" :style="'background-image: url('+pageLeft+')'" v-if="hasPrevious" @click="changePage('left')"></div>
+          <div class="left" :style="'background-image: url('+pageNoneLeft+')'" v-if="!hasPrevious"></div>
+          <div class="right" :style="'background-image: url('+pageRight+')'" v-if="hasNext" @click="changePage('right')"></div>
+          <div class="right" :style="'background-image: url('+pageNoneRight+')'" v-if="!hasNext"></div>
+        </div>
       </div>
     </div>
     <Footer></Footer>
@@ -25,6 +25,7 @@
 <script>
   import Header from '../../components/Header/index'
   import Footer from '../../components/Footer/index'
+  import {geEquipmentList} from "@/api/about-us";
 
   export default {
     name: "Equipment",
@@ -34,9 +35,48 @@
     },
     data(){
       return{
+        baseImgUrl: this.$globalData.baseImgUrl,
         img:require('../../../public/static/images/detailp.png'),
         img1:require('../../../public/static/images/n1.png'),
+        pageNum:1,
+        pageSize:9,
+        hasPrevious:false,
+        hasNext:false,
+        equipmentList:[],
+        pageLeft: require('../../../public/static/images/btn_more_l.png'),
+        pageNoneLeft: require('../../../public/static/images/btn_more_none_l.png'),
+        pageRight: require('../../../public/static/images/btn_more_r.png'),
+        pageNoneRight: require('../../../public/static/images/btn_more_none_r.png'),
       }
+    },
+    methods:{
+      goTo(path){
+        this.$router.push({path:path})
+      },
+      changePage(type){
+        if(type==='left'){
+          this.fetchData(-1)
+
+        }else if(type==='right'){
+          this.fetchData(+1)
+        }
+      },
+      fetchData(num = 0){
+        geEquipmentList({
+          pageNum:this.pageNum + num,
+          pageSize:this.pageSize
+        }).then(res=>{
+          if(res.code && res.code===200){
+            this.equipmentList=res.data.list
+            this.hasNext=res.data.hasNextPage
+            this.hasPrevious=res.data.hasPreviousPage
+            this.pageNum=this.pageNum + num
+          }
+        })
+      }
+    },
+    mounted() {
+      this.fetchData()
     },
     computed: {
       isShow() {
@@ -86,6 +126,12 @@
           padding-bottom: 30px;
         }
       }
+      .items::after{
+        height: 0;
+        width: 300px;
+        min-width: 300px;
+        content: "";
+      }
       .items{
         width: 992px;
         display: flex;
@@ -104,6 +150,29 @@
         .item:hover {
           transition: transform 0.5s;
           transform: scale(1.05)
+        }
+      }
+      .pageButton {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        .buttons {
+          display: flex;
+          .left, .right {
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            background-position: center center;
+            cursor: pointer;
+          }
+          .left {
+            margin: 0 20px;
+          }
+
+          .right {
+
+          }
         }
       }
     }
@@ -138,20 +207,52 @@
           padding-bottom: 30px;
         }
       }
+      .items::after{
+        height: 0;
+        width: 120px;
+        min-width: 120px;
+        content: "";
+      }
       .items{
         width: 100%;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: space-between;
         .item{
           cursor: pointer;
           width: 120px;
           height: 120px;
-          margin-bottom: 10px;
+          margin-bottom: 15px;
           background-size: cover;
           background-position: center center;
           background-repeat: no-repeat;
+        }
+      }
+      .pageButton {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+        .buttons {
+          display: flex;
+
+          .left, .right {
+            width: 40px;
+            height: 40px;
+            padding: 10px 0;
+            background-size: cover;
+            background-position: center center;
+            cursor: pointer;
+          }
+
+          .left {
+            margin: 0 20px;
+          }
+
+          .right {
+            margin-right: 20px;
+          }
         }
       }
     }

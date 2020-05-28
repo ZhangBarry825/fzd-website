@@ -3,8 +3,8 @@
     <Header :menu-id="7" :is-show="isShow" banner-title="CONTACT" :banner-num="5"></Header>
     <div class="contact-center">
       <div class="title">
-        <div class="text1">PRODUCTS</div>
-        <div class="text2">PRODUCTS</div>
+        <div class="text1">ADDRESS</div>
+        <div class="text2">ADDRESS</div>
       </div>
       <div class="map">
         <baidu-map :center="center" :zoom="zoom" @ready="handler" class="map-height" @click="getClickInfo"
@@ -96,7 +96,7 @@
     data() {
       return {
         center: {lng: 113.774673, lat: 34.776896},
-        zoom: 19,
+        zoom: 17,
         ruleForm: {
           name: '',
           email: '',
@@ -108,7 +108,8 @@
             {required: true, message: 'Please type your name', trigger: 'blur'}
           ],
           email: [
-            {required: true, message: 'Please type your email', trigger: 'blur'}
+            {required: true, message: 'Please type your email', trigger: 'blur'},
+            { type: 'email', message: 'Please type the real email', trigger: ['blur', 'change'] }
           ],
           tel: [
             {required: true, message: 'Please type your telephone number', trigger: 'blur'}
@@ -134,7 +135,7 @@
     methods: {
       handler({BMap, map}) {
         var point = new BMap.Point(113.774673, 34.776896)
-        map.centerAndZoom(point, 19)
+        map.centerAndZoom(point, 17)
         var marker = new BMap.Marker(point) // 创建标注
         map.addOverlay(marker) // 将标注添加到地图中
         var circle = new BMap.Circle(point, 0, {
@@ -160,7 +161,7 @@
             formData.append('phone',this.ruleForm.tel)
             formData.append('message',this.ruleForm.message)
             formData.append('name',this.ruleForm.name)
-            formData.append('address',this.ruleForm.name)
+
             contactUs(formData).then(res=>{
               console.log(res,2222)
               this.$message({

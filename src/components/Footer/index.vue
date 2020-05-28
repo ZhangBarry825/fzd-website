@@ -6,9 +6,7 @@
           <div class="left1">
             <ul>
               <li class="title">Products</li>
-              <li @click="goTo('/product-list')">Aluminum Circle</li>
-              <li @click="goTo('/product-list')">Aluminum Sheet/Coil</li>
-              <li @click="goTo('/product-list')">Aluminum Foil</li>
+              <li @click="goTo('/product-list?id='+item.id+'&menuId='+menuIdAdd(index))" v-for="(item,index) in menuData">{{item.classifyName}}</li>
             </ul>
           </div>
           <div class="left1 left2">
@@ -25,7 +23,7 @@
             <img src="../../../public/static/images/icon_contact1.png" alt="">
             <div class="rightRight">
               <div class="top1">EMAIL</div>
-              <div class="down1">943870975@qq.com</div>
+              <div class="down1">{{contactInfo.email}}</div>
             </div>
           </div>
           <div class="right1">
@@ -35,7 +33,7 @@
                 TEL
               </div>
               <div class="down1">
-                15238699705
+                {{contactInfo.phone}}
               </div>
             </div>
           </div>
@@ -44,8 +42,7 @@
             <div class="rightRight">
               <div class="top1">ADDRESS</div>
               <div class="down1">
-                1521 / 1522, building 6, Greenland new metropolis, Jinshui
-                East Road,Zhengdong New District, Zhengzhou
+                {{contactInfo.address}}
               </div>
             </div>
           </div>
@@ -63,12 +60,43 @@
 </template>
 
 <script>
+  import {getFooterInfo, getHomeMenu} from "@/api/home";
+
   export default {
     name: "Footer",
+    data(){
+      return{
+        menuData:[],
+        contactInfo:{}
+      }
+
+    },
     methods:{
       goTo(path){
         this.$router.push({path:path})
+      },
+      menuIdAdd(n){
+        return 3+n
+      },
+      fetchData(){
+        let that = this
+        getHomeMenu({
+          pageSize:3,
+          pageNum:1
+        }).then(res=>{
+          if(res.code==200){
+            that.menuData=res.data.list
+          }
+        })
+        getFooterInfo().then(res=>{
+          if(res.code && res.code===200){
+            this.contactInfo=res.data[0]
+          }
+        })
       }
+    },
+    mounted() {
+      this.fetchData()
     }
   }
 </script>

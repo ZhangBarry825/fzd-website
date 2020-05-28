@@ -32,7 +32,9 @@
       </div>
       <div class="hideMenu" v-if="hideMenu && !isShow" @touchmove.prevent @mousewheel.prevent>
         <div class="menuItem" @click="goTo('/home')">HOME</div>
-        <div class="menuItem" @click="goTo('/about-us')">ABOUT US</div>
+        <div class="menuItem" @click="goTo('/equipment')">Equipment & Workshop</div>
+        <div class="menuItem" @click="goTo('/news')">B.News & Blog-post</div>
+        <div class="menuItem" @click="goTo('/about-us')">About US</div>
         <div class="menuItem" @click="goTo('/product-list?id='+item.id+'&menuId='+menuIdAdd(index))" v-for="(item,index) in menuData">
           <div class="text">{{item.classifyName}}</div>
         </div>
@@ -238,8 +240,9 @@
         padding: 20px 0;
 
         .menuItem {
+          font-size: 17px;
           cursor: pointer;
-          padding: 5px 20px;
+          padding: 12px 20px;
           box-sizing: border-box;
           width: 100%;
         }

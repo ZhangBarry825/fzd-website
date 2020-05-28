@@ -8,6 +8,13 @@ export function getHomeMenu(data) {
     params:data
   })
 }
+export function getFooterInfo(data) {
+  return request({
+    url: '/contactUs-deskend/contactUsSelectDetail',
+    method: 'get',
+    params:data
+  })
+}
 
 export function getHomeBanner(data) {
   return request({
@@ -48,7 +55,7 @@ export function getHomeNews(data) {
 }
 export function contactUs(data) {
   return request({
-    url: '/contactUs-backend/contactUsAdd',
+    url: '/message-deskend/messageAdd',
     method: 'post',
     data
   })

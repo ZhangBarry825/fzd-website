@@ -164,7 +164,7 @@
           <div class="items">
             <div class="item" @click="goTo('/detail?type=news&id='+item.id)" v-for="(item,index) in homeNews">
               <div class="itemLeft">
-                <div class="leftTop">{{index+1}}</div>
+                <div class="leftTop">{{index+1|addZero}}</div>
                 <div class="leftDown">{{item.createTime|formatTime}}</div>
               </div>
               <div class="itemRight">
@@ -185,7 +185,7 @@
         <div class="items">
           <div class="item" v-for="(item,index) in homeNews" @click="goTo('/detail?type=news&id='+item.id)">
             <div class="itemLeft">
-              <div class="leftTop">{{index+1}}</div>
+              <div class="leftTop">{{index+1|addZero}}</div>
               <div class="leftDown">{{item.createTime|formatTime}}</div>
             </div>
             <div class="itemRight">
@@ -251,6 +251,13 @@
     filters:{
       formatTime(value){
         return parseTime(value,'{m}-{d}')
+      },
+      addZero(value){
+        if(value<10){
+          return '0'+value
+        }else {
+          return value
+        }
       }
     },
     computed: {

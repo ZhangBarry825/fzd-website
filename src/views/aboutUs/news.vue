@@ -7,68 +7,15 @@
         <div class="text2">NEWS</div>
       </div>
       <div class="content">
-        <div class="newsItem"  @click="goTo('/detail')">
+        <div class="newsItem"  @click="goTo('/detail?type=news&id='+item.id)" v-for="(item,index) in newsList">
           <div class="itemLeft">
-            <div class="leftTop">01</div>
-            <div class="leftDown">5-15</div>
+            <div class="leftTop">{{index+1|addZero(pageNum,pageSize)}}</div>
+            <div class="leftDown">{{item.createTime|formatTime}}</div>
           </div>
           <div class="itemRight">
-            <div class="rightTitle">Composition</div>
+            <div class="rightTitle">{{item.title}}</div>
             <div class="rightDes">
-              The composition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.  The compos
-              ition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.
-            </div>
-          </div>
-        </div>
-        <div class="newsItem"  @click="goTo('/detail')">
-          <div class="itemLeft">
-            <div class="leftTop">02</div>
-            <div class="leftDown">5-15</div>
-          </div>
-          <div class="itemRight">
-            <div class="rightTitle">Composition</div>
-            <div class="rightDes">
-              The composition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.  The compos
-              ition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.
-            </div>
-          </div>
-        </div>
-        <div class="newsItem"  @click="goTo('/detail')">
-          <div class="itemLeft">
-            <div class="leftTop">03</div>
-            <div class="leftDown">5-15</div>
-          </div>
-          <div class="itemRight">
-            <div class="rightTitle">Composition</div>
-            <div class="rightDes">
-              The composition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.  The compos
-              ition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.
-            </div>
-          </div>
-        </div>
-        <div class="newsItem"  @click="goTo('/detail')">
-          <div class="itemLeft">
-            <div class="leftTop">04</div>
-            <div class="leftDown">5-15</div>
-          </div>
-          <div class="itemRight">
-            <div class="rightTitle">Composition</div>
-            <div class="rightDes">
-              The composition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.  The compos
-              ition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.
-            </div>
-          </div>
-        </div>
-        <div class="newsItem"  @click="goTo('/detail')">
-          <div class="itemLeft">
-            <div class="leftTop">05</div>
-            <div class="leftDown">5-15</div>
-          </div>
-          <div class="itemRight">
-            <div class="rightTitle">Composition</div>
-            <div class="rightDes">
-              The composition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.  The compos
-              ition of 6061-t6 aluminum plate determines the performance  The composition of 6061-t6 aluminum plate determines.
+              {{item.introduction}}
             </div>
           </div>
         </div>
@@ -77,8 +24,10 @@
 
       <div class="pageButton">
         <div class="buttons">
-          <div class="left" :style="'background-image: url('+pageNoneLeft+')'"></div>
-          <div class="right" :style="'background-image: url('+pageRight+')'"></div>
+          <div class="left" :style="'background-image: url('+pageLeft+')'" v-if="hasPrevious" @click="changePage('left')"></div>
+          <div class="left" :style="'background-image: url('+pageNoneLeft+')'" v-if="!hasPrevious"></div>
+          <div class="right" :style="'background-image: url('+pageRight+')'" v-if="hasNext" @click="changePage('right')"></div>
+          <div class="right" :style="'background-image: url('+pageNoneRight+')'" v-if="!hasNext"></div>
         </div>
       </div>
     </div>
@@ -89,6 +38,8 @@
 <script>
   import Header from '../../components/Header/index'
   import Footer from '../../components/Footer/index'
+  import {getNewsList} from "@/api/about-us";
+  import {parseTime} from "@/utils";
 
   export default {
     name: "Detail",
@@ -98,11 +49,29 @@
     },
     data(){
       return{
+        newsList:[],
+        hasNext:false,
+        hasPrevious:false,
+        pageNum:1,
+        pageSize:8,
         img:require('../../../public/static/images/detailp.png'),
         pageLeft: require('../../../public/static/images/btn_more_l.png'),
         pageNoneLeft: require('../../../public/static/images/btn_more_none_l.png'),
         pageRight: require('../../../public/static/images/btn_more_r.png'),
         pageNoneRight: require('../../../public/static/images/btn_more_none_r.png'),
+      }
+    },
+    filters:{
+      formatTime(value){
+        return parseTime(value,'{m}-{d}')
+      },
+      addZero(value,pageNum,pageSize){
+        value=(pageNum-1)*pageSize+value
+        if(value<10){
+          return '0'+value
+        }else {
+          return value
+        }
       }
     },
     computed: {
@@ -115,9 +84,33 @@
       }
     },
     methods:{
+      changePage(type){
+        if(type=='left'){
+          this.fetchData(-1)
+
+        }else if(type==='right'){
+          this.fetchData(+1)
+        }
+      },
       goTo(path){
         this.$router.push({path:path})
+      },
+      fetchData(num = 0){
+        getNewsList({
+          pageNum:this.pageNum + num,
+          pageSize:this.pageSize,
+        }).then(res=>{
+          if(res.code && res.code===200){
+            this.newsList=res.data.list
+            this.hasNext=res.data.hasNextPage
+            this.hasPrevious=res.data.hasPreviousPage
+            this.pageNum=this.pageNum + num
+          }
+        })
       }
+    },
+    mounted() {
+      this.fetchData()
     }
   }
 </script>

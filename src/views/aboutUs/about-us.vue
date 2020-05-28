@@ -11,26 +11,16 @@
           </div>
           <div class="middle"></div>
           <div class="down">
-            China Building Materials International Trade product system basically covers all categories in the field of
-            building materials. The main products are: steel, aluminum, construction machinery and equipment, coal,
-            glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving
-            products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic
-            products, geotechnical.
+            {{detail.introduction}}
           </div>
         </div>
         <div class="right">
-          <div class="backColor"  :style="'background-image: url('+img+')'"></div>
+          <div class="backColor"  :style="'background-image: url('+baseImgUrl+detail.imageUrl+')'"></div>
         </div>
       </div>
       <div class="article">
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.
-        </div>
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.
-        </div>
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.
+        <div class="text" v-html="detail.content">
+<!--          {{detail.content}}-->
         </div>
       </div>
     </div>
@@ -41,15 +31,12 @@
         <div class="text2">ABOUT US</div>
       </div>
       <div class="des">
-        China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical.
+        {{detail.introduction}}
       </div>
-      <div class="img" :style="'background-image: url('+img+')'"></div>
+      <div class="img" :style="'background-image: url('+baseImgUrl+detail.imageUrl+')'"></div>
       <div class="detail">
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.
-        </div>
-        <div class="text">
-          China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.China Building Materials International Trade product system basically covers all categories in the field of building materials. The main products are: steel, aluminum, construction machinery and equipment, coal, glass fiber products, solar modules, ductile iron castings, thermal insulation materials, energy-saving products, waterproof materials, refractory materials, decorative materials, adhesive tapes, PE plastic products, geotechnical materials, plates, hardware products, etc.
+        <div class="text" v-html="detail.content">
+          <!--          {{detail.content}}-->
         </div>
       </div>
     </div>
@@ -62,6 +49,7 @@
 <script>
   import Header from '../../components/Header/index'
   import Footer from '../../components/Footer/index'
+  import {getAboutDetail} from "@/api/about-us";
 
   export default {
     name: "AboutUs",
@@ -71,7 +59,9 @@
     },
     data() {
       return {
-        img: require('../../../public/static/images/compony_img.png')
+        baseImgUrl: this.$globalData.baseImgUrl,
+        img: require('../../../public/static/images/compony_img.png'),
+        detail:{}
       }
     },
     computed: {
@@ -86,6 +76,19 @@
         this.$router.go(0)
       }
     },
+    mounted() {
+      this.fetchData()
+    },
+    methods:{
+      fetchData(){
+        getAboutDetail().then(res=>{
+          console.log(res,555)
+          if(res.code && res.code === 200){
+            this.detail=res.data[0]
+          }
+        })
+      }
+    }
   }
 </script>
 
@@ -173,16 +176,16 @@
         }
       }
       .article{
-        padding: 20px 0;
-        line-height: 1.5;
-        color: #333333;
-        font-size: 16px;
+        padding: 50px 0;
+        /*line-height: 1.5;*/
+        /*color: #333333;*/
+        /*font-size: 16px;*/
         width: 100%;
 
         .text{
-          text-align: justify;
-          text-indent: 2em;
-          margin: 10px 0;
+          /*text-align: justify;*/
+          /*text-indent: 2em;*/
+          /*margin: 10px 0;*/
         }
       }
     }
@@ -233,10 +236,10 @@
       .detail{
         width: 100%;
         .text{
-          text-indent: 2em;
-          padding: 10px 0;
-          text-align: justify;
-          line-height: 1.5;
+          /*text-indent: 2em;*/
+          /*padding: 10px 0;*/
+          /*text-align: justify;*/
+          /*line-height: 1.5;*/
         }
       }
     }
