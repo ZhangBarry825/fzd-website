@@ -134,25 +134,25 @@
       }
     },
     methods: {
-      handler({BMap, map}) {
-        var point = new BMap.Point(113.774673, 34.776896)
-        map.centerAndZoom(point, 17)
-        var marker = new BMap.Marker(point) // 创建标注
-        map.addOverlay(marker) // 将标注添加到地图中
-        var circle = new BMap.Circle(point, 0, {
-          strokeColor: 'Red',
-          strokeWeight: 1,
-          strokeOpacity: 1,
-          Color: 'Red',
-          fillColor: '#f03'
-        })
-        map.addOverlay(circle)
-
-      },
-      getClickInfo(e) {
-        this.center.lng = e.point.lng
-        this.center.lat = e.point.lat
-      },
+      // handler({BMap, map}) {
+      //   var point = new BMap.Point(113.774673, 34.776896)
+      //   map.centerAndZoom(point, 17)
+      //   var marker = new BMap.Marker(point) // 创建标注
+      //   map.addOverlay(marker) // 将标注添加到地图中
+      //   var circle = new BMap.Circle(point, 0, {
+      //     strokeColor: 'Red',
+      //     strokeWeight: 1,
+      //     strokeOpacity: 1,
+      //     Color: 'Red',
+      //     fillColor: '#f03'
+      //   })
+      //   map.addOverlay(circle)
+      //
+      // },
+      // getClickInfo(e) {
+      //   this.center.lng = e.point.lng
+      //   this.center.lat = e.point.lat
+      // },
 
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {

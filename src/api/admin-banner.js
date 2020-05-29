@@ -22,5 +22,12 @@ export function deleteBanner(data) {
     data
   })
 }
+export function uploadFile(data) {
+  return request({
+    url: '/image-backend/up',
+    method: 'post',
+    data
+  })
+}
 
 

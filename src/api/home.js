@@ -26,7 +26,7 @@ export function getHomeBanner(data) {
 
 export function getHomeProduct(data) {
   return request({
-    url: '/product-deskend/productSelectList',
+    url: '/product-deskend/productSelectListBySort',
     method: 'get',
     params:data
   })

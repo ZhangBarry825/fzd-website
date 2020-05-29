@@ -48,7 +48,7 @@ service.interceptors.response.use(
 
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 200) {
-      if(res.code==201){
+      if(res.code==222){
         Message({
           message:  'Username or password is wrong!',
           type: 'error',

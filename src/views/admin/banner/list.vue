@@ -5,7 +5,7 @@
       <el-button size="small" type="primary" icon="el-icon-edit">
         Create
       </el-button>
-      <el-button size="small" type="primary" icon="el-icon-delete"
+      <el-button size="small" type="primary" icon="el-icon-delete" @click="deleteItems"
                  style="border-top-right-radius: 4px;border-bottom-right-radius: 4px">Delete
       </el-button>
     </el-button-group>
@@ -85,24 +85,47 @@
         loading:false,
         baseImgUrl: this.$globalData.baseImgUrl,
         pageNum: 1,
-        pageSize: 2,
+        pageSize: 10,
         hasNext: false,
         totalNum: 0,
         multipleSelection:[],//多选内容
-        bannerList: [{
-          title: '2016-05-02',
-          introduction: '王小虎',
-          state: 1,
-          content: '普陀区',
-          imageUrl: '上海市普陀区金沙江路 1518 弄',
-          id: 200333,
-          sort:1,
-        }]
+        bannerList: []
       }
     },
     methods: {
+      deleteItems(){
+        if(this.multipleSelection.length===0){
+          return
+        }
+        let d=[]
+        for (let i = 0; i <this.multipleSelection.length ; i++) {
+          d.push(this.multipleSelection[i].id)
+        }
+        this.$confirm('This operation will permanently delete the data, continue?', 'Warn', {
+          confirmButtonText: 'Ok',
+          cancelButtonText: 'Cance',
+          type: 'warning'
+        }).then(() => {
+          let formData=new FormData()
+          formData.append('ids',d)
+          deleteBanner(formData).then(res=>{
+            if(res.code && res.code == 200){
+              this.$message({
+                type: 'success',
+                message: 'Delete successfully!'
+              });
+              this.fetchData()
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'cancel'
+          });
+        });
+      },
       handleDelete(id){
-        this.$confirm('This operation will permanently delete the file, continue?', 'Warn', {
+        this.$confirm('This operation will permanently delete the data, continue?', 'Warn', {
           confirmButtonText: 'Ok',
           cancelButtonText: 'Cance',
           type: 'warning'
