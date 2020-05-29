@@ -7,9 +7,8 @@
         <div class="text2">ADDRESS</div>
       </div>
       <div class="map">
-        <baidu-map :center="center" :zoom="zoom" @ready="handler" class="map-height" @click="getClickInfo"
-                   :scroll-wheel-zoom='true'>
-        </baidu-map>
+<!--        <baidu-map :center="center" :zoom="zoom" @ready="handler" class="map-height" @click="getClickInfo" :scroll-wheel-zoom='true'></baidu-map>-->
+        <MapBox mapWidth="100%" mapHeight="400px"></MapBox>
       </div>
       <div class="contact-items">
         <div class="contact-item">
@@ -83,6 +82,7 @@
 </template>
 
 <script>
+  import MapBox from '../../components/MapBox/mapbox'
   import Header from '../../components/Header/index'
   import Footer from '../../components/Footer/index'
   import {contactUs} from "@/api/home";
@@ -91,7 +91,8 @@
     name: "Contact",
     components: {
       Header,
-      Footer
+      Footer,
+      MapBox,
     },
     data() {
       return {
