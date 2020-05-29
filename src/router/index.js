@@ -159,6 +159,13 @@ export const constantRoutes = [
         component: () => import('@/views/admin/product/create'),
         meta: { title: 'Create Product', icon: 'create' }
       },
+      {
+        path: 'edit',
+        name: 'AdminProductEdit',
+        component: () => import('@/views/admin/product/edit'),
+        meta: { title: 'Edit Product', icon: 'create' },
+        hidden: true
+      },
     ]
   },
   {

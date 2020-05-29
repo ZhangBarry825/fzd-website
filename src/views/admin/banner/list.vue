@@ -21,6 +21,11 @@
         width="55">
       </el-table-column>
       <el-table-column
+        width="70"
+        prop="sort"
+        label="Sort">
+      </el-table-column>
+      <el-table-column
         prop="title"
         label="Title">
       </el-table-column>

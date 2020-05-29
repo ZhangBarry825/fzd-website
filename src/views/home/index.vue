@@ -330,7 +330,7 @@
       fetchData() {
         getHomeProduct().then(res => {
           if (res.code && res.code === 200) {
-            this.homeProduct = res.data
+            this.homeProduct = res.data.list
           }
         })
 
@@ -494,7 +494,10 @@
           color: #E6E6E6;
         }
       }
-
+      .items:after {
+        content: '';
+        width: 310px;
+      }
       .items {
         width: 992px;
         display: flex;
@@ -987,7 +990,10 @@
       .items::-webkit-scrollbar { /* Chrome Safari */
         display: none;
       }
-
+      .items:after {
+        content: '';
+        width: 30%;
+      }
       .items {
         width: 100%;
         display: flex;
