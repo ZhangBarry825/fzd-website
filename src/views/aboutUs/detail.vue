@@ -147,7 +147,7 @@
             max-width: 100%;
           }
           /*padding: 10px 0;*/
-          /*line-height: 1.7;*/
+          line-height: 1.5;
           /*text-indent: 2em;*/
           /*text-align: justify;*/
         }
@@ -195,6 +195,9 @@
         }
         .text{
           min-height: 200px;
+         /deep/ img{
+            max-width: 100%;
+          }
           /*padding: 10px 0;*/
           /*line-height: 1.5;*/
           /*text-indent: 2em;*/

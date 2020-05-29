@@ -47,7 +47,7 @@
       <div class="bannerInfo">
         <div class="title">{{nowBanner.title}}</div>
         <div class="description">{{nowBanner.introduction}}</div>
-        <div class="more"  @click="goTo('/detail?type=banner&id='+activeIndex)">VIEW MORE</div>
+        <div class="more"  @click="goTo('/detail?type=banner&id='+nowBanner.id)">VIEW MORE</div>
       </div>
 
       <div class="swiper-container">

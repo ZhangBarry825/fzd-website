@@ -2,7 +2,7 @@
   <div class="list-box">
     <el-row><h2>Banner List</h2></el-row>
     <el-button-group class="buttons">
-      <el-button size="small" type="primary" icon="el-icon-edit">
+      <el-button size="small" type="primary" icon="el-icon-edit" @click="goTo('/banner/create')">
         Create
       </el-button>
       <el-button size="small" type="primary" icon="el-icon-delete" @click="deleteItems"
@@ -93,6 +93,9 @@
       }
     },
     methods: {
+      goTo(path){
+        this.$router.push({path:path})
+      },
       deleteItems(){
         if(this.multipleSelection.length===0){
           return
@@ -114,7 +117,7 @@
                 type: 'success',
                 message: 'Delete successfully!'
               });
-              this.fetchData()
+              this.changePage(this.pageNum,true,this.multipleSelection.length)
             }
           })
         }).catch(() => {
@@ -138,7 +141,8 @@
                 type: 'success',
                 message: 'Delete successfully!'
               });
-              this.fetchData()
+
+              this.changePage(this.pageNum,true,1)
             }
           })
         }).catch(() => {
@@ -175,7 +179,28 @@
         this.multipleSelection = val;
       },
       handleClick(row) {
+        this.goTo('/banner/edit?id='+row.id)
         console.log(row);
+      },
+      changePage(currentPage, isDelete = false, deleteNum = 1) {
+        if (isDelete) {
+          let num = this.totalNum % this.pageSize
+          console.log(this.totalNum, 'this.totalNum')
+          console.log(this.pageSize, 'this.pageSize')
+          console.log(num, 'num')
+          if (num > deleteNum) {
+            this.pageNum = currentPage
+          } else {
+            if (currentPage > 1) {
+              this.pageNum = currentPage - 1
+            } else {
+              this.pageNum = currentPage
+            }
+          }
+        } else {
+          this.pageNum = currentPage
+        }
+        this.fetchData()
       },
       fetchData(page = this.pageNum) {
         this.loading=true
@@ -189,8 +214,8 @@
             this.hasNext = res.data.hasNextPage
             this.totalNum=res.data.total
             this.pageNum=page
-            this.loading=false
           }
+          this.loading=false
         })
       }
     },

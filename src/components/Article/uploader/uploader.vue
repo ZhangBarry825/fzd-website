@@ -30,7 +30,7 @@
         limitNum:{
           default:1,
           type:Number
-        }
+        },
       },
       methods:{
         uploadRequest(params) {
@@ -53,10 +53,7 @@
           // 文件对象
           form.append("file", file);
           uploadFile(form).then(res => {
-            console.log(res, 123123)
             if (res.data || res.code == 200) {
-              console.log(res,987)
-
               this.$emit('handSubmit',res.data[0])
             }
           }).catch(() => {
@@ -78,6 +75,11 @@
 
 <style scoped lang="scss">
 .uploader{
-
+  display: flex;
+  .img{
+    width: 150px;
+    height: 150px;
+  }
 }
+
 </style>

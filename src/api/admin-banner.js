@@ -8,9 +8,23 @@ export function getBannerList(data) {
     params:data
   })
 }
+export function getBannerDetail(data) {
+  return request({
+    url: '/banner-backend/bannerSelectById',
+    method: 'get',
+    params:data
+  })
+}
 export function updateBanner(data) {
   return request({
     url: '/banner-backend/bannerUpdate',
+    method: 'post',
+    data
+  })
+}
+export function addBanner(data) {
+  return request({
+    url: '/banner-backend/bannerAdd',
     method: 'post',
     data
   })

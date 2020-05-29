@@ -23,7 +23,7 @@
       </el-form-item>
       <el-form-item label="Content" prop="content">
 <!--        <el-input type="textarea"  v-model="ruleForm.content"></el-input>-->
-        <Editor></Editor>
+        <Editor v-model="ruleForm.content" :height="300"></Editor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
@@ -38,6 +38,7 @@
 <script>
   import Uploader from '@/components/Article/uploader/uploader'
   import Editor from '@/components/Article/Tinymce/index'
+  import {addBanner} from "@/api/admin-banner";
 
   export default {
     name: "AdminBannerCreate",
@@ -76,19 +77,36 @@
       Uploader,
       Editor
     },
+    mounted() {
+
+    },
     methods:{
       imgSubmit(path){
         this.ruleForm.imageUrl = path
-        console.log(path,'成功提交！')
       },
       imgRemove(){
         this.ruleForm.imageUrl = ''
-        console.log('成功删除！')
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(this.ruleForm)
+            let formData=new FormData()
+            formData.append('title',this.ruleForm.title)
+            formData.append('imageUrl',this.ruleForm.imageUrl)
+            formData.append('sort',this.ruleForm.sort)
+            formData.append('state',this.ruleForm.state)
+            formData.append('introduction',this.ruleForm.introduction)
+            formData.append('content',this.ruleForm.content)
+
+            addBanner(formData).then(res=>{
+              if(res.code && res.code==200){
+                this.$message({
+                  message:'create successfully!',
+                  type:'success'
+                })
+                this.$router.push({path:'/banner/list'})
+              }
+            })
           } else {
             console.log('error submit!!');
             return false;
