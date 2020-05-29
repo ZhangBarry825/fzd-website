@@ -7,7 +7,9 @@
         :limit="limitNum"
         :on-preview="handlePictureCardPreview"
         :on-remove="handleRemove">
-        <i class="el-icon-plus"></i>
+        <div :class="{'hidden':ifHidden}" class="img"  :style="'background-image: url('+backImg+')'"  slot="trigger">
+          <i class="el-icon-plus"></i>
+        </div>
       </el-upload>
       <el-dialog :visible.sync="dialogVisible">
         <img width="100%" :src="dialogImageUrl" alt="">
@@ -23,13 +25,18 @@
       data(){
           return{
             dialogImageUrl: '',
-            dialogVisible: false
+            dialogVisible: false,
+            ifHidden:false,
           }
       },
       props:{
         limitNum:{
           default:1,
           type:Number
+        },
+        backImg:{
+          default:'',
+          type:String
         },
       },
       methods:{
@@ -55,6 +62,7 @@
           uploadFile(form).then(res => {
             if (res.data || res.code == 200) {
               this.$emit('handSubmit',res.data[0])
+              this.ifHidden=true
             }
           }).catch(() => {
 
@@ -75,10 +83,16 @@
 
 <style scoped lang="scss">
 .uploader{
-  display: flex;
+  .hidden{
+    background: none !important;
+  }
   .img{
-    width: 150px;
-    height: 150px;
+    /*position: absolute;*/
+    width: 100%;
+    height: 100%;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 }
 

@@ -16,7 +16,7 @@
         <el-input type="number" v-model="ruleForm.sort"></el-input>
       </el-form-item>
       <el-form-item label="Image" prop="imageUrl">
-        <Uploader :limitNum="1" @handSubmit="imgSubmit" @handRemove="imgRemove"></Uploader>
+        <Uploader :backImg="baseImgUrl+ruleForm.imageUrl" :limitNum="1" @handSubmit="imgSubmit" @handRemove="imgRemove"></Uploader>
 
       </el-form-item>
       <el-form-item label="Introduction" prop="introduction">
