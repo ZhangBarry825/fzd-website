@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      uploadUrl:'http://192.168.1.3:8091/image-backend/up',
+      uploadUrl:this.$globalData.baseImgUrl+'/image-backend/up',
       baseImgUrl:this.$globalData.baseImgUrl,
       dialogVisible: false,
       listObj: {},

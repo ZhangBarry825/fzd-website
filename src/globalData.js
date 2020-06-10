@@ -1,4 +1,4 @@
-const baseImgUrl = 'http://192.168.1.13:8091';
+const baseImgUrl = 'http://192.168.1.17:8091';
 
 
 export default{

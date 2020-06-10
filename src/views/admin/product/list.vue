@@ -178,7 +178,7 @@
         formData.append('content',data.content)
         formData.append('state',data.state)
         formData.append('imageUrl',data.imageUrl)
-        updateBanner(formData).then(res=>{
+        updateProduct(formData).then(res=>{
           console.log(res,876)
           if(res.code && res.code === 200){
             that.loading=false

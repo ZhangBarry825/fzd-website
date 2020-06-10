@@ -1,26 +1,25 @@
 import request from '@/utils/request'
 
 
-// export function getProductDetail(data) {
-//   return request({
-//     url: '/product-deskend/productSelectById',
-//     method: 'get',
-//     params:data
-//   })
-// }
-//
-// export function getProductClassify(data) {
-//   return request({
-//     url: '/classify-deskend/classifySelectByParentId',
-//     method: 'get',
-//     params:data
-//   })
-// }
 export function getProductList(data) {
   return request({
     url: '/product-backend/productSelectByPage',
     method: 'get',
     params:data
+  })
+}
+export function addProduct(data) {
+  return request({
+    url: '/product-backend/productAdd',
+    method: 'post',
+    data
+  })
+}
+export function updateProduct(data) {
+  return request({
+    url: '/product-backend/productUpdate',
+    method: 'post',
+    data
   })
 }
 

@@ -204,6 +204,13 @@ export const constantRoutes = [
         component: () => import('@/views/admin/news/create'),
         meta: { title: 'Create News', icon: 'create' }
       },
+      {
+        path: 'edit',
+        name: 'AdminNewsEdit',
+        component: () => import('@/views/admin/news/edit'),
+        meta: { title: 'Edit News', icon: 'create' },
+        hidden: true
+      },
     ]
   },
   {
@@ -222,6 +229,13 @@ export const constantRoutes = [
         name: 'AdminAppCreate',
         component: () => import('@/views/admin/application/create'),
         meta: { title: 'Create Application', icon: 'example' }
+      },
+      {
+        path: 'edit',
+        name: 'AdminAppEdit',
+        component: () => import('@/views/admin/application/edit'),
+        meta: { title: 'Edit Application', icon: 'create' },
+        hidden: true
       },
     ]
   },
@@ -254,6 +268,13 @@ export const constantRoutes = [
         name: 'AdminEquipCreate',
         component: () => import('@/views/admin/equipment/create'),
         meta: { title: 'Create Equipment', icon: 'create' }
+      },
+      {
+        path: 'edit',
+        name: 'AdminEquipmentEdit',
+        component: () => import('@/views/admin/equipment/edit'),
+        meta: { title: 'Edit Equipment', icon: 'create' },
+        hidden: true
       },
     ]
   },

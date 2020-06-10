@@ -39,6 +39,7 @@
   import Uploader from '@/components/Article/uploader/uploader'
   import Editor from '@/components/Article/Tinymce/index'
   import {addBanner} from "@/api/admin-banner";
+  import {addProduct} from "@/api/admin-product";
 
   export default {
     name: "AdminProductCreate",
@@ -51,6 +52,7 @@
           content:'',
           imageUrl:'',
           sort:'',
+          classifyId:''
         },
         rules: {
           productName: [
@@ -68,6 +70,9 @@
           ],
           content: [
             {required: true, message: 'Please input the content', trigger: 'blur'}
+          ],
+          classifyId: [
+            {required: true, message: 'Please select the classification', trigger: 'blur'}
           ]
         },
 
@@ -97,14 +102,15 @@
             formData.append('state',this.ruleForm.state)
             formData.append('introduction',this.ruleForm.introduction)
             formData.append('content',this.ruleForm.content)
+            formData.append('classifyId',this.ruleForm.classifyId)
 
-            addBanner(formData).then(res=>{
+            addProduct(formData).then(res=>{
               if(res.code && res.code==200){
                 this.$message({
                   message:'create successfully!',
                   type:'success'
                 })
-                this.$router.push({path:'/banner/list'})
+                this.$router.push({path:'/admin-product/list'})
               }
             })
           } else {

@@ -116,7 +116,8 @@
             {required: true, message: 'Please type your telephone number', trigger: 'blur'}
           ],
           message: [
-            {required: true, message: 'Please type some message', trigger: 'blur'}
+            {required: true, message: 'Please type some message', trigger: 'blur'},
+            {min: 0, max: 500, message: 'The length should be no more than 500 characters', trigger: 'blur'}
           ],
         }
       }

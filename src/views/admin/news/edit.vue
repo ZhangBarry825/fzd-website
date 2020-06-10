@@ -1,6 +1,6 @@
 <template>
   <div class="list-box">
-    <el-row><h2>Create Application</h2></el-row>
+    <el-row><h2>Edit News</h2></el-row>
 
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
       <el-form-item label="Title" prop="title">
@@ -13,17 +13,17 @@
           v-model="ruleForm.state"></el-switch>
       </el-form-item>
       <el-form-item label="Image" prop="imageUrl">
-        <Uploader :limitNum="1" @handSubmit="imgSubmit" @handRemove="imgRemove"></Uploader>
+        <Uploader :backImg="baseImgUrl+ruleForm.imageUrl" :limitNum="1" @handSubmit="imgSubmit" @handRemove="imgRemove"></Uploader>
+
       </el-form-item>
       <el-form-item label="Introduction" prop="introduction">
         <el-input type="textarea" :autosize="{ minRows: 4}" v-model="ruleForm.introduction"></el-input>
       </el-form-item>
       <el-form-item label="Content" prop="content">
-        <!--        <el-input type="textarea"  v-model="ruleForm.content"></el-input>-->
-        <Editor v-model="ruleForm.content" :height="300"></Editor>
+        <Editor  v-model="ruleForm.content" :height="300"></Editor>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')">Update</el-button>
         <el-button @click="resetForm('ruleForm')">Reset</el-button>
       </el-form-item>
     </el-form>
@@ -35,14 +35,15 @@
 <script>
   import Uploader from '@/components/Article/uploader/uploader'
   import Editor from '@/components/Article/Tinymce/index'
-  import {addBanner} from "@/api/admin-banner";
-  import {addNews} from "@/api/admin-news";
-  import {addApplication} from "@/api/admin-application";
+  import {addBanner, getBannerDetail, updateBanner} from "@/api/admin-banner";
+  import {getNewsDetail, updateNews} from "@/api/admin-news";
 
   export default {
-    name: "AdminAppCreate",
+    name: "AdminNewsEdit",
     data() {
       return {
+        baseImgUrl: this.$globalData.baseImgUrl,
+        id:'',
         ruleForm: {
           title: '',
           state: '1',
@@ -73,32 +74,35 @@
       Editor
     },
     mounted() {
-
+      this.id=this.$route.query.id
+      this.fetchData()
     },
     methods:{
       imgSubmit(path){
         this.ruleForm.imageUrl = path
+        console.log(path,'成功提交！')
       },
       imgRemove(){
         this.ruleForm.imageUrl = ''
+        console.log('成功删除！')
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let formData=new FormData()
+            formData.append('id',this.ruleForm.id)
             formData.append('title',this.ruleForm.title)
             formData.append('imageUrl',this.ruleForm.imageUrl)
             formData.append('state',this.ruleForm.state)
             formData.append('introduction',this.ruleForm.introduction)
             formData.append('content',this.ruleForm.content)
 
-            addApplication(formData).then(res=>{
+            updateNews(formData).then(res=>{
               if(res.code && res.code==200){
                 this.$message({
-                  message:'create successfully!',
+                  message:'update successfully!',
                   type:'success'
                 })
-                this.$router.push({path:'/admin-application/list'})
               }
             })
           } else {
@@ -109,8 +113,16 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      fetchData(){
+        getNewsDetail({
+          id:this.id
+        }).then(res=>{
+          console.log(res,864)
+          this.ruleForm=res.data
+        })
       }
-    }
+    },
   }
 </script>
 
@@ -142,5 +154,6 @@
     .pagination {
       padding: 30px 0;
     }
+
   }
 </style>
