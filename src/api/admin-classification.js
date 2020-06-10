@@ -7,14 +7,35 @@ export function getClassList(data) {
     params:data
   })
 }
+export function getChildClass(data) {
+  return request({
+    url: '/classify-backend/classifySelectByParentId',
+    method: 'get',
+    params:data
+  })
+}
 
-// export function deleteProduct(data) {
-//   return request({
-//     url: '/product-backend/productDel',
-//     method: 'post',
-//     data
-//   })
-// }
+export function deleteClass(data) {
+  return request({
+    url: '/classify-backend/classifyDel',
+    method: 'post',
+    data
+  })
+}
 
+export function updateClass(data) {
+  return request({
+    url: '/classify-backend/classifyUpdate',
+    method: 'post',
+    data
+  })
+}
 
+export function addClass(data) {
+  return request({
+    url: '/classify-backend/classifyAdd',
+    method: 'post',
+    data
+  })
+}
 

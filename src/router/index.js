@@ -177,13 +177,15 @@ export const constantRoutes = [
         path: 'list',
         name: 'AdminClassList',
         component: () => import('@/views/admin/classification/list'),
-        meta: { title: 'Class List', icon: 'list' }
+        meta: { title: 'Classification', icon: 'product-fill' }
       },
+
       {
-        path: 'create',
-        name: 'AdminClassCreate',
-        component: () => import('@/views/admin/classification/create'),
-        meta: { title: 'Create Class', icon: 'create' }
+        path: 'edit',
+        name: 'AdminClassEdit',
+        component: () => import('@/views/admin/classification/edit'),
+        meta: { title: 'Edit Classification', icon: 'create' },
+        hidden: true
       },
     ]
   },

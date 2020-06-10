@@ -1,8 +1,8 @@
 <template>
   <div class="list-box">
-    <el-row><h2>Classification List</h2></el-row>
+    <el-row><h2>Classification Edit</h2></el-row>
     <el-button-group class="buttons">
-      <el-button size="small" type="primary" icon="el-icon-edit"  @click="createClass">
+      <el-button size="small" type="primary" icon="el-icon-edit" @click="goTo('/admin-class/create')">
         Create
       </el-button>
       <el-button size="small" type="primary" icon="el-icon-delete" @click="deleteItems"
@@ -86,8 +86,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="updateItem" v-if="!isCreate">Update</el-button>
-        <el-button type="primary" @click="createItem" v-if="isCreate">Create</el-button>
+        <el-button type="primary" @click="updateItem">Update</el-button>
       </div>
     </el-dialog>
 
@@ -97,14 +96,14 @@
 <script>
   import {deleteBanner, updateBanner} from "@/api/admin-banner";
   import {deleteProduct, getProductList} from "@/api/admin-product";
-  import {addClass, deleteClass, getClassList, updateClass} from "@/api/admin-classification";
+  import {deleteClass, getChildClass, getClassList, updateClass} from "@/api/admin-classification";
   import {parseTime} from "@/utils";
 
   export default {
-    name: "AdminClassList",
+    name: "AdminClassEdit",
     data() {
       return {
-        isCreate:false,
+        parentId:'',
         dialogFormVisible:false,
         itemForm:{
           id:'',
@@ -130,33 +129,6 @@
       }
     },
     methods: {
-      createClass(){
-        this.itemForm={
-          id:'',
-          classifyName:'',
-          state:'',
-          description:''
-        }
-        this.isCreate=true
-        this.dialogFormVisible=true
-      },
-      createItem(){
-        let that = this
-        let formData=new FormData()
-        formData.append('parentId',0)
-        formData.append('description',this.itemForm.description)
-        formData.append('classifyName',this.itemForm.classifyName)
-        formData.append('state',1)
-        addClass(formData).then(res=>{
-          console.log(res,876)
-          if(res.code && res.code === 200){
-            that.loading=false
-            that.fetchData()
-          }
-        })
-        this.dialogFormVisible=false
-
-      },
       updateItem(){
 
         let that = this
@@ -263,7 +235,6 @@
       },
       handleClick(row) {
         // this.goTo('/admin-class/edit?id='+row.id)
-        this.isCreate=false
         this.dialogFormVisible=true
         this.itemForm.id=row.id
         this.itemForm.state=row.state
@@ -297,9 +268,10 @@
       },
       fetchData(page = this.pageNum) {
         this.loading=true
-        getClassList({
+        getChildClass({
           pageNum: page,
           pageSize: this.pageSize,
+          parentId:this.parentId
         }).then(res => {
           if (res.code && res.code === 200) {
             this.productList = res.data.list
@@ -312,7 +284,9 @@
         })
       }
     },
-    mounted() {
+    mounted(e) {
+      console.log(this.$route.query.id,852)
+      this.parentId=this.$route.query.id
       this.fetchData()
     }
   }
