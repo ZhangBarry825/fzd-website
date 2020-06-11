@@ -136,10 +136,11 @@
         flex-direction: column;
         padding: 50px 0;
         .text{
+
           /*color: #333333;*/
           /*font-size: 16px;*/
           /*padding: 10px 0;*/
-          /*line-height: 1.5;*/
+          line-height: 1.5;
           /*text-indent: 2em;*/
           /*text-align: justify;*/
         }

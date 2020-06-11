@@ -284,6 +284,7 @@
 
         }
         .text{
+          line-height: 1.5;
           /deep/ img{
             max-width: 100%;
           }
