@@ -58,7 +58,7 @@
           getNewsDetail({
             id:this.id
           }).then(res=>{
-            console.log(res)
+            //console.log(res)
             if(res.code && res.code===200){
               this.detail=res.data
             }
@@ -68,7 +68,7 @@
           getEquipmentDetail({
             id:this.id
           }).then(res=>{
-            console.log(res)
+            //console.log(res)
             if(res.code && res.code===200){
               this.detail=res.data
             }
@@ -78,7 +78,7 @@
           getBannerDetail({
             id:this.id
           }).then(res=>{
-            console.log(res)
+            //console.log(res)
             if(res.code && res.code===200){
               this.detail=res.data
             }

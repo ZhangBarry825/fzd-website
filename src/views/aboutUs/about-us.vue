@@ -82,7 +82,7 @@
     methods:{
       fetchData(){
         getAboutDetail().then(res=>{
-          console.log(res,555)
+          //console.log(res,555)
           if(res.code && res.code === 200){
             this.detail=res.data[0]
           }

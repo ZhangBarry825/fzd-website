@@ -22,12 +22,29 @@
 <!--          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">-->
 <!--            <el-dropdown-item>Docs</el-dropdown-item>-->
 <!--          </a>-->
+          <el-dropdown-item divided @click.native="showDialog">
+            <span style="display:block;">Update Password</span>
+          </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">Log Out</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+
+
+
+    <el-dialog title="Update Password" :visible.sync="dialogFormVisible">
+      <el-form :model="form">
+        <el-form-item label="password" :label-width="formLabelWidth">
+          <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="updatePassword" >Update</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -35,6 +52,8 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import {updateWord} from "@/api/home";
+import {getAllChild} from "@/api/admin-classification";
 
 export default {
   components: {
@@ -43,6 +62,11 @@ export default {
   },
   data(){
     return{
+      formLabelWidth: '120px',
+      form: {
+        password:''
+      },
+      dialogFormVisible: false,
       baseImgUrl: this.$globalData.baseImgUrl,
       avatarImg:require('../../../public/static/images/avatar.png')
     }
@@ -54,6 +78,30 @@ export default {
     ])
   },
   methods: {
+    showDialog(){
+      console.log('update')
+      this.dialogFormVisible=true
+    },
+    updatePassword(){
+      if(this.form.password.length<6){
+        this.$message({
+          type: 'warning',
+          message: 'The password should more than 6 digits!'
+        });
+      }else {
+        let formData=new FormData()
+        formData.append('username','admin')
+        formData.append('password',this.form.password)
+        updateWord(formData).then(res => {
+          console.log(res, 1)
+          this.$message({
+            type: 'success',
+            message: 'Update successfully!'
+          });
+          this.dialogFormVisible = false
+        })
+      }
+    },
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },

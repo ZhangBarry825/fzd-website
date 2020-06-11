@@ -12,11 +12,21 @@
           inactive-value="0"
           v-model="ruleForm.state"></el-switch>
       </el-form-item>
+      <el-form-item label="Category" prop="classifyId">
+        <el-select v-model="ruleForm.classifyId" placeholder="Please select">
+          <el-option
+            v-for="item in categoryList"
+            :key="item.id"
+            :label="item.classifyName"
+            :value="item.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="Sort Num" prop="sort">
         <el-input type="number" v-model="ruleForm.sort"></el-input>
       </el-form-item>
-      <el-form-item label="Image" prop="imageUrl">
-        <Uploader :limitNum="1" @handSubmit="imgSubmit" @handRemove="imgRemove"></Uploader>
+      <el-form-item label="Image" prop="imagesUrl">
+        <Uploader :limitNum="5" @handSubmit="imgSubmit" @handRemove="imgRemove"></Uploader>
       </el-form-item>
       <el-form-item label="Introduction" prop="introduction">
         <el-input type="textarea" :autosize="{ minRows: 4}" v-model="ruleForm.introduction"></el-input>
@@ -40,26 +50,31 @@
   import Editor from '@/components/Article/Tinymce/index'
   import {addBanner} from "@/api/admin-banner";
   import {addProduct} from "@/api/admin-product";
+  import {getAllChild, getClassList} from "@/api/admin-classification";
 
   export default {
     name: "AdminProductCreate",
     data() {
       return {
+        categoryList: [],
         ruleForm: {
           productName: '',
           state: '1',
           introduction: '',
-          content:'',
-          imageUrl:'',
-          sort:'',
-          classifyId:''
+          content: '',
+          imagesUrl: [],
+          sort: '',
+          classifyId: ''
         },
         rules: {
           productName: [
             {required: true, message: 'Please input the title', trigger: 'blur'}
           ],
-          imageUrl:[
+          imageUrl: [
             {required: true, message: 'Please select the image', trigger: 'blur'}
+          ],
+          classifyId: [
+            {required: true, message: 'Please select the category', trigger: 'blur'}
           ],
           sort: [
             {required: true, message: 'Please input the sort', trigger: 'blur'}
@@ -78,39 +93,42 @@
 
       }
     },
-    components:{
+    components: {
       Uploader,
       Editor
     },
     mounted() {
-
+      this.fetchData()
     },
-    methods:{
-      imgSubmit(path){
-        this.ruleForm.imageUrl = path
+    methods: {
+      imgSubmit(path) {
+        //console.log(path)
+        this.ruleForm.imagesUrl.push(path)
       },
-      imgRemove(){
+      imgRemove() {
         this.ruleForm.imageUrl = ''
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            let formData=new FormData()
-            formData.append('productName',this.ruleForm.productName)
-            formData.append('imageUrl',this.ruleForm.imageUrl)
-            formData.append('sort',this.ruleForm.sort)
-            formData.append('state',this.ruleForm.state)
-            formData.append('introduction',this.ruleForm.introduction)
-            formData.append('content',this.ruleForm.content)
-            formData.append('classifyId',this.ruleForm.classifyId)
+            let formData = new FormData()
+            formData.append('productName', this.ruleForm.productName)
+            formData.append('imageUrl', this.ruleForm.imageUrl)
+            formData.append('imagesUrl', this.ruleForm.imagesUrl)
+            formData.append('sort', this.ruleForm.sort)
+            formData.append('state', this.ruleForm.state)
+            formData.append('introduction', this.ruleForm.introduction)
+            formData.append('content', this.ruleForm.content)
+            formData.append('classifyId', this.ruleForm.classifyId)
 
-            addProduct(formData).then(res=>{
-              if(res.code && res.code==200){
+            //console.log(this.ruleForm)
+            addProduct(formData).then(res => {
+              if (res.code && res.code == 200) {
                 this.$message({
-                  message:'create successfully!',
-                  type:'success'
+                  message: 'create successfully!',
+                  type: 'success'
                 })
-                this.$router.push({path:'/admin-product/list'})
+                this.$router.push({path: '/admin-product/list'})
               }
             })
           } else {
@@ -118,6 +136,16 @@
             return false;
           }
         });
+      },
+      fetchData() {
+        getAllChild({
+        }).then(res => {
+          //console.log(res,1)
+          if (res.code && res.code === 200) {
+            this.categoryList=res.data
+          }
+          this.loading=false
+        })
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();

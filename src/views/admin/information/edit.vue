@@ -38,7 +38,7 @@
           return callback(new Error());
         } else {
           const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
-          console.log(reg.test(value));
+          //console.log(reg.test(value));
           if (reg.test(value)) {
             callback();
           } else {
@@ -65,7 +65,7 @@
           ],
           address: [
             {required: true, message: 'Please input the address', trigger: 'blur'},
-            {min: 0, max: 100, message: 'The length should be no more than 100 characters', trigger: 'blur'}
+            {min: 0, max: 200, message: 'The length should be no more than 200 characters', trigger: 'blur'}
           ]
         },
 
@@ -81,11 +81,11 @@
     methods:{
       imgSubmit(path){
         this.ruleForm.imageUrl = path
-        console.log(path,'成功提交！')
+        //console.log(path,'成功提交！')
       },
       imgRemove(){
         this.ruleForm.imageUrl = ''
-        console.log('成功删除！')
+        //console.log('成功删除！')
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -105,7 +105,7 @@
               }
             })
           } else {
-            console.log('error submit!!');
+            //console.log('error submit!!');
             return false;
           }
         });
@@ -115,7 +115,7 @@
       },
       fetchData(){
         getInformation().then(res=>{
-          console.log(res,864)
+          //console.log(res,864)
           this.ruleForm=res.data
         })
       }

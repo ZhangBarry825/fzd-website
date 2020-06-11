@@ -18,7 +18,7 @@
           <div class="right">
             <div class="top">EMAIL</div>
             <div class="down">
-              943870975@qq.com
+              {{contactInfo.email}}
             </div>
           </div>
         </div>
@@ -29,7 +29,7 @@
           <div class="right">
             <div class="top">TEL</div>
             <div class="down">
-              15238699705
+              {{contactInfo.phone}}
             </div>
           </div>
         </div>
@@ -41,9 +41,12 @@
             <div class="top">
               ADDRESS
             </div>
+<!--            <div class="down">-->
+<!--              1521 / 1522, building 6, Greenland new metropolis, Jinshui East Road,-->
+<!--              Zhengdong New District, Zhengzhou-->
+<!--            </div> -->
             <div class="down">
-              1521 / 1522, building 6, Greenland new metropolis, Jinshui East Road,
-              Zhengdong New District, Zhengzhou
+              {{contactInfo.address}}
             </div>
           </div>
         </div>
@@ -85,7 +88,7 @@
   import MapBox from '../../components/MapBox/mapbox'
   import Header from '../../components/Header/index'
   import Footer from '../../components/Footer/index'
-  import {contactUs} from "@/api/home";
+  import {contactUs, getFooterInfo} from "@/api/home";
 
   export default {
     name: "Contact",
@@ -96,6 +99,7 @@
     },
     data() {
       return {
+        contactInfo:{},
         center: {lng: 113.774673, lat: 34.776896},
         zoom: 17,
         ruleForm: {
@@ -134,6 +138,9 @@
         this.$router.go(0)
       }
     },
+    mounted() {
+      this.fetchData()
+    },
     methods: {
       // handler({BMap, map}) {
       //   var point = new BMap.Point(113.774673, 34.776896)
@@ -154,7 +161,15 @@
       //   this.center.lng = e.point.lng
       //   this.center.lat = e.point.lat
       // },
-
+      fetchData(){
+        let that = this
+        getFooterInfo().then(res=>{
+          //console.log(res,111)
+          if(res.code && res.code===200){
+            this.contactInfo=res.data[0]
+          }
+        })
+      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -165,7 +180,7 @@
             formData.append('name',this.ruleForm.name)
 
             contactUs(formData).then(res=>{
-              console.log(res,2222)
+              //console.log(res,2222)
               this.$message({
                 message:'submit successfully',
                 type:'success'

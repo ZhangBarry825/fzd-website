@@ -14,7 +14,13 @@ export function getChildClass(data) {
     params:data
   })
 }
-
+export function getAllChild(data) {
+  return request({
+    url: '/classify-backend/classifySelectSecond',
+    method: 'get',
+    params:data
+  })
+}
 export function deleteClass(data) {
   return request({
     url: '/classify-backend/classifyDel',

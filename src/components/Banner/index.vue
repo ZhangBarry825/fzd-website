@@ -9,6 +9,7 @@
             <div class="item" :class="{'selected':menuId === 1}" @click="goTo('/home')">HOME</div>
             <div class="item" :class="{'selected':menuId === 2}">
               <div class="text">ABOUT US</div>
+              <div class="hover"></div>
               <div class="itemDetailBox">
                 <div class="itemDetail" @click="goTo('/equipment')">Equipment&Workshop</div>
                 <div class="itemDetail" @click="goTo('/news')">B.News&Blog-post</div>
@@ -161,7 +162,7 @@
         }).then(res=>{
           if(res.code==200){
             that.menuData=res.data.list
-            console.log(that.menuData,99999)
+            //console.log(that.menuData,99999)
           }
         })
       }
@@ -242,6 +243,7 @@
             flex-wrap: wrap;
 
             .item {
+              position: relative;
               cursor: pointer;
               font-size: 13px;
               margin: 0 5px;
@@ -272,7 +274,15 @@
             .item:hover, .item:active {
               border-bottom: 3px solid #177EE6;
             }
+            .hover{
+              position: absolute;
+              width: 100%;
+              height: 200%;
 
+            }
+            .itemDetailBox:hover{
+              display: block;
+            }
             .item:hover > .itemDetailBox, .item:active > .itemDetailBox {
               display: block;
             }

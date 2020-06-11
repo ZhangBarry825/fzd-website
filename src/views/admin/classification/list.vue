@@ -1,6 +1,6 @@
 <template>
   <div class="list-box">
-    <el-row><h2>Classification List</h2></el-row>
+    <el-row><h2>Category List</h2></el-row>
     <el-button-group class="buttons">
       <el-button size="small" type="primary" icon="el-icon-edit"  @click="createClass">
         Create
@@ -148,7 +148,7 @@
         formData.append('classifyName',this.itemForm.classifyName)
         formData.append('state',1)
         addClass(formData).then(res=>{
-          console.log(res,876)
+          //console.log(res,876)
           if(res.code && res.code === 200){
             that.loading=false
             that.fetchData()
@@ -167,7 +167,7 @@
         formData.append('classifyName',this.itemForm.classifyName)
         formData.append('state',this.itemForm.state)
         updateClass(formData).then(res=>{
-          console.log(res,876)
+          //console.log(res,876)
           if(res.code && res.code === 200){
             that.loading=false
             that.fetchData()
@@ -238,7 +238,7 @@
       switchState(data){
         let that = this
         this.loading=true
-        console.log(data)
+        //console.log(data)
         let formData=new FormData()
         formData.append('id',data.id)
         formData.append('introduction',data.introduction)
@@ -248,7 +248,7 @@
         formData.append('state',data.state)
         formData.append('imageUrl',data.imageUrl)
         updateClass(formData).then(res=>{
-          console.log(res,876)
+          //console.log(res,876)
           if(res.code && res.code === 200){
             that.loading=false
           }
@@ -269,18 +269,18 @@
         this.itemForm.state=row.state
         this.itemForm.classifyName=row.classifyName
         this.itemForm.description=row.description
-        console.log(row);
+        //console.log(row);
       },
       handleView(row) {
-        this.goTo('/admin-class/edit?id='+row.id)
-        console.log(row);
+        this.goTo('/admin-class/edit?id='+row.id+'&name='+row.classifyName)
+        //console.log(row);
       },
       changePage(currentPage, isDelete = false, deleteNum = 1) {
         if (isDelete) {
           let num = this.totalNum % this.pageSize
-          console.log(this.totalNum, 'this.totalNum')
-          console.log(this.pageSize, 'this.pageSize')
-          console.log(num, 'num')
+          //console.log(this.totalNum, 'this.totalNum')
+          //console.log(this.pageSize, 'this.pageSize')
+          //console.log(num, 'num')
           if (num > deleteNum) {
             this.pageNum = currentPage
           } else {

@@ -160,7 +160,7 @@
       switchState(data){
         let that = this
         this.loading=true
-        console.log(data)
+        //console.log(data)
         let formData=new FormData()
         formData.append('id',data.id)
         formData.append('introduction',data.introduction)
@@ -170,7 +170,7 @@
         formData.append('state',data.state)
         formData.append('imageUrl',data.imageUrl)
         updateBanner(formData).then(res=>{
-          console.log(res,876)
+          //console.log(res,876)
           if(res.code && res.code === 200){
             that.loading=false
           }
@@ -185,14 +185,14 @@
       },
       handleClick(row) {
         this.goTo('/banner/edit?id='+row.id)
-        console.log(row);
+        //console.log(row);
       },
       changePage(currentPage, isDelete = false, deleteNum = 1) {
         if (isDelete) {
           let num = this.totalNum % this.pageSize
-          console.log(this.totalNum, 'this.totalNum')
-          console.log(this.pageSize, 'this.pageSize')
-          console.log(num, 'num')
+          //console.log(this.totalNum, 'this.totalNum')
+          //console.log(this.pageSize, 'this.pageSize')
+          //console.log(num, 'num')
           if (num > deleteNum) {
             this.pageNum = currentPage
           } else {

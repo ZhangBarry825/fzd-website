@@ -115,7 +115,7 @@
             id:this.nextId
           }).then(res=>{
             if(res.code && res.code === 200){
-              console.log(res,876)
+              //console.log(res,876)
               this.detail=res.data
 
 
@@ -139,7 +139,7 @@
           id:this.id
         }).then(res=>{
           if(res.code && res.code === 200){
-            console.log(res,876)
+            //console.log(res,876)
             this.detail=res.data
 
 

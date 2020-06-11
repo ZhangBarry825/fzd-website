@@ -1,8 +1,8 @@
 <template>
   <div class="list-box">
-    <el-row><h2>Classification Edit</h2></el-row>
+    <el-row><h2>{{categoryName}}</h2></el-row>
     <el-button-group class="buttons">
-      <el-button size="small" type="primary" icon="el-icon-edit" @click="goTo('/admin-class/create')">
+      <el-button size="small" type="primary" icon="el-icon-edit" @click="createClass">
         Create
       </el-button>
       <el-button size="small" type="primary" icon="el-icon-delete" @click="deleteItems"
@@ -55,7 +55,6 @@
         label="Config">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="primary" size="small" plain>edit</el-button>
-          <el-button @click="handleView(scope.row)" type="success" size="small" plain>list</el-button>
           <el-button type="danger" @click="handleDelete([scope.row.id])" size="small" plain>delete</el-button>
         </template>
       </el-table-column>
@@ -75,18 +74,29 @@
 
 
 
-    <el-dialog title="Edit" :visible.sync="dialogFormVisible">
+    <el-dialog title="Create Category" :visible.sync="dialogFormVisible">
       <el-form :model="itemForm">
-        <el-form-item label="Name" :label-width="formLabelWidth">
+        <el-form-item label="Category Name" :label-width="formLabelWidth">
           <el-input v-model="itemForm.classifyName" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Description" :label-width="formLabelWidth">
           <el-input v-model="itemForm.description" autocomplete="off"></el-input>
         </el-form-item>
+<!--        <el-form-item label="Parent Category" :label-width="formLabelWidth">-->
+<!--          <el-select v-model="itemForm.parentId" placeholder="Please select">-->
+<!--            <el-option-->
+<!--              v-for="item in parentList"-->
+<!--              :key="item.id"-->
+<!--              :label="item.classify_name"-->
+<!--              :value="item.id">-->
+<!--            </el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="updateItem">Update</el-button>
+        <el-button type="primary" @click="updateItem" v-if="!isCreate">Update</el-button>
+        <el-button type="primary" @click="createItem" v-if="isCreate">Create</el-button>
       </div>
     </el-dialog>
 
@@ -96,22 +106,26 @@
 <script>
   import {deleteBanner, updateBanner} from "@/api/admin-banner";
   import {deleteProduct, getProductList} from "@/api/admin-product";
-  import {deleteClass, getChildClass, getClassList, updateClass} from "@/api/admin-classification";
+  import {addClass, deleteClass, getChildClass, getClassList, updateClass} from "@/api/admin-classification";
   import {parseTime} from "@/utils";
 
   export default {
     name: "AdminClassEdit",
     data() {
       return {
+        isCreate:false,
+        categoryName:'',
         parentId:'',
         dialogFormVisible:false,
         itemForm:{
           id:'',
           classifyName:'',
           state:'',
-          description:''
+          description:'',
+          parentId:'',
         },
-        formLabelWidth: '120px',
+        parentList:[],
+        formLabelWidth: '130px',
         loading:false,
         baseImgUrl: this.$globalData.baseImgUrl,
         pageNum: 1,
@@ -129,6 +143,36 @@
       }
     },
     methods: {
+      createClass(){
+        this.itemForm={
+          id:'',
+          classifyName:'',
+          state:1,
+          description:'',
+          parentId:this.parentId,
+        }
+        this.isCreate=true
+        this.dialogFormVisible=true
+      },
+      createItem(){
+
+        let that = this
+        this.loading=true
+        let formData=new FormData()
+        formData.append('parentId',this.itemForm.parentId)
+        formData.append('description',this.itemForm.description)
+        formData.append('classifyName',this.itemForm.classifyName)
+        formData.append('state',this.itemForm.state)
+        addClass(formData).then(res=>{
+          //console.log(res,876)
+          if(res.code && res.code === 200){
+            that.loading=false
+            that.fetchData()
+          }
+        })
+
+        this.dialogFormVisible=false
+      },
       updateItem(){
 
         let that = this
@@ -139,7 +183,7 @@
         formData.append('classifyName',this.itemForm.classifyName)
         formData.append('state',this.itemForm.state)
         updateClass(formData).then(res=>{
-          console.log(res,876)
+          //console.log(res,876)
           if(res.code && res.code === 200){
             that.loading=false
             that.fetchData()
@@ -210,7 +254,7 @@
       switchState(data){
         let that = this
         this.loading=true
-        console.log(data)
+        //console.log(data)
         let formData=new FormData()
         formData.append('id',data.id)
         formData.append('introduction',data.introduction)
@@ -220,7 +264,7 @@
         formData.append('state',data.state)
         formData.append('imageUrl',data.imageUrl)
         updateClass(formData).then(res=>{
-          console.log(res,876)
+          //console.log(res,876)
           if(res.code && res.code === 200){
             that.loading=false
           }
@@ -235,23 +279,21 @@
       },
       handleClick(row) {
         // this.goTo('/admin-class/edit?id='+row.id)
+        this.isCreate=false
         this.dialogFormVisible=true
         this.itemForm.id=row.id
         this.itemForm.state=row.state
         this.itemForm.classifyName=row.classifyName
         this.itemForm.description=row.description
-        console.log(row);
-      },
-      handleView(row) {
-        this.goTo('/admin-class/edit?id='+row.id)
-        console.log(row);
+        this.itemForm.parentId=row.parentId
+        //console.log(row);
       },
       changePage(currentPage, isDelete = false, deleteNum = 1) {
         if (isDelete) {
           let num = this.totalNum % this.pageSize
-          console.log(this.totalNum, 'this.totalNum')
-          console.log(this.pageSize, 'this.pageSize')
-          console.log(num, 'num')
+          //console.log(this.totalNum, 'this.totalNum')
+          //console.log(this.pageSize, 'this.pageSize')
+          //console.log(num, 'num')
           if (num > deleteNum) {
             this.pageNum = currentPage
           } else {
@@ -285,8 +327,10 @@
       }
     },
     mounted(e) {
-      console.log(this.$route.query.id,852)
+      //console.log(this.$route.query.id,852)
+      //console.log(this.$route.query.name,852)
       this.parentId=this.$route.query.id
+      this.categoryName=this.$route.query.name
       this.fetchData()
     }
   }

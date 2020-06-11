@@ -171,20 +171,20 @@ export const constantRoutes = [
   {
     path: '/admin-class',
     component: Layout,
-    meta: { title: 'Classification', icon: 'product-fill' },
+    meta: { title: 'Category', icon: 'product-fill' },
     children: [
       {
         path: 'list',
         name: 'AdminClassList',
         component: () => import('@/views/admin/classification/list'),
-        meta: { title: 'Classification', icon: 'product-fill' }
+        meta: { title: 'Category', icon: 'product-fill' }
       },
 
       {
         path: 'edit',
         name: 'AdminClassEdit',
         component: () => import('@/views/admin/classification/edit'),
-        meta: { title: 'Edit Classification', icon: 'create' },
+        meta: { title: 'Edit Category', icon: 'create' },
         hidden: true
       },
     ]

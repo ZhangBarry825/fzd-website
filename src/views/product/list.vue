@@ -99,7 +99,7 @@
           pageSize:this.pageSize,
           classifyId:item.id,
         }).then(res=>{
-          console.log(res,111)
+          //console.log(res,111)
           if(res.code && res.code ===200){
             if(res.data){
               this.hasPrevious=res.data.hasPreviousPage
@@ -113,7 +113,7 @@
               this.pageNum=1
             }
 
-            console.log(this.productList,990)
+            //console.log(this.productList,990)
           }
         })
 

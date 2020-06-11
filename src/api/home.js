@@ -61,4 +61,10 @@ export function contactUs(data) {
   })
 }
 
-
+export function updateWord(data) {
+  return request({
+    url: '/updatePassword',
+    method: 'post',
+    data
+  })
+}

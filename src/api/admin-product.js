@@ -15,6 +15,13 @@ export function addProduct(data) {
     data
   })
 }
+export function getProduct(data) {
+  return request({
+    url: '/product-backend/productSelectById',
+    method: 'get',
+    params:data
+  })
+}
 export function updateProduct(data) {
   return request({
     url: '/product-backend/productUpdate',
