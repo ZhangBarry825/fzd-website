@@ -80,6 +80,11 @@
     },
     computed: {
       isShow() {
+        if(this.$store.getters.isShow){
+          this.pageSize=9
+        }else {
+          this.pageSize=8
+        }
         return this.$store.getters.isShow
       }
     },
@@ -193,7 +198,7 @@
         font-weight: bold;
         flex-wrap: wrap;
         overflow: hidden;
-        text-align: center;
+        text-align: left;
         .text1 {
           font-size: 24px;
           color: #222222;
@@ -209,8 +214,8 @@
       }
       .items::after{
         height: 0;
-        width: 120px;
-        min-width: 120px;
+        width: 165px;
+        min-width: 165px;
         content: "";
       }
       .items{
@@ -218,12 +223,14 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: space-around;
+
         .item{
+          margin: 0 10px;
           cursor: pointer;
-          width: 120px;
-          height: 120px;
-          margin-bottom: 15px;
+          width: 140px;
+          height: 140px;
+          margin-bottom: 20px;
           background-size: cover;
           background-position: center center;
           background-repeat: no-repeat;
