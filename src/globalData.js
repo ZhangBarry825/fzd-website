@@ -1,4 +1,4 @@
-const baseImgUrl = 'http://192.168.1.17:8091';
+const baseImgUrl = 'http://www.fzdaluminum.com';
 
 
 export default{
