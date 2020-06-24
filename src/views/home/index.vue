@@ -32,7 +32,7 @@
         </div>
         <div class="textBox">
           <div class="text">
-            {{homeAboutUs.content}}
+            {{homeAboutUs.introduction}}
           </div>
           <div class="more">
             <div class="box" @click="goTo('/about-us')">
@@ -1002,12 +1002,15 @@
         justify-content: space-around;
         padding: 20px 0;
 
+        .item:nth-child(2){
+          margin: 0 10rpx;
+        }
         .item {
           cursor: pointer;
           margin-bottom: 10px;
           width: 30%;
           background-color: #FFFFFF;
-          margin-left: 20px;
+
           .img {
             width: 100%;
             height: 135px;
