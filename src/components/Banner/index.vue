@@ -246,7 +246,7 @@
               position: relative;
               cursor: pointer;
               font-size: 13px;
-              margin: 0 5px;
+              margin: 0 10px;
               box-sizing: border-box;
               height: 100%;
               font-weight: normal;

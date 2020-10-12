@@ -106,11 +106,13 @@
               this.hasNext=res.data.hasNextPage
               this.productList=res.data.list
               this.pageNum=1
+              this.nowTypeId=item.id
             }else {
               this.hasPrevious=false
               this.hasNext=false
               this.productList=[]
               this.pageNum=1
+              this.nowTypeId=item.id
             }
 
             //console.log(this.productList,990)
